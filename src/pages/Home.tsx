@@ -26,8 +26,17 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  @media (max-width: 767px) {
-    margin-top: 10px;
+  height: 100%;
+  background: linear-gradient(-45deg, #eff6e0 50%, #cde4a0 50%);
+`;
+
+const Logo = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const LogoText = styled.div`
+  /* @media (max-width: 767px) {
   }
   @media (min-width: 768px) and (max-width: 991px) {
   }
@@ -36,17 +45,7 @@ const Wrapper = styled.div`
   }
 
   @media (min-width: 1200px) {
-    margin-top: 150px;
-  }
-`;
-
-const Logo = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 10vh;
-`;
-
-const LogoText = styled.div`
+  } */
   font-size: 150px;
   font-family: "Allan", cursive;
   letter-spacing: 20px;
@@ -56,10 +55,28 @@ const LogoText = styled.div`
 const LogoIcon = styled(BiSolidTennisBall)`
   position: relative;
   font-size: 100px;
+  color: #9bc940;
   animation: ${bounce} 1s ease-in Infinite Alternate;
 `;
 
-const Button = styled.div``;
+const Button = styled.button`
+  margin-top: 20px;
+  box-sizing: border-box;
+  appearance: none;
+  background-color: transparent;
+  padding: 0.8em 2em;
+  border-radius: 20px;
+  text-decoration: none;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 2px solid #9bc940;
+  transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+  &:hover {
+    box-shadow: 0 0 40px 40px #9bc940 inset;
+  }
+`;
 
 export default function Home() {
   return (
@@ -68,11 +85,7 @@ export default function Home() {
         <LogoText>Tenning </LogoText>
         <LogoIcon />
       </Logo>
-      <button>로그인</button>
-      <div>
-        <p>이미 회원이신가요?</p>
-        <button>회원가입</button>
-      </div>
+      <Button>시작하기</Button>
     </Wrapper>
   );
 }
