@@ -1,5 +1,20 @@
 import styled, { keyframes } from "styled-components";
 import { BiSolidTennisBall } from "react-icons/bi";
+import { Link } from "react-router-dom";
+
+export default function Home() {
+  return (
+    <Wrapper>
+      <Logo>
+        <LogoText>Tenning </LogoText>
+        <LogoIcon />
+      </Logo>
+      <Link to="/login" className="links">
+        <Button>시작하기</Button>
+      </Link>
+    </Wrapper>
+  );
+}
 
 const fadeIn = keyframes`
     from {
@@ -77,15 +92,3 @@ const Button = styled.button`
     box-shadow: 0 0 40px 40px #9bc940 inset;
   }
 `;
-
-export default function Home() {
-  return (
-    <Wrapper>
-      <Logo>
-        <LogoText>Tenning </LogoText>
-        <LogoIcon />
-      </Logo>
-      <Button>시작하기</Button>
-    </Wrapper>
-  );
-}
