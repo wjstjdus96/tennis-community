@@ -2,10 +2,11 @@ import styled from "styled-components";
 import { BiSolidTennisBall } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import AuthInput from "../components/AuthInput";
+import HomeLayout from "../layouts/HomeLayout";
 
 export default function Login() {
   return (
-    <Wrapper>
+    <HomeLayout>
       <Logo>
         TENNING
         <BiSolidTennisBall />
@@ -23,18 +24,9 @@ export default function Login() {
           <Link to="/signup">회원가입</Link>
         </Others>
       </Box>
-    </Wrapper>
+    </HomeLayout>
   );
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  background: linear-gradient(-45deg, #eff6e0 50%, #cde4a0 50%);
-`;
 
 const Logo = styled.div`
   display: flex;
