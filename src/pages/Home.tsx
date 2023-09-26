@@ -1,5 +1,21 @@
 import styled, { keyframes } from "styled-components";
 import { BiSolidTennisBall } from "react-icons/bi";
+import { Link } from "react-router-dom";
+import HomeLayout from "../layouts/HomeLayout";
+
+export default function Home() {
+  return (
+    <HomeLayout>
+      <Logo>
+        <LogoText>Tenning </LogoText>
+        <LogoIcon />
+      </Logo>
+      <Link to="/login" className="links">
+        <Button>시작하기</Button>
+      </Link>
+    </HomeLayout>
+  );
+}
 
 const fadeIn = keyframes`
     from {
@@ -19,15 +35,6 @@ const bounce = keyframes`
   to {
     top:10px;
   } 
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  background: linear-gradient(-45deg, #eff6e0 50%, #cde4a0 50%);
 `;
 
 const Logo = styled.div`
@@ -77,15 +84,3 @@ const Button = styled.button`
     box-shadow: 0 0 40px 40px #9bc940 inset;
   }
 `;
-
-export default function Home() {
-  return (
-    <Wrapper>
-      <Logo>
-        <LogoText>Tenning </LogoText>
-        <LogoIcon />
-      </Logo>
-      <Button>시작하기</Button>
-    </Wrapper>
-  );
-}
