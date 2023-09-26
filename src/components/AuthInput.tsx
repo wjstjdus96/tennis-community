@@ -1,12 +1,18 @@
 import styled from "styled-components";
 import { Path, UseFormRegister } from "react-hook-form";
-import { ILoginValue } from "../pages/Login";
+
+interface IAuthValue {
+  email: string;
+  nickname?: string;
+  password: string;
+  checkPw?: string;
+}
 
 interface IAuthInput {
-  name: Path<ILoginValue>;
+  name: Path<IAuthValue>;
   text: string;
   inputType?: string;
-  register: UseFormRegister<ILoginValue>;
+  register: UseFormRegister<IAuthValue>;
   errorMsg?: string;
 }
 
@@ -24,7 +30,9 @@ export default function AuthInput({
         id={name}
         type={inputType}
         {...register(name, { required: true })}
-        placeholder={`${text}을 입력하십시오`}
+        placeholder={
+          name == "checkPw" ? "비밀번호를 한 번 더 입력하십시오" : `${text}`
+        }
       />
       {errorMsg && <span>{errorMsg}</span>}
     </Wrapper>

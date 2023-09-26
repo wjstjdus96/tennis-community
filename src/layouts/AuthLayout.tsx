@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { BiSolidTennisBall } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 export default function AuthLayout({
   children,
@@ -17,6 +18,21 @@ export default function AuthLayout({
       <Box>
         <Title>{title}</Title>
         {children}
+        <hr />
+        <Others>
+          {title == "로그인" && (
+            <>
+              <div>아직 회원이 아니신가요?</div>
+              <Link to="/signup">회원가입</Link>
+            </>
+          )}
+          {title == "회원가입" && (
+            <>
+              <div>이미 회원이신가요?</div>
+              <Link to="/login">로그인</Link>
+            </>
+          )}
+        </Others>
       </Box>
     </Wrapper>
   );
@@ -45,7 +61,7 @@ const Logo = styled.div`
 
 const Box = styled.div`
   position: relative;
-  width: 400px;
+  min-width: 400px;
   min-height: 400px;
   border-radius: 30px;
   padding: 30px 70px;
@@ -56,5 +72,18 @@ const Box = styled.div`
 const Title = styled.div`
   font-size: 30px;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+`;
+
+const Others = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  div {
+    margin-right: 10px;
+  }
+  a {
+    text-underline-offset: 2px;
+  }
 `;

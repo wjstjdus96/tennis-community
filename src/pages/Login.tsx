@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import AuthInput from "../components/AuthInput";
 import { useForm, SubmitHandler } from "react-hook-form";
 import {
@@ -41,25 +40,20 @@ export default function Login() {
       <form onSubmit={handleSubmit(onSubmitHandler)}>
         <AuthInput
           name="email"
-          text="이메일"
+          text="이메일을 입력하십시오"
           inputType="email"
           register={register}
           errorMsg={errors.email && "이메일을 입력해주세요"}
         />
         <AuthInput
           name="password"
-          text="비밀번호"
+          text="비밀번호를 입력하십시오"
           inputType="password"
           register={register}
           errorMsg={errors.password && "비밀번호를 입력해주세요"}
         />
         <SubmitBtn type="submit">로그인</SubmitBtn>
       </form>
-      <hr />
-      <Others>
-        <div>아직 회원이 아니신가요?</div>
-        <Link to="/signup">회원가입</Link>
-      </Others>
     </AuthLayout>
   );
 }
@@ -81,18 +75,5 @@ const SubmitBtn = styled.button`
   transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
   &:hover {
     background-color: transparent;
-  }
-`;
-
-const Others = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 30px;
-  div {
-    margin-right: 10px;
-  }
-  a {
-    text-underline-offset: 2px;
   }
 `;
