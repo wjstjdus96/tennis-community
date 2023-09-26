@@ -22,7 +22,15 @@ export default function Login() {
   } = useForm<ILoginValue>();
   const navigate = useNavigate();
 
-  const onSubmitHandler: SubmitHandler<ILoginValue> = async (data) => {};
+  const onSubmitHandler: SubmitHandler<ILoginValue> = async (data) => {
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+      navigate("/community");
+    } catch (error) {
+      alert("로그인에 실패하였습니다. 다시 시도해주세요");
+      reset();
+    }
+  };
 
   return (
     <HomeLayout>
