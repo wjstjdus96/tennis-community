@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 import AuthInput from "../components/AuthInput";
 import HomeLayout from "../layouts/HomeLayout";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { signInWithEmailAndPassword } from "@firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  setPersistence,
+  browserSessionPersistence,
+} from "@firebase/auth";
 import { auth } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 
@@ -24,6 +28,7 @@ export default function Login() {
 
   const onSubmitHandler: SubmitHandler<ILoginValue> = async (data) => {
     try {
+      await setPersistence(auth, browserSessionPersistence);
       await signInWithEmailAndPassword(auth, data.email, data.password);
       navigate("/community");
     } catch (error) {
