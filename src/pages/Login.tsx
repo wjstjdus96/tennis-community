@@ -1,8 +1,6 @@
 import styled from "styled-components";
-import { BiSolidTennisBall } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import AuthInput from "../components/AuthInput";
-import HomeLayout from "../layouts/HomeLayout";
 import { useForm, SubmitHandler } from "react-hook-form";
 import {
   signInWithEmailAndPassword,
@@ -11,6 +9,7 @@ import {
 } from "@firebase/auth";
 import { auth } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
+import AuthLayout from "../layouts/AuthLayout";
 
 export interface ILoginValue {
   email: string;
@@ -38,67 +37,32 @@ export default function Login() {
   };
 
   return (
-    <HomeLayout>
-      <Logo>
-        TENNING
-        <BiSolidTennisBall />
-      </Logo>
-      <Box>
-        <Title>로그인</Title>
-        <form onSubmit={handleSubmit(onSubmitHandler)}>
-          <AuthInput
-            name="email"
-            text="이메일"
-            inputType="email"
-            register={register}
-            errorMsg={errors.email && "이메일을 입력해주세요"}
-          />
-          <AuthInput
-            name="password"
-            text="비밀번호"
-            inputType="password"
-            register={register}
-            errorMsg={errors.password && "비밀번호를 입력해주세요"}
-          />
-          <SubmitBtn type="submit">로그인</SubmitBtn>
-        </form>
-        <hr />
-        <Others>
-          <div>아직 회원이 아니신가요?</div>
-          <Link to="/signup">회원가입</Link>
-        </Others>
-      </Box>
-    </HomeLayout>
+    <AuthLayout title="로그인">
+      <form onSubmit={handleSubmit(onSubmitHandler)}>
+        <AuthInput
+          name="email"
+          text="이메일"
+          inputType="email"
+          register={register}
+          errorMsg={errors.email && "이메일을 입력해주세요"}
+        />
+        <AuthInput
+          name="password"
+          text="비밀번호"
+          inputType="password"
+          register={register}
+          errorMsg={errors.password && "비밀번호를 입력해주세요"}
+        />
+        <SubmitBtn type="submit">로그인</SubmitBtn>
+      </form>
+      <hr />
+      <Others>
+        <div>아직 회원이 아니신가요?</div>
+        <Link to="/signup">회원가입</Link>
+      </Others>
+    </AuthLayout>
   );
 }
-
-const Logo = styled.div`
-  display: flex;
-  justify-content: center;
-  font-size: 50px;
-  font-family: "Allan", cursive;
-  margin-bottom: 20px;
-  letter-spacing: 20px;
-  svg {
-    color: #9bc940;
-  }
-`;
-
-const Box = styled.div`
-  position: relative;
-  width: 400px;
-  min-height: 400px;
-  border-radius: 30px;
-  padding: 30px 70px;
-  background-color: rgb(255, 255, 255, 0.5);
-  font-family: "Do Hyeon", sans-serif;
-`;
-
-const Title = styled.div`
-  font-size: 30px;
-  text-align: center;
-  margin-bottom: 10px;
-`;
 
 const SubmitBtn = styled.button`
   width: 100%;
