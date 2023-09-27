@@ -4,6 +4,13 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import styled from "styled-components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import {
+  setPersistence,
+  inMemoryPersistence,
+  createUserWithEmailAndPassword,
+} from "@firebase/auth";
+import { auth } from "../firebase/firebase";
+import { useNavigate } from "react-router-dom";
 
 export interface ISignupValue {
   email: string;
@@ -12,6 +19,8 @@ export interface ISignupValue {
 }
 
 export default function Signup() {
+  const navigate = useNavigate();
+
   const formSchema = yup.object({
     email: yup
       .string()
@@ -40,8 +49,16 @@ export default function Signup() {
     resolver: yupResolver(formSchema),
   });
 
-  const onSubmitHandler: SubmitHandler<ISignupValue> = async (data) =>
-    console.log(data);
+  const onSubmitHandler: SubmitHandler<ISignupValue> = async (data) => {
+    try {
+      await setPersistence(auth, inMemoryPersistence);
+      await createUserWithEmailAndPassword(auth, data.email, data.password);
+      alert("회원가입에 성공하였습니다");
+      navigate("/login");
+    } catch (error) {
+      alert("회원가입에 실패하였습니다.");
+    }
+  };
 
   return (
     <AuthLayout title="회원가입">
