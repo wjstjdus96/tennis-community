@@ -1,11 +1,14 @@
 import styled, { keyframes } from "styled-components";
 import { BiSolidTennisBall } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import HomeLayout from "../layouts/HomeLayout";
 import { useContext } from "react";
 import { auth } from "../firebase/firebase";
 import { AuthContext } from "../contexts/authContext";
 import { checkIsLogin } from "../utils/checkIsLogin";
+import {
+  HomeAfterLoginLayout,
+  HomeBeforeLoginLayout,
+} from "../layouts/HomeLayout";
 
 export default function Home() {
   const isLogin = checkIsLogin();
@@ -13,9 +16,11 @@ export default function Home() {
   return (
     <>
       {isLogin ? (
-        <div></div>
+        <HomeAfterLoginLayout>
+          <div></div>
+        </HomeAfterLoginLayout>
       ) : (
-        <HomeLayout>
+        <HomeBeforeLoginLayout>
           <Logo>
             <LogoText>Tenning </LogoText>
             <LogoIcon />
@@ -23,7 +28,7 @@ export default function Home() {
           <Link to="/login" className="links">
             <Button>시작하기</Button>
           </Link>
-        </HomeLayout>
+        </HomeBeforeLoginLayout>
       )}
     </>
   );
