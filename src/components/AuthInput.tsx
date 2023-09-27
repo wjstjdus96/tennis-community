@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import { Path, UseFormRegister } from "react-hook-form";
 import { ISignupValue } from "../pages/Signup";
-import { ILoginValue } from "../pages/Login";
 
 interface IAuthInput {
-  name: any;
+  name: Path<ISignupValue>;
   text?: string;
   inputType?: string;
-  register: any;
+  register: UseFormRegister<ISignupValue>;
   errorMsg?: string;
 }
 
