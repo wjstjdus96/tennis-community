@@ -9,6 +9,7 @@ import {
   HomeAfterLoginLayout,
   HomeBeforeLoginLayout,
 } from "../layouts/HomeLayout";
+import Board from "../components/home/Board";
 
 export default function Home() {
   const isLogin = checkIsLogin();
@@ -17,7 +18,11 @@ export default function Home() {
     <>
       {isLogin ? (
         <HomeAfterLoginLayout>
-          <div></div>
+          <Row>
+            <Board />
+            <Board />
+            <Board />
+          </Row>
         </HomeAfterLoginLayout>
       ) : (
         <HomeBeforeLoginLayout>
@@ -99,5 +104,14 @@ const Button = styled.button`
   transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
   &:hover {
     box-shadow: 0 0 40px 40px #9bc940 inset;
+  }
+`;
+
+const Row = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  & > :nth-child(3) {
+    grid-column: 1/3;
   }
 `;

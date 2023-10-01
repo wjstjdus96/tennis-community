@@ -26,7 +26,12 @@ export function HomeAfterLoginLayout({
   return (
     <AfterLoginWrapper>
       <Header />
-      {children}
+      <Body>
+        <div></div>
+        <div>{children}</div>
+
+        <div></div>
+      </Body>
     </AfterLoginWrapper>
   );
 }
@@ -34,4 +39,9 @@ export function HomeAfterLoginLayout({
 const AfterLoginWrapper = styled.div`
   background-color: #eff6e0;
   height: 100%;
+`;
+
+const Body = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
 `;
