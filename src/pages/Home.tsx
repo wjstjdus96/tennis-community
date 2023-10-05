@@ -19,9 +19,9 @@ export default function Home() {
       {isLogin ? (
         <HomeAfterLoginLayout>
           <Row>
-            <Board />
-            <Board />
-            <Board />
+            <Board title="커뮤니티" collectionName="community" />
+            {/* <Board title="사람모집" collectionName="recruit" />
+            <Board title="대회일정" collectionName="contest" /> */}
           </Row>
         </HomeAfterLoginLayout>
       ) : (

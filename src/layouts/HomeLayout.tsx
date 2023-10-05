@@ -44,4 +44,5 @@ const AfterLoginWrapper = styled.div`
 const Body = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
+  font-family: "Noto Sans KR", sans-serif;
 `;

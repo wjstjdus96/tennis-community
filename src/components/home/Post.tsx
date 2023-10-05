@@ -1,26 +1,27 @@
 import styled from "styled-components";
 import defaultProfile from "../../assets/defaultProfile.png";
 import { FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
+import { IPost } from "./Board";
 
-export default function Post() {
+export default function Post({ post }: { post: IPost }) {
   return (
     <Wrapper>
       <Infos>
         <InfoGroup>
           <IconItem>
             <img src={defaultProfile} />
-            <div>이름</div>
+            <div>{post.creatorName}</div>
           </IconItem>
           <div>시간</div>
         </InfoGroup>
         <InfoGroup>
           <IconItem>
             <FaRegBookmark />
-            <div>북마크수</div>
+            <div>{post.bookmarkNum}</div>
           </IconItem>
           <IconItem>
             <FaRegCommentDots />
-            <div>댓글수</div>
+            <div>{post.commentNum}</div>
           </IconItem>
         </InfoGroup>
       </Infos>
