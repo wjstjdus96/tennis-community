@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import Post from "./Post";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { useState, useEffect } from "react";
+import MarketPost from "./MarketPost";
 
 interface IBoard {
   title: string;
@@ -24,12 +25,16 @@ export interface IPost {
   type?: string;
 }
 
+export interface IMarketPost {
+  title: string;
+}
+
 export default function Board({ title, collectionName }: IBoard) {
-  const [posts, setPosts] = useState<IPost[]>([]);
+  const [posts, setPosts] = useState<IPost[] | IMarketPost[]>([]);
   const getPosts = async () => {
     const collectionRef = collection(db, collectionName);
     const querySnapShot = await getDocs(
-      query(collectionRef, orderBy("createdAt", "desc"))
+      query(collectionRef, orderBy("createdAt", "desc"), limit(6))
     );
     querySnapShot.forEach((doc) => {
       const postObject = {
@@ -47,11 +52,19 @@ export default function Board({ title, collectionName }: IBoard) {
   return (
     <Wrapper>
       <Head>{title}</Head>
-      <Body>
-        {posts.map((post: any) => (
-          <Post post={post} />
-        ))}
-      </Body>
+      {collectionName == "market" ? (
+        <MarketBoardBody>
+          {posts.map((post: any) => (
+            <MarketPost post={post} />
+          ))}
+        </MarketBoardBody>
+      ) : (
+        <Body>
+          {posts.map((post: any) => (
+            <Post post={post} />
+          ))}
+        </Body>
+      )}
     </Wrapper>
   );
 }
@@ -78,4 +91,9 @@ const Body = styled.div`
   & > div:last-child {
     border: none;
   }
+`;
+
+const MarketBoardBody = styled.div`
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
 `;

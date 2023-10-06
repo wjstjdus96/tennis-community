@@ -21,7 +21,7 @@ export default function Home() {
           <Row>
             <Board title="커뮤니티" collectionName="community" />
             <Board title="사람모집" collectionName="recruit" />
-            {/* <Board title="대회일정" collectionName="contest" /> */}
+            <Board title="플리마켓" collectionName="market" />
           </Row>
         </HomeAfterLoginLayout>
       ) : (

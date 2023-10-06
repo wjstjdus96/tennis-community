@@ -20,7 +20,7 @@ export default function Header() {
           <Link to="/recruit">사람모집</Link>
         </div>
         <div>
-          <Link to="/contest">대회정보</Link>
+          <Link to="/market">플리마켓</Link>
         </div>
       </Menu>
       <Profile>
