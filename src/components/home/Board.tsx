@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Post from "./Post";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { useState, useEffect } from "react";
 
@@ -26,7 +26,10 @@ export interface IPost {
 export default function Board({ title, collectionName }: IBoard) {
   const [posts, setPosts] = useState<IPost[]>([]);
   const getPosts = async () => {
-    const querySnapShot = await getDocs(collection(db, collectionName));
+    const collectionRef = collection(db, collectionName);
+    const querySnapShot = await getDocs(
+      query(collectionRef, orderBy("createdAt", "desc"))
+    );
     querySnapShot.forEach((doc) => {
       const postObject = {
         ...doc.data(),

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import defaultProfile from "../../assets/defaultProfile.png";
 import { FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
 import { IPost } from "./Board";
+import { getElapsedTime } from "../../utils/getElapsedTime";
 
 export default function Post({ post }: { post: IPost }) {
   return (
@@ -12,7 +13,7 @@ export default function Post({ post }: { post: IPost }) {
             <img src={defaultProfile} />
             <div>{post.creatorName}</div>
           </IconItem>
-          <div>시간</div>
+          <div>{getElapsedTime(post.createdAt.seconds)}</div>
         </InfoGroup>
         <InfoGroup>
           <IconItem>
@@ -25,7 +26,7 @@ export default function Post({ post }: { post: IPost }) {
           </IconItem>
         </InfoGroup>
       </Infos>
-      <Title>이것은 제목입니다</Title>
+      <Title>{post.title}</Title>
     </Wrapper>
   );
 }
