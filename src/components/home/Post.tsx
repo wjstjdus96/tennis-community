@@ -26,7 +26,10 @@ export default function Post({ post }: { post: IPost }) {
           </IconItem>
         </InfoGroup>
       </Infos>
-      <Title>{post.title}</Title>
+      <Title type={post.type}>
+        {post.type && <p>{post.type}</p>}
+        <div>{post.title}</div>
+      </Title>
     </Wrapper>
   );
 }
@@ -48,12 +51,31 @@ const Infos = styled.div`
   }
 `;
 
-const Title = styled.div`
-  height: 20px;
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+const Title = styled.div<{ type?: string }>`
+  display: grid;
+  grid-template-columns: ${(props) => (props.type ? "1fr 7fr" : "1fr")};
+  gap: 10px;
+  justify-content: center;
+  align-items: flex-start;
+  & > p {
+    color: grey;
+    font-size: 12px;
+    font-weight: 700;
+    margin: 0;
+    border: 1px solid grey;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    padding: 3px;
+  }
+  & > div {
+    height: 20px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 `;
 
 const InfoGroup = styled.div`

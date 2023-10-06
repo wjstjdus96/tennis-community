@@ -21,6 +21,7 @@ export interface IPost {
   creatorName: string;
   id: string;
   title: string;
+  type?: string;
 }
 
 export default function Board({ title, collectionName }: IBoard) {

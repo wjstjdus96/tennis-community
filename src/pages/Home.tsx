@@ -20,8 +20,8 @@ export default function Home() {
         <HomeAfterLoginLayout>
           <Row>
             <Board title="커뮤니티" collectionName="community" />
-            {/* <Board title="사람모집" collectionName="recruit" />
-            <Board title="대회일정" collectionName="contest" /> */}
+            <Board title="사람모집" collectionName="recruit" />
+            {/* <Board title="대회일정" collectionName="contest" /> */}
           </Row>
         </HomeAfterLoginLayout>
       ) : (
