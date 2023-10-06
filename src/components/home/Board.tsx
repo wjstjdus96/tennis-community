@@ -33,8 +33,9 @@ export default function Board({ title, collectionName }: IBoard) {
   const [posts, setPosts] = useState<IPost[] | IMarketPost[]>([]);
   const getPosts = async () => {
     const collectionRef = collection(db, collectionName);
+    const limitNumber = collectionName == "market" ? 6 : 4;
     const querySnapShot = await getDocs(
-      query(collectionRef, orderBy("createdAt", "desc"), limit(6))
+      query(collectionRef, orderBy("createdAt", "desc"), limit(limitNumber))
     );
     querySnapShot.forEach((doc) => {
       const postObject = {
@@ -94,6 +95,8 @@ const Body = styled.div`
 `;
 
 const MarketBoardBody = styled.div`
+  display: grid;
+  column-gap: 30px;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
 `;
