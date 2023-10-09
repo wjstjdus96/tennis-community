@@ -28,7 +28,7 @@ export default function Login() {
     try {
       await setPersistence(auth, browserSessionPersistence);
       await signInWithEmailAndPassword(auth, data.email, data.password);
-      navigate("/community");
+      navigate("/");
     } catch (error) {
       alert("로그인에 실패하였습니다. 다시 시도해주세요");
       reset();

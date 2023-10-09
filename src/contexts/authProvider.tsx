@@ -7,9 +7,9 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const subscribe = auth.onAuthStateChanged((fbUser) => {
-      console.log(`구독 실행`, fbUser);
-      setUser(fbUser);
+    const subscribe = auth.onAuthStateChanged((user) => {
+      console.log("정보 받아옴");
+      setUser(user);
     });
     return subscribe;
   }, []);

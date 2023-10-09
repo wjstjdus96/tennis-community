@@ -1,19 +1,41 @@
 import styled, { keyframes } from "styled-components";
 import { BiSolidTennisBall } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import HomeLayout from "../layouts/HomeLayout";
+import { useContext } from "react";
+import { auth } from "../firebase/firebase";
+import { AuthContext } from "../contexts/authContext";
+import { checkIsLogin } from "../utils/checkIsLogin";
+import {
+  HomeAfterLoginLayout,
+  HomeBeforeLoginLayout,
+} from "../layouts/HomeLayout";
+import Board from "../components/home/Board";
 
 export default function Home() {
+  const isLogin = checkIsLogin();
+
   return (
-    <HomeLayout>
-      <Logo>
-        <LogoText>Tenning </LogoText>
-        <LogoIcon />
-      </Logo>
-      <Link to="/login" className="links">
-        <Button>시작하기</Button>
-      </Link>
-    </HomeLayout>
+    <>
+      {isLogin ? (
+        <HomeAfterLoginLayout>
+          <Row>
+            <Board title="커뮤니티" collectionName="community" />
+            <Board title="사람모집" collectionName="recruit" />
+            <Board title="플리마켓" collectionName="market" />
+          </Row>
+        </HomeAfterLoginLayout>
+      ) : (
+        <HomeBeforeLoginLayout>
+          <Logo>
+            <LogoText>Tenning </LogoText>
+            <LogoIcon />
+          </Logo>
+          <Link to="/login" className="links">
+            <Button>시작하기</Button>
+          </Link>
+        </HomeBeforeLoginLayout>
+      )}
+    </>
   );
 }
 
@@ -82,5 +104,14 @@ const Button = styled.button`
   transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
   &:hover {
     box-shadow: 0 0 40px 40px #9bc940 inset;
+  }
+`;
+
+const Row = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  & > :nth-child(3) {
+    grid-column: 1/3;
   }
 `;
