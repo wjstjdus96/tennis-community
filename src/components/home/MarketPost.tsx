@@ -4,8 +4,10 @@ import { getStorage, ref, getDownloadURL, listAll } from "firebase/storage";
 import { storage } from "../../firebase/firebase";
 import { useState, useEffect } from "react";
 import { IMarketPost } from "./Board";
+import { useNavigate } from "react-router-dom";
 
 export default function MarketPost({ post }: { post: IMarketPost }) {
+  const navigate = useNavigate();
   const storage = getStorage();
   const imageRef = ref(storage, `${post.itemImage}`);
   const [image, setImage] = useState<string>("");
@@ -16,11 +18,15 @@ export default function MarketPost({ post }: { post: IMarketPost }) {
     });
   });
 
+  const onClickTitle = () => {
+    navigate(`/${post.field}/${post.id}`);
+  };
+
   return (
     <Wrapper>
       <ItemImage url={image}></ItemImage>
       <div>
-        <div>{post.itemName}</div>
+        <ItemTitle onClick={onClickTitle}>{post.itemName}</ItemTitle>
         <ItemPrice>{post.price.toLocaleString()}원</ItemPrice>
         <PostInfo>
           <PostInfoItem>
@@ -51,6 +57,13 @@ const ItemImage = styled.div<{ url: string }>`
   width: 65px;
   height: 65px;
   border-radius: 10px;
+`;
+
+const ItemTitle = styled.div`
+  &:hover {
+    font-weight: 600;
+    cursor: pointer;
+  }
 `;
 
 const ItemPrice = styled.div`

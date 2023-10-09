@@ -24,6 +24,7 @@ export interface IPost {
   id: string;
   title: string;
   type?: string;
+  field: string;
 }
 
 export interface IMarketPost {
@@ -40,6 +41,8 @@ export interface IMarketPost {
   itemName: string;
   price: number;
   transactionMethod: string;
+  field: string;
+  id: string;
 }
 
 export default function Board({ title, collectionName }: IBoard) {

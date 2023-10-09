@@ -6,8 +6,10 @@ import { getElapsedTime } from "../../utils/getElapsedTime";
 import { ref, getDownloadURL, listAll, getStorage } from "firebase/storage";
 import { storage } from "../../firebase/firebase";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Post({ post }: { post: IPost }) {
+  const navigate = useNavigate();
   const storage = getStorage();
   const imageRef = ref(storage, `${post.creatorImage}`);
   const [profileImage, setProfileImage] = useState("");
@@ -22,6 +24,10 @@ export default function Post({ post }: { post: IPost }) {
       setProfileImage(defaultProfile);
     }
   });
+
+  const onClickTitle = () => {
+    navigate(`/${post.field}/${post.id}`);
+  };
 
   return (
     <Wrapper>
@@ -46,7 +52,7 @@ export default function Post({ post }: { post: IPost }) {
       </Infos>
       <Title type={post.type}>
         {post.type && <p>{post.type}</p>}
-        <div>{post.title}</div>
+        <div onClick={onClickTitle}>{post.title}</div>
       </Title>
     </Wrapper>
   );
@@ -93,6 +99,10 @@ const Title = styled.div<{ type?: string }>`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+  & > div:hover {
+    font-weight: 600;
+    cursor: pointer;
   }
 `;
 
