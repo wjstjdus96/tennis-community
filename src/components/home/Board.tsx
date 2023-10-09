@@ -4,6 +4,7 @@ import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { useState, useEffect } from "react";
 import MarketPost from "./MarketPost";
+import { Link, useNavigate } from "react-router-dom";
 
 interface IBoard {
   title: string;
@@ -45,6 +46,10 @@ export default function Board({ title, collectionName }: IBoard) {
       setPosts((prev: any) => [...prev, postObject]);
     });
   };
+  const navigate = useNavigate();
+  const onClickTitle = () => {
+    navigate(`/${collectionName}`);
+  };
 
   useEffect(() => {
     getPosts();
@@ -52,7 +57,7 @@ export default function Board({ title, collectionName }: IBoard) {
 
   return (
     <Wrapper>
-      <Head>{title}</Head>
+      <Head onClick={onClickTitle}>{title}</Head>
       {collectionName == "market" ? (
         <MarketBoardBody>
           {posts.map((post: any) => (
@@ -86,6 +91,10 @@ const Head = styled.div`
   border-radius: 15px;
   font-family: "Noto Sans KR", sans-serif;
   font-weight: 700;
+  &:hover {
+    color: #2a6c23;
+    cursor: pointer;
+  }
 `;
 
 const Body = styled.div`
