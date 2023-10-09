@@ -11,16 +11,15 @@ export default function MarketPost({ post }: { post: any }) {
   useEffect(() => {
     getDownloadURL(imageRef).then((url) => {
       setImage(url);
-      console.log(url);
     });
   });
 
   return (
     <Wrapper>
       <ItemImage url={image}></ItemImage>
-      <ItemInfo>
+      <div>
         <div>{post.itemName}</div>
-        <div>{post.price}</div>
+        <ItemPrice>{post.price.toLocaleString()}원</ItemPrice>
         <PostInfo>
           <PostInfoItem>
             <FaRegBookmark />
@@ -31,7 +30,7 @@ export default function MarketPost({ post }: { post: any }) {
             <div>{post.commentNum}</div>
           </PostInfoItem>
         </PostInfo>
-      </ItemInfo>
+      </div>
     </Wrapper>
   );
 }
@@ -52,7 +51,10 @@ const ItemImage = styled.div<{ url: string }>`
   border-radius: 10px;
 `;
 
-const ItemInfo = styled.div``;
+const ItemPrice = styled.div`
+  color: #245c1e;
+  font-size: 14px;
+`;
 
 const PostInfo = styled.div`
   display: flex;
