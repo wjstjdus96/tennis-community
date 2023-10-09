@@ -28,6 +28,18 @@ export interface IPost {
 
 export interface IMarketPost {
   title: string;
+  bookmarkNum: number;
+  commentNum: number;
+  brand: string;
+  category: string;
+  createdAt: {
+    nanoseconds: number;
+    seconds: number;
+  };
+  itemImage: string;
+  itemName: string;
+  price: number;
+  transactionMethod: string;
 }
 
 export default function Board({ title, collectionName }: IBoard) {

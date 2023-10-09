@@ -3,11 +3,12 @@ import { FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
 import { getStorage, ref, getDownloadURL, listAll } from "firebase/storage";
 import { storage } from "../../firebase/firebase";
 import { useState, useEffect } from "react";
+import { IMarketPost } from "./Board";
 
-export default function MarketPost({ post }: { post: any }) {
+export default function MarketPost({ post }: { post: IMarketPost }) {
   const storage = getStorage();
   const imageRef = ref(storage, `${post.itemImage}`);
-  const [image, setImage] = useState<any>("");
+  const [image, setImage] = useState<string>("");
 
   useEffect(() => {
     getDownloadURL(imageRef).then((url) => {
