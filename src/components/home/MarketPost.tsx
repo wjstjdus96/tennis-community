@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
 import { getStorage, ref, getDownloadURL, listAll } from "firebase/storage";
-import { storage } from "../../firebase/storage";
+import { storage } from "../../firebase/firebase";
 import { useState, useEffect } from "react";
 
 export default function MarketPost({ post }: { post: any }) {
+  const storage = getStorage();
   const imageRef = ref(storage, `${post.itemImage}`);
   const [image, setImage] = useState<any>("");
 
@@ -52,7 +53,7 @@ const ItemImage = styled.div<{ url: string }>`
 `;
 
 const ItemPrice = styled.div`
-  color: #245c1e;
+  color: #2a6c23;
   font-size: 14px;
 `;
 

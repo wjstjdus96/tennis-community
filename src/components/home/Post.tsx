@@ -3,14 +3,32 @@ import defaultProfile from "../../assets/defaultProfile.png";
 import { FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
 import { IPost } from "./Board";
 import { getElapsedTime } from "../../utils/getElapsedTime";
+import { ref, getDownloadURL, listAll, getStorage } from "firebase/storage";
+import { storage } from "../../firebase/firebase";
+import { useState, useEffect } from "react";
 
 export default function Post({ post }: { post: IPost }) {
+  const storage = getStorage();
+  const imageRef = ref(storage, `${post.creatorImage}`);
+  const [profileImage, setProfileImage] = useState("");
+
+  useEffect(() => {
+    if (post.creatorImage) {
+      getDownloadURL(imageRef).then((url) => {
+        setProfileImage(url);
+        console.log(url);
+      });
+    } else {
+      setProfileImage(defaultProfile);
+    }
+  });
+
   return (
     <Wrapper>
       <Infos>
         <InfoGroup>
           <IconItem>
-            <img src={defaultProfile} />
+            <img src={profileImage} />
             <div>{post.creatorName}</div>
           </IconItem>
           <div>{getElapsedTime(post.createdAt.seconds)}</div>
