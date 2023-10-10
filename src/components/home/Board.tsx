@@ -82,7 +82,7 @@ export default function Board({ title, collectionName }: IBoard) {
       ) : (
         <Body>
           {posts.map((post: any) => (
-            <Post post={post} />
+            <Post post={post} isHome={true} />
           ))}
         </Body>
       )}

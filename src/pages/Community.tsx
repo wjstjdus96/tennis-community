@@ -2,8 +2,31 @@ import { HomeAfterLoginLayout } from "../layouts/HomeLayout";
 import styled from "styled-components";
 import { FiSearch } from "react-icons/fi";
 import { HiOutlineSortDescending, HiPencil } from "react-icons/hi";
+import { useState, useEffect } from "react";
+import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
+import { db } from "../firebase/firebase";
+import Post from "../components/home/Post";
 
 export default function Community() {
+  const [posts, setPosts] = useState<any>([]);
+  const getPosts = async () => {
+    const collectionRef = collection(db, "community");
+    const querySnapShot = await getDocs(
+      query(collectionRef, orderBy("createdAt", "desc"))
+    );
+    querySnapShot.forEach((doc) => {
+      const postObject = {
+        ...doc.data(),
+        id: doc.id,
+      };
+      setPosts((prev: any) => [...prev, postObject]);
+    });
+  };
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
   return (
     <HomeAfterLoginLayout>
       <Head>
@@ -24,7 +47,11 @@ export default function Community() {
           <div>최신순</div>
         </Filter>
       </Settings>
-      <Board></Board>
+      <Board>
+        {posts.map((post: any) => (
+          <Post post={post} isHome={false} />
+        ))}
+      </Board>
     </HomeAfterLoginLayout>
   );
 }
