@@ -3,12 +3,23 @@ import styled from "styled-components";
 import { FiSearch } from "react-icons/fi";
 import { HiOutlineSortDescending, HiPencil } from "react-icons/hi";
 import { useState, useEffect } from "react";
-import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  limit,
+  startAfter,
+} from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import Post from "../components/home/Post";
+import { Pagination } from "../components/Pagination";
 
 export default function Community() {
+  const [totalPosts, setTotalPosts] = useState<any>([]);
   const [posts, setPosts] = useState<any>([]);
+  const [page, setPage] = useState<number>(1);
+  const postsPerPage = 5;
   const getPosts = async () => {
     const collectionRef = collection(db, "community");
     const querySnapShot = await getDocs(
@@ -19,13 +30,54 @@ export default function Community() {
         ...doc.data(),
         id: doc.id,
       };
-      setPosts((prev: any) => [...prev, postObject]);
+      setTotalPosts((prev: any) => [...prev, postObject]);
     });
+  };
+
+  const getPostsByPage = async (offset: number, field: string) => {
+    const collectionRef = collection(db, field);
+    await setPosts([]);
+
+    if (offset == 0) {
+      const querySnapShot = await getDocs(
+        query(collectionRef, orderBy("createdAt", "desc"), limit(5))
+      );
+      querySnapShot.forEach((doc) => {
+        const postObject = {
+          ...doc.data(),
+          id: doc.id,
+        };
+        setPosts((prev: any) => [...prev, postObject]);
+      });
+    } else {
+      const prev = query(collectionRef, orderBy("createdAt"), limit(offset));
+      const documentSnapshots = await getDocs(prev);
+      const lastVisible =
+        documentSnapshots.docs[documentSnapshots.docs.length - 1];
+
+      const next = query(
+        collectionRef,
+        orderBy("createdAt"),
+        startAfter(lastVisible),
+        limit(5)
+      );
+      (await getDocs(next)).forEach((doc: any) => {
+        const postObject = {
+          ...doc.data(),
+          id: doc.id,
+        };
+        setPosts((prev: any) => [...prev, postObject]);
+      });
+    }
   };
 
   useEffect(() => {
     getPosts();
   }, []);
+
+  useEffect(() => {
+    getPostsByPage((page - 1) * postsPerPage, "community");
+  }, [page, totalPosts]);
 
   return (
     <HomeAfterLoginLayout>
@@ -52,6 +104,12 @@ export default function Community() {
           <Post post={post} isHome={false} />
         ))}
       </Board>
+      <Pagination
+        totalPage={Math.ceil(totalPosts.length / postsPerPage)}
+        limit={5}
+        page={page}
+        setPage={setPage}
+      />
     </HomeAfterLoginLayout>
   );
 }
