@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Community from "./pages/Community";
+import { Writing } from "./pages/Writing";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/community" element={<Community />} />
+        <Route path="/community/write" element={<Writing />} />
       </Routes>
     </Router>
   );

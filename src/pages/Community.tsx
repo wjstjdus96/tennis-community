@@ -14,8 +14,10 @@ import {
 import { db } from "../firebase/firebase";
 import Post from "../components/home/Post";
 import { Pagination } from "../components/Pagination";
+import { useNavigate } from "react-router-dom";
 
 export default function Community() {
+  const navigate = useNavigate();
   const [totalPosts, setTotalPosts] = useState<any>([]);
   const [posts, setPosts] = useState<any>([]);
   const [page, setPage] = useState<number>(1);
@@ -71,6 +73,10 @@ export default function Community() {
     }
   };
 
+  const onClickWritingBtn = () => {
+    navigate("/community/write");
+  };
+
   useEffect(() => {
     getPosts();
   }, []);
@@ -86,7 +92,7 @@ export default function Community() {
         <div>테니스에 대한 다양한 생각을 공유해보세요</div>
       </Head>
       <Settings>
-        <WritingBtn>
+        <WritingBtn onClick={onClickWritingBtn}>
           <HiPencil className="writingIcon" />
           작성하기
         </WritingBtn>
