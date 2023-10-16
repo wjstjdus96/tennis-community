@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import WritingInput from "../components/WritingInput";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "../firebase/firebase";
 
 export interface ICommunityValue {
   title: string;
@@ -16,7 +18,24 @@ export function Writing() {
     formState: { errors },
   } = useForm<ICommunityValue>();
   const navigate = useNavigate();
-  const onClickSubmit = () => {};
+  const onClickSubmit: SubmitHandler<ICommunityValue> = async (data) => {
+    try {
+      let docData = {
+        body: data.body,
+        bookmarkNum: 0,
+        commentNum: 0,
+        createdAt: serverTimestamp(),
+        creatorImage: "",
+        creatorName: "임시 닉네임",
+        field: "community",
+        title: data.title,
+      };
+      await addDoc(collection(db, "community"), docData);
+      navigate("/community");
+    } catch (error) {
+      alert("글쓰기에 실패하였습니다" + error);
+    }
+  };
 
   return (
     <HomeAfterLoginLayout>
