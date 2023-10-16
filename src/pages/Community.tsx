@@ -22,6 +22,7 @@ export default function Community() {
   const [posts, setPosts] = useState<any>([]);
   const [page, setPage] = useState<number>(1);
   const postsPerPage = 5;
+
   const getPosts = async () => {
     const collectionRef = collection(db, "community");
     const querySnapShot = await getDocs(
@@ -38,8 +39,6 @@ export default function Community() {
 
   const getPostsByPage = async (offset: number, field: string) => {
     const collectionRef = collection(db, field);
-    await setPosts([]);
-
     if (offset == 0) {
       const querySnapShot = await getDocs(
         query(collectionRef, orderBy("createdAt", "desc"), limit(5))
@@ -52,14 +51,17 @@ export default function Community() {
         setPosts((prev: any) => [...prev, postObject]);
       });
     } else {
-      const prev = query(collectionRef, orderBy("createdAt"), limit(offset));
+      const prev = query(
+        collectionRef,
+        orderBy("createdAt", "desc"),
+        limit(offset)
+      );
       const documentSnapshots = await getDocs(prev);
       const lastVisible =
         documentSnapshots.docs[documentSnapshots.docs.length - 1];
-
       const next = query(
         collectionRef,
-        orderBy("createdAt"),
+        orderBy("createdAt", "desc"),
         startAfter(lastVisible),
         limit(5)
       );
@@ -71,6 +73,7 @@ export default function Community() {
         setPosts((prev: any) => [...prev, postObject]);
       });
     }
+    console.log(offset);
   };
 
   const onClickWritingBtn = () => {
@@ -82,8 +85,9 @@ export default function Community() {
   }, []);
 
   useEffect(() => {
+    setPosts([]);
     getPostsByPage((page - 1) * postsPerPage, "community");
-  }, [page, totalPosts]);
+  }, [page]);
 
   return (
     <HomeAfterLoginLayout>

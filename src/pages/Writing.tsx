@@ -20,6 +20,7 @@ export function Writing() {
   const navigate = useNavigate();
   const onClickSubmit: SubmitHandler<ICommunityValue> = async (data) => {
     try {
+      console.log(data.body);
       let docData = {
         body: data.body,
         bookmarkNum: 0,

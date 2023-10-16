@@ -59,5 +59,6 @@ const Wrapper = styled.div<{ isBody: boolean }>`
     height: 300px;
     resize: none;
     font-family: "Noto Sans KR", sans-serif;
+    white-space: pre-wrap;
   }
 `;
