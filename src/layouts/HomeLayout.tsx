@@ -29,7 +29,6 @@ export function HomeAfterLoginLayout({
       <Body>
         <div></div>
         <div>{children}</div>
-
         <div></div>
       </Body>
     </AfterLoginWrapper>

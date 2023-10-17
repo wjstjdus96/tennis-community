@@ -4,11 +4,16 @@ import { FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
 import { IPost } from "./Board";
 import { getElapsedTime } from "../../utils/getElapsedTime";
 import { ref, getDownloadURL, listAll, getStorage } from "firebase/storage";
-import { storage } from "../../firebase/firebase";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Post({ post }: { post: IPost }) {
+export default function Post({
+  post,
+  isHome,
+}: {
+  post: IPost;
+  isHome: boolean;
+}) {
   const navigate = useNavigate();
   const storage = getStorage();
   const imageRef = ref(storage, `${post.creatorImage}`);
@@ -18,7 +23,6 @@ export default function Post({ post }: { post: IPost }) {
     if (post.creatorImage) {
       getDownloadURL(imageRef).then((url) => {
         setProfileImage(url);
-        console.log(url);
       });
     } else {
       setProfileImage(defaultProfile);
@@ -30,7 +34,7 @@ export default function Post({ post }: { post: IPost }) {
   };
 
   return (
-    <Wrapper>
+    <Wrapper isHome={isHome}>
       <Infos>
         <InfoGroup>
           <IconItem>
@@ -54,12 +58,13 @@ export default function Post({ post }: { post: IPost }) {
         {post.type && <p>{post.type}</p>}
         <div onClick={onClickTitle}>{post.title}</div>
       </Title>
+      {!isHome && <Body>{post.body}</Body>}
     </Wrapper>
   );
 }
 
-const Wrapper = styled.div`
-  padding: 15px;
+const Wrapper = styled.div<{ isHome: boolean }>`
+  padding: ${(props) => (props.isHome ? "15px" : "15px 3px")};
   font-family: "Noto Sans KR", sans-serif;
   border-bottom: 1px solid #cde4a0;
 `;
@@ -138,4 +143,10 @@ const IconItem = styled.div`
   & > :first-child {
     margin-right: 5px;
   }
+`;
+
+const Body = styled.div`
+  font-size: 13px;
+  color: grey;
+  margin-top: 10px;
 `;

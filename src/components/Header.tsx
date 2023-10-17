@@ -64,8 +64,10 @@ const Logo = styled.div`
 
 const Menu = styled.div`
   display: flex;
-  font-family: "Do Hyeon", sans-serif;
-  font-size: 18px;
+  justify-content: baseline;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
   a:hover {
     color: #9bc940;
   }
