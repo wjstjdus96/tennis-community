@@ -20,7 +20,6 @@ export function Writing() {
   const navigate = useNavigate();
   const onClickSubmit: SubmitHandler<ICommunityValue> = async (data) => {
     try {
-      console.log(data.body);
       let docData = {
         body: data.body,
         bookmarkNum: 0,
@@ -30,6 +29,7 @@ export function Writing() {
         creatorName: "임시 닉네임",
         field: "community",
         title: data.title,
+        titleKeyword: data.title.split(" "),
       };
       await addDoc(collection(db, "community"), docData);
       navigate("/community");

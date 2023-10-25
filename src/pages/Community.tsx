@@ -10,24 +10,37 @@ import {
   orderBy,
   limit,
   startAfter,
+  where,
 } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import Post from "../components/home/Post";
 import { Pagination } from "../components/Pagination";
 import { useNavigate } from "react-router-dom";
+import BoardFilter from "../components/BoardFilter";
 
 export default function Community() {
   const navigate = useNavigate();
   const [totalPosts, setTotalPosts] = useState<any>([]);
   const [posts, setPosts] = useState<any>([]);
   const [page, setPage] = useState<number>(1);
+  const [keyword, setKeyword] = useState("");
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [filterType, setFilterType] = useState(["최신순", "createdAt"]);
+  const [isExpanded, setIsExpanded] = useState(false);
   const postsPerPage = 5;
 
-  const getPosts = async () => {
+  const getPosts = async (keyword: string, filterType: string[]) => {
     const collectionRef = collection(db, "community");
     const querySnapShot = await getDocs(
-      query(collectionRef, orderBy("createdAt", "desc"))
+      keyword
+        ? query(
+            collectionRef,
+            where("titleKeyword", "array-contains", keyword),
+            orderBy(filterType[1], "desc")
+          )
+        : query(collectionRef, orderBy(filterType[1], "desc"))
     );
+
     querySnapShot.forEach((doc) => {
       const postObject = {
         ...doc.data(),
@@ -37,11 +50,27 @@ export default function Community() {
     });
   };
 
-  const getPostsByPage = async (offset: number, field: string) => {
+  const getPostsByPage = async (
+    offset: number,
+    field: string,
+    keyword: string,
+    filterType: string[]
+  ) => {
     const collectionRef = collection(db, field);
     if (offset == 0) {
       const querySnapShot = await getDocs(
-        query(collectionRef, orderBy("createdAt", "desc"), limit(5))
+        keyword
+          ? query(
+              collectionRef,
+              where("titleKeyword", "array-contains", keyword),
+              orderBy(filterType[1], "desc"),
+              limit(postsPerPage)
+            )
+          : query(
+              collectionRef,
+              orderBy(filterType[1], "desc"),
+              limit(postsPerPage)
+            )
       );
       querySnapShot.forEach((doc) => {
         const postObject = {
@@ -51,20 +80,32 @@ export default function Community() {
         setPosts((prev: any) => [...prev, postObject]);
       });
     } else {
-      const prev = query(
-        collectionRef,
-        orderBy("createdAt", "desc"),
-        limit(offset)
-      );
+      const prev = keyword
+        ? query(
+            collectionRef,
+            where("titleKeyword", "array-contains", keyword),
+            orderBy(filterType[1], "desc"),
+            limit(offset)
+          )
+        : query(collectionRef, orderBy(filterType[1], "desc"), limit(offset));
       const documentSnapshots = await getDocs(prev);
       const lastVisible =
         documentSnapshots.docs[documentSnapshots.docs.length - 1];
-      const next = query(
-        collectionRef,
-        orderBy("createdAt", "desc"),
-        startAfter(lastVisible),
-        limit(5)
-      );
+      const next = keyword
+        ? query(
+            collectionRef,
+            where("titleKeyword", "array-contains", keyword),
+            orderBy(filterType[1], "desc"),
+            startAfter(lastVisible),
+            limit(postsPerPage)
+          )
+        : query(
+            collectionRef,
+            orderBy(filterType[1], "desc"),
+            startAfter(lastVisible),
+            limit(postsPerPage)
+          );
+
       (await getDocs(next)).forEach((doc: any) => {
         const postObject = {
           ...doc.data(),
@@ -73,21 +114,35 @@ export default function Community() {
         setPosts((prev: any) => [...prev, postObject]);
       });
     }
-    console.log(offset);
   };
 
   const onClickWritingBtn = () => {
     navigate("/community/write");
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key == "Enter") {
+      setSearchKeyword(keyword);
+      keyword
+        ? navigate(`/community?search=${keyword}`)
+        : navigate(`/community`);
+    }
+  };
+
   useEffect(() => {
-    getPosts();
-  }, []);
+    setTotalPosts([]);
+    getPosts(searchKeyword, filterType);
+  }, [searchKeyword, filterType]);
 
   useEffect(() => {
     setPosts([]);
-    getPostsByPage((page - 1) * postsPerPage, "community");
-  }, [page]);
+    getPostsByPage(
+      (page - 1) * postsPerPage,
+      "community",
+      searchKeyword,
+      filterType
+    );
+  }, [page, searchKeyword, filterType]);
 
   return (
     <HomeAfterLoginLayout>
@@ -102,12 +157,20 @@ export default function Community() {
         </WritingBtn>
         <Search>
           <FiSearch className="searchIcon" />
-          <input />
+          <input
+            value={keyword}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setKeyword(e.target.value);
+            }}
+            onKeyDown={handleKeyPress}
+          />
         </Search>
-        <Filter>
-          <HiOutlineSortDescending className="filterIcon" size="18" />
-          <div>최신순</div>
-        </Filter>
+        <BoardFilter
+          filterType={filterType}
+          setFilterType={setFilterType}
+          isExpanded={isExpanded}
+          setIsExpanded={setIsExpanded}
+        />
       </Settings>
       <Board>
         {posts.map((post: any) => (
