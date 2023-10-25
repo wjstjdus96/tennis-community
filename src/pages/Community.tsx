@@ -16,6 +16,7 @@ import { db } from "../firebase/firebase";
 import Post from "../components/home/Post";
 import { Pagination } from "../components/Pagination";
 import { useNavigate } from "react-router-dom";
+import BoardFilter from "../components/BoardFilter";
 
 export default function Community() {
   const navigate = useNavigate();
@@ -24,6 +25,8 @@ export default function Community() {
   const [page, setPage] = useState<number>(1);
   const [keyword, setKeyword] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
+  const [filterType, setFilterType] = useState("최신순");
+  const [isExpanded, setIsExpanded] = useState(false);
   const postsPerPage = 5;
 
   const getPosts = async (keyword: string) => {
@@ -153,10 +156,12 @@ export default function Community() {
             onKeyDown={handleKeyPress}
           />
         </Search>
-        <Filter>
-          <HiOutlineSortDescending className="filterIcon" size="18" />
-          <div>최신순</div>
-        </Filter>
+        <BoardFilter
+          filterType={filterType}
+          setFilterType={setFilterType}
+          isExpanded={isExpanded}
+          setIsExpanded={setIsExpanded}
+        />
       </Settings>
       <Board>
         {posts.map((post: any) => (
