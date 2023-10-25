@@ -25,20 +25,20 @@ export default function Community() {
   const [page, setPage] = useState<number>(1);
   const [keyword, setKeyword] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
-  const [filterType, setFilterType] = useState("최신순");
+  const [filterType, setFilterType] = useState(["최신순", "createdAt"]);
   const [isExpanded, setIsExpanded] = useState(false);
   const postsPerPage = 5;
 
-  const getPosts = async (keyword: string) => {
+  const getPosts = async (keyword: string, filterType: string[]) => {
     const collectionRef = collection(db, "community");
     const querySnapShot = await getDocs(
       keyword
         ? query(
             collectionRef,
             where("titleKeyword", "array-contains", keyword),
-            orderBy("createdAt", "desc")
+            orderBy(filterType[1], "desc")
           )
-        : query(collectionRef, orderBy("createdAt", "desc"))
+        : query(collectionRef, orderBy(filterType[1], "desc"))
     );
 
     querySnapShot.forEach((doc) => {
@@ -53,7 +53,8 @@ export default function Community() {
   const getPostsByPage = async (
     offset: number,
     field: string,
-    keyword: string
+    keyword: string,
+    filterType: string[]
   ) => {
     const collectionRef = collection(db, field);
     if (offset == 0) {
@@ -62,12 +63,12 @@ export default function Community() {
           ? query(
               collectionRef,
               where("titleKeyword", "array-contains", keyword),
-              orderBy("createdAt", "desc"),
+              orderBy(filterType[1], "desc"),
               limit(postsPerPage)
             )
           : query(
               collectionRef,
-              orderBy("createdAt", "desc"),
+              orderBy(filterType[1], "desc"),
               limit(postsPerPage)
             )
       );
@@ -83,10 +84,10 @@ export default function Community() {
         ? query(
             collectionRef,
             where("titleKeyword", "array-contains", keyword),
-            orderBy("createdAt", "desc"),
+            orderBy(filterType[1], "desc"),
             limit(offset)
           )
-        : query(collectionRef, orderBy("createdAt", "desc"), limit(offset));
+        : query(collectionRef, orderBy(filterType[1], "desc"), limit(offset));
       const documentSnapshots = await getDocs(prev);
       const lastVisible =
         documentSnapshots.docs[documentSnapshots.docs.length - 1];
@@ -94,13 +95,13 @@ export default function Community() {
         ? query(
             collectionRef,
             where("titleKeyword", "array-contains", keyword),
-            orderBy("createdAt", "desc"),
+            orderBy(filterType[1], "desc"),
             startAfter(lastVisible),
             limit(postsPerPage)
           )
         : query(
             collectionRef,
-            orderBy("createdAt", "desc"),
+            orderBy(filterType[1], "desc"),
             startAfter(lastVisible),
             limit(postsPerPage)
           );
@@ -122,18 +123,26 @@ export default function Community() {
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key == "Enter") {
       setSearchKeyword(keyword);
+      keyword
+        ? navigate(`/community?search=${keyword}`)
+        : navigate(`/community`);
     }
   };
 
   useEffect(() => {
     setTotalPosts([]);
-    getPosts(searchKeyword);
-  }, [searchKeyword]);
+    getPosts(searchKeyword, filterType);
+  }, [searchKeyword, filterType]);
 
   useEffect(() => {
     setPosts([]);
-    getPostsByPage((page - 1) * postsPerPage, "community", searchKeyword);
-  }, [page, searchKeyword]);
+    getPostsByPage(
+      (page - 1) * postsPerPage,
+      "community",
+      searchKeyword,
+      filterType
+    );
+  }, [page, searchKeyword, filterType]);
 
   return (
     <HomeAfterLoginLayout>

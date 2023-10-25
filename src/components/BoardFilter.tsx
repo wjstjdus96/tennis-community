@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { HiOutlineSortDescending, HiPencil } from "react-icons/hi";
 
 interface IBoardFilter {
-  filterType: string;
-  setFilterType: React.Dispatch<React.SetStateAction<string>>;
+  filterType: string[];
+  setFilterType: React.Dispatch<React.SetStateAction<string[]>>;
   isExpanded: boolean;
   setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -14,7 +14,12 @@ export default function BoardFilter({
   isExpanded,
   setIsExpanded,
 }: IBoardFilter) {
-  const filterTypeList = ["최신순", "북마크순", "댓글순"];
+  //   const filterTypeList = ["최신순", "북마크순", "댓글순"];
+  const filterTypeList = [
+    ["최신순", "createdAt"],
+    ["북마크순", "bookmarkNum"],
+    ["댓글순", "commentNum"],
+  ];
   const handleClickFilter = () => {
     setIsExpanded((prev) => !prev);
   };
@@ -26,7 +31,7 @@ export default function BoardFilter({
     }, 200);
   };
 
-  const changeFilterType = (type: string) => {
+  const changeFilterType = (type: string[]) => {
     setFilterType(type);
     setIsExpanded(false);
   };
@@ -35,13 +40,13 @@ export default function BoardFilter({
     <Wrapper onBlur={handleBlurFilter}>
       <SelectedType onClick={handleClickFilter}>
         <HiOutlineSortDescending className="filterIcon" size="18" />
-        <div>{filterType}</div>
+        <div>{filterType[0]}</div>
       </SelectedType>
       {isExpanded && (
         <Dropdown>
-          {filterTypeList.map((filterType: string) => (
+          {filterTypeList.map((filterType: string[]) => (
             <DropdownItem onClick={() => changeFilterType(filterType)}>
-              {filterType}
+              {filterType[0]}
             </DropdownItem>
           ))}
         </Dropdown>
