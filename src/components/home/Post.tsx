@@ -30,7 +30,7 @@ export default function Post({
   });
 
   const onClickTitle = () => {
-    navigate(`/${post.field}/${post.id}`);
+    navigate(`/${post.field}/${post.id}`, { state: post });
   };
 
   return (
