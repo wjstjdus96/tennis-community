@@ -4,6 +4,9 @@ import { useLocation } from "react-router-dom";
 import { IPost } from "../components/home/Board";
 import { useEffect } from "react";
 import { getElapsedTime } from "../utils/getElapsedTime";
+import { getComments } from "../firebase/getComments";
+import { useState } from "react";
+import CommentCard from "../components/CommentCard";
 
 interface RouteState {
   state: IPost;
@@ -11,6 +14,15 @@ interface RouteState {
 
 export default function PostDetail() {
   const state = (useLocation() as RouteState).state;
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    getComments({
+      collectionName: "community",
+      docId: state.id,
+      setComments: setComments,
+    });
+  }, []);
 
   return (
     <HomeAfterLoginLayout>
@@ -23,6 +35,7 @@ export default function PostDetail() {
           <div>{getElapsedTime(state.createdAt.seconds)}</div>
         </InfoWrapper>
         <DetailWrapper>
+          <div>{state.title}</div>
           <div>{state.body}</div>
           <div>
             <button>북마크</button>
@@ -39,6 +52,9 @@ export default function PostDetail() {
               <button>작성</button>
             </div>
           </WritingComment>
+          {comments.map((comment) => (
+            <CommentCard comment={comment} />
+          ))}
         </CommentWrapper>
       </Wrapper>
     </HomeAfterLoginLayout>
@@ -71,6 +87,11 @@ const WriterInfos = styled.div`
 
 const DetailWrapper = styled.div`
   white-space: pre-wrap;
+  & > div:first-child {
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
   & > div:last-child {
     margin-top: 30px;
     display: flex;
