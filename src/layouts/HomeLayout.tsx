@@ -44,4 +44,10 @@ const Body = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   font-family: "Noto Sans KR", sans-serif;
+  & > div {
+    overflow-x: auto;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
 `;
