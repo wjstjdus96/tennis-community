@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import defaultProfile from "../../assets/defaultProfile.png";
 import { FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
 import { IPost } from "./Board";
 import { getElapsedTime } from "../../utils/getElapsedTime";
-import { ref, getDownloadURL, listAll, getStorage } from "firebase/storage";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getImage } from "../../firebase/getImage";
 
 export default function Post({
   post,
@@ -15,18 +14,10 @@ export default function Post({
   isHome: boolean;
 }) {
   const navigate = useNavigate();
-  const storage = getStorage();
-  const imageRef = ref(storage, `${post.creatorImage}`);
   const [profileImage, setProfileImage] = useState("");
 
   useEffect(() => {
-    if (post.creatorImage) {
-      getDownloadURL(imageRef).then((url) => {
-        setProfileImage(url);
-      });
-    } else {
-      setProfileImage(defaultProfile);
-    }
+    getImage({ imageURL: post.creatorImage, setImage: setProfileImage });
   });
 
   const onClickTitle = () => {
