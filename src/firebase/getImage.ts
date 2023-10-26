@@ -6,9 +6,8 @@ interface IGetImage {
   setImage: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const storage = getStorage();
-
 export const getImage = ({ imageURL, setImage }: IGetImage) => {
+  const storage = getStorage();
   if (imageURL) {
     const imageRef = ref(storage, `${imageURL}`);
     getDownloadURL(imageRef).then((url) => {
