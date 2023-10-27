@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { getImage } from "../firebase/getImage";
 import { getElapsedTime } from "../utils/getElapsedTime";
 
-interface IComment {
+export interface IComment {
   comment: string;
   createdAt: any;
   creatorId: string;

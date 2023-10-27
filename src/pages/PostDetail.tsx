@@ -6,15 +6,49 @@ import { useEffect } from "react";
 import { getElapsedTime } from "../utils/getElapsedTime";
 import { getComments } from "../firebase/getComments";
 import { useState } from "react";
-import CommentCard from "../components/CommentCard";
+import CommentCard, { IComment } from "../components/CommentCard";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { db } from "../firebase/firebase";
+import { doc, setDoc, collection, serverTimestamp } from "firebase/firestore";
 
 interface RouteState {
   state: IPost;
 }
 
+interface ISetComment {
+  comment: string;
+}
+
 export default function PostDetail() {
   const state = (useLocation() as RouteState).state;
   const [comments, setComments] = useState([]);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ISetComment>();
+
+  const onClickCommentWriting: SubmitHandler<ISetComment> = async (data) => {
+    try {
+      let commentData = {
+        comment: data.comment,
+        createdAt: serverTimestamp(),
+        creatorId: "임시id",
+        creatorName: "댓글 임시 닉넴",
+        creatorPhotoURL: "",
+      };
+      const commentRef = doc(collection(db, "community", state.id, "comments"));
+      await setDoc(commentRef, commentData);
+      setComments([]);
+      getComments({
+        collectionName: "community",
+        docId: state.id,
+        setComments: setComments,
+      });
+    } catch (error) {
+      alert("댓글 작성을 실패하였습니다");
+    }
+  };
 
   useEffect(() => {
     getComments({
@@ -43,10 +77,14 @@ export default function PostDetail() {
         </DetailWrapper>
         <div>
           <div>{state.commentNum}개의 댓글</div>
-          <WritingComment>
+          <WritingComment onSubmit={handleSubmit(onClickCommentWriting)}>
             <div>
               <img src={state.creatorImage} />
-              <textarea />
+              <textarea
+                id="comment"
+                {...register("comment")}
+                placeholder={"댓글을 입력해주세요"}
+              />
             </div>
             <div>
               <button>작성</button>
@@ -109,7 +147,7 @@ const CommentWrapper = styled.div`
   }
 `;
 
-const WritingComment = styled.div`
+const WritingComment = styled.form`
   margin-top: 30px;
   & > div:first-child {
     margin-bottom: 20px;
@@ -134,5 +172,14 @@ const WritingComment = styled.div`
   button {
     margin-left: auto;
     margin-bottom: 0;
+    padding: 8px 13px;
+    border-radius: 10px;
+    border: none;
+    background-color: #9bc940;
+    font-family: "Noto Sans KR", sans-serif;
+    &:hover {
+      box-shadow: 100px 0 0 0 rgba(0, 0, 0, 0.1) inset;
+      cursor: pointer;
+    }
   }
 `;
