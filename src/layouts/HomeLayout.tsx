@@ -14,7 +14,7 @@ const BeforeLoginWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: 100vh;
   background: linear-gradient(-45deg, #eff6e0 50%, #cde4a0 50%);
 `;
 
@@ -37,7 +37,7 @@ export function HomeAfterLoginLayout({
 
 const AfterLoginWrapper = styled.div`
   background-color: #eff6e0;
-  height: 100%;
+  min-height: 100vh;
 `;
 
 const Body = styled.div`
