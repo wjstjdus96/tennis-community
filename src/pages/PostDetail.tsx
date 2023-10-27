@@ -41,7 +41,7 @@ export default function PostDetail() {
             <button>북마크</button>
           </div>
         </DetailWrapper>
-        <CommentWrapper>
+        <div>
           <div>{state.commentNum}개의 댓글</div>
           <WritingComment>
             <div>
@@ -52,10 +52,12 @@ export default function PostDetail() {
               <button>작성</button>
             </div>
           </WritingComment>
-          {comments.map((comment) => (
-            <CommentCard comment={comment} />
-          ))}
-        </CommentWrapper>
+          <CommentWrapper>
+            {comments.map((comment) => (
+              <CommentCard comment={comment} />
+            ))}
+          </CommentWrapper>
+        </div>
       </Wrapper>
     </HomeAfterLoginLayout>
   );
@@ -101,14 +103,20 @@ const DetailWrapper = styled.div`
   }
 `;
 
-const CommentWrapper = styled.div``;
+const CommentWrapper = styled.div`
+  & > div:last-child {
+    border: none;
+  }
+`;
 
 const WritingComment = styled.div`
-  margin-top: 20px;
+  margin-top: 30px;
+  & > div:first-child {
+    margin-bottom: 20px;
+  }
   & > div {
     display: flex;
     gap: 20px;
-    margin-bottom: 20px;
   }
   img {
     width: 30px;
@@ -125,5 +133,6 @@ const WritingComment = styled.div`
   }
   button {
     margin-left: auto;
+    margin-bottom: 0;
   }
 `;
