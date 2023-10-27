@@ -42,6 +42,7 @@ const Wrapper = styled.div`
   padding: 20px 0;
   & > div:last-child {
     font-size: 15px;
+    white-space: pre-wrap;
   }
 `;
 

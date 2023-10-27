@@ -6,10 +6,12 @@ import { useEffect } from "react";
 import { getElapsedTime } from "../utils/getElapsedTime";
 import { getComments } from "../firebase/getComments";
 import { useState } from "react";
-import CommentCard, { IComment } from "../components/CommentCard";
+import CommentCard from "../components/CommentCard";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { db } from "../firebase/firebase";
 import { doc, setDoc, collection, serverTimestamp } from "firebase/firestore";
+import { updateData } from "../firebase/updateData";
+import { getPost } from "../firebase/getPost";
 
 interface RouteState {
   state: IPost;
@@ -21,11 +23,13 @@ interface ISetComment {
 
 export default function PostDetail() {
   const state = (useLocation() as RouteState).state;
+  const [postData, setPostData] = useState<IPost>();
   const [comments, setComments] = useState([]);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<ISetComment>();
 
   const onClickCommentWriting: SubmitHandler<ISetComment> = async (data) => {
@@ -45,14 +49,21 @@ export default function PostDetail() {
         docId: state.id,
         setComments: setComments,
       });
+      updateData({ collectionName: "community", docId: state.id });
+      reset();
     } catch (error) {
       alert("댓글 작성을 실패하였습니다");
     }
   };
 
   useEffect(() => {
+    getPost({
+      collectionName: state.field,
+      docId: state.id,
+      setPostData: setPostData,
+    });
     getComments({
-      collectionName: "community",
+      collectionName: state.field,
       docId: state.id,
       setComments: setComments,
     });
@@ -60,43 +71,45 @@ export default function PostDetail() {
 
   return (
     <HomeAfterLoginLayout>
-      <Wrapper>
-        <InfoWrapper>
-          <WriterInfos>
-            <img src={state.creatorImage} />
-            <div>{state.creatorName}</div>
-          </WriterInfos>
-          <div>{getElapsedTime(state.createdAt.seconds)}</div>
-        </InfoWrapper>
-        <DetailWrapper>
-          <div>{state.title}</div>
-          <div>{state.body}</div>
-          <div>
-            <button>북마크</button>
-          </div>
-        </DetailWrapper>
-        <div>
-          <div>{state.commentNum}개의 댓글</div>
-          <WritingComment onSubmit={handleSubmit(onClickCommentWriting)}>
-            <div>
+      {postData && (
+        <Wrapper>
+          <InfoWrapper>
+            <WriterInfos>
               <img src={state.creatorImage} />
-              <textarea
-                id="comment"
-                {...register("comment")}
-                placeholder={"댓글을 입력해주세요"}
-              />
-            </div>
+              <div>{postData.creatorName}</div>
+            </WriterInfos>
+            <div>{getElapsedTime(postData.createdAt.seconds)}</div>
+          </InfoWrapper>
+          <DetailWrapper>
+            <div>{postData.title}</div>
+            <div>{postData.body}</div>
             <div>
-              <button>작성</button>
+              <button>북마크</button>
             </div>
-          </WritingComment>
-          <CommentWrapper>
-            {comments.map((comment) => (
-              <CommentCard comment={comment} />
-            ))}
-          </CommentWrapper>
-        </div>
-      </Wrapper>
+          </DetailWrapper>
+          <div>
+            <div>{postData.commentNum}개의 댓글</div>
+            <WritingComment onSubmit={handleSubmit(onClickCommentWriting)}>
+              <div>
+                <img src={postData.creatorImage} />
+                <textarea
+                  id="comment"
+                  {...register("comment")}
+                  placeholder={"댓글을 입력해주세요"}
+                />
+              </div>
+              <div>
+                <button>작성</button>
+              </div>
+            </WritingComment>
+            <CommentWrapper>
+              {comments.map((comment) => (
+                <CommentCard comment={comment} />
+              ))}
+            </CommentWrapper>
+          </div>
+        </Wrapper>
+      )}
     </HomeAfterLoginLayout>
   );
 }

@@ -22,7 +22,7 @@ export default function Post({
 
   const onClickTitle = () => {
     navigate(`/${post.field}/${post.id}`, {
-      state: { ...post, creatorImage: profileImage },
+      state: { field: post.field, id: post.id, creatorImage: profileImage },
     });
   };
 
