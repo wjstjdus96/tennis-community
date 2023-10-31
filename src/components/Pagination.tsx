@@ -76,8 +76,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-top: 30px;
-  margin-bottom: 60px;
+  margin: 30px 0px;
   .icon {
     color: #9bc940;
     cursor: pointer;
