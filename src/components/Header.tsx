@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import { BiSolidTennisBall } from "react-icons/bi";
 import defaultProfile from "../assets/defaultProfile.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { checkIsLogin } from "../utils/checkIsLogin";
 
 export default function Header() {
+  const isLogin = checkIsLogin();
+
   return (
     <Wrapper>
       <Link to="/">
@@ -23,13 +26,19 @@ export default function Header() {
           <Link to="/market">플리마켓</Link>
         </div>
       </Menu>
-      <Profile>
-        <div>
-          <Link to="/myPage">
-            <img src={defaultProfile} />
-          </Link>
-        </div>
-      </Profile>
+      {isLogin ? (
+        <Profile>
+          <div>
+            <Link to="/myPage">
+              <img src={defaultProfile} />
+            </Link>
+          </div>
+        </Profile>
+      ) : (
+        <Link to="/login" className="links">
+          <LoginBtn>시작하기</LoginBtn>
+        </Link>
+      )}
     </Wrapper>
   );
 }
@@ -106,5 +115,24 @@ const Profile = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+`;
+
+const LoginBtn = styled.button`
+  box-sizing: border-box;
+  appearance: none;
+  background-color: transparent;
+  padding: 0.8em 2em;
+  border-radius: 20px;
+  text-decoration: none;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: "Noto Sans KR", sans-serif;
+  cursor: pointer;
+  border: 2px solid #9bc940;
+  transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+  &:hover {
+    box-shadow: 0 0 40px 40px #9bc940 inset;
   }
 `;
