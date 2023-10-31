@@ -1,14 +1,5 @@
 import styled from "styled-components";
-import { Path, UseFormRegister } from "react-hook-form";
-import { ISignupValue } from "../pages/Signup";
-
-interface IAuthInput {
-  name: Path<ISignupValue>;
-  text?: string;
-  inputType?: string;
-  register: UseFormRegister<ISignupValue>;
-  errorMsg?: string;
-}
+import { IAuthInput } from "../interfaces/IComponent";
 
 export default function AuthInput({
   name,
@@ -40,7 +31,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   margin-bottom: 20px;
   label {
-    color: #aaa;
+    color: grey;
     font-size: 15px;
     margin-bottom: 5px;
   }

@@ -1,12 +1,6 @@
 import styled from "styled-components";
 import { HiOutlineSortDescending, HiPencil } from "react-icons/hi";
-
-interface IBoardFilter {
-  filterType: string[];
-  setFilterType: React.Dispatch<React.SetStateAction<string[]>>;
-  isExpanded: boolean;
-  setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { IBoardFilter } from "../../interfaces/IComponent";
 
 export default function BoardFilter({
   filterType,
@@ -71,10 +65,10 @@ const SelectedType = styled.div`
   background-color: white;
   padding: 7px 13px;
   border-radius: 10px;
-  border: 1px solid #9bc940;
+  border: 1px solid ${(props) => props.theme.green[2]};
   font-size: 14px;
   &:hover {
-    outline: 1px solid #9bc940;
+    outline: 1px solid ${(props) => props.theme.green[2]};
   }
   .filterIcon {
     margin-right: 5px;
@@ -94,6 +88,6 @@ const DropdownItem = styled.div`
   font-size: 14px;
   cursor: pointer;
   &:hover {
-    color: #9bc940;
+    color: ${(props) => props.theme.green[2]};
   }
 `;

@@ -1,11 +1,7 @@
+import { IGetComments } from "../interfaces/IFunction";
 import { db } from "./firebase";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 
-interface IGetComments {
-  collectionName: string;
-  docId: string;
-  setComments: React.Dispatch<React.SetStateAction<any>>;
-}
 export async function getComments({
   collectionName,
   docId,

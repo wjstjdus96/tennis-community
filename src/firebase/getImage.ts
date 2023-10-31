@@ -1,10 +1,6 @@
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import defaultProfile from "../assets/defaultProfile.png";
-
-interface IGetImage {
-  imageURL: string;
-  setImage: React.Dispatch<React.SetStateAction<string>>;
-}
+import { IGetImage } from "../interfaces/IFunction";
 
 export const getImage = ({ imageURL, setImage }: IGetImage) => {
   const storage = getStorage();

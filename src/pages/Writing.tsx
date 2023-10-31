@@ -1,24 +1,20 @@
-import { HomeAfterLoginLayout } from "../layouts/HomeLayout";
+import { HomeLayout } from "../layouts/HomeLayout";
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import WritingInput from "../components/WritingInput";
+import WritingInput from "../components/post/WritingInput";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase/firebase";
-
-export interface ICommunityValue {
-  title: string;
-  body: string;
-}
+import { ICommunityWritingValue } from "../interfaces/IValue";
 
 export function Writing() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ICommunityValue>();
+  } = useForm<ICommunityWritingValue>();
   const navigate = useNavigate();
-  const onClickSubmit: SubmitHandler<ICommunityValue> = async (data) => {
+  const onClickSubmit: SubmitHandler<ICommunityWritingValue> = async (data) => {
     try {
       let docData = {
         body: data.body,
@@ -39,8 +35,8 @@ export function Writing() {
   };
 
   return (
-    <HomeAfterLoginLayout>
-      <Head>글쓰기</Head>
+    <HomeLayout>
+      <Head>커뮤니티 글쓰기</Head>
       <Body>
         <form onSubmit={handleSubmit(onClickSubmit)}>
           <WritingInput
@@ -60,12 +56,12 @@ export function Writing() {
           </div>
         </form>
       </Body>
-    </HomeAfterLoginLayout>
+    </HomeLayout>
   );
 }
 
 const Head = styled.div`
-  background-color: #cde4a0;
+  background-color: ${(props) => props.theme.green[1]};
   padding: 20px;
   border-radius: 15px;
 `;
@@ -87,7 +83,7 @@ const SubmitBtn = styled.button`
   padding: 8px 13px;
   border-radius: 10px;
   border: none;
-  background-color: #9bc940;
+  background-color: ${(props) => props.theme.green[2]};
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
   transition: background-color 300ms ease-in-out, color 300ms ease-in-out;

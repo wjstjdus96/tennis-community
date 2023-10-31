@@ -5,45 +5,8 @@ import { db } from "../../firebase/firebase";
 import { useState, useEffect } from "react";
 import MarketPost from "./MarketPost";
 import { Link, useNavigate } from "react-router-dom";
-
-interface IBoard {
-  title: string;
-  collectionName: string;
-}
-
-export interface IPost {
-  body: string;
-  bookmarkNum: number;
-  commentNum: number;
-  createdAt: {
-    nanoseconds: number;
-    seconds: number;
-  };
-  creatorImage: string;
-  creatorName: string;
-  id: string;
-  title: string;
-  type?: string;
-  field: string;
-}
-
-export interface IMarketPost {
-  title: string;
-  bookmarkNum: number;
-  commentNum: number;
-  brand: string;
-  category: string;
-  createdAt: {
-    nanoseconds: number;
-    seconds: number;
-  };
-  itemImage: string;
-  itemName: string;
-  price: number;
-  transactionMethod: string;
-  field: string;
-  id: string;
-}
+import { IBoard } from "../../interfaces/IComponent";
+import { IMarketPost, IPost } from "../../interfaces/IValue";
 
 export default function Board({ title, collectionName }: IBoard) {
   const [posts, setPosts] = useState<IPost[] | IMarketPost[]>([]);
@@ -99,7 +62,7 @@ const Wrapper = styled.div`
 
 const Head = styled.div`
   height: 10px;
-  background-color: #cde4a0;
+  background-color: ${(props) => props.theme.green[1]};
   display: flex;
   align-items: center;
   padding: 20px;
@@ -107,7 +70,7 @@ const Head = styled.div`
   font-family: "Noto Sans KR", sans-serif;
   font-weight: 700;
   &:hover {
-    color: #2a6c23;
+    color: ${(props) => props.theme.green[3]};
     cursor: pointer;
   }
 `;

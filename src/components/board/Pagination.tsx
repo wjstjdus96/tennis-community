@@ -6,13 +6,7 @@ import {
   FaAngleRight,
   FaAngleDoubleRight,
 } from "react-icons/fa";
-
-interface IPagination {
-  totalPage: number;
-  limit: number;
-  page: number;
-  setPage: any;
-}
+import { IPagination } from "../../interfaces/IComponent";
 
 export function Pagination({ totalPage, limit, page, setPage }: IPagination) {
   const [currentPageArray, setCurrentPageArray] = useState<any>([]);
@@ -78,7 +72,7 @@ const Wrapper = styled.div`
   gap: 10px;
   margin: 30px 0px;
   .icon {
-    color: #9bc940;
+    color: ${(props) => props.theme.green[2]};
     cursor: pointer;
   }
 `;

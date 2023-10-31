@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import { BiSolidTennisBall } from "react-icons/bi";
 import defaultProfile from "../assets/defaultProfile.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { checkIsLogin } from "../utils/checkIsLogin";
 
 export default function Header() {
+  const isLogin = checkIsLogin();
+
   return (
     <Wrapper>
       <Link to="/">
@@ -23,13 +26,19 @@ export default function Header() {
           <Link to="/market">플리마켓</Link>
         </div>
       </Menu>
-      <Profile>
-        <div>
-          <Link to="/myPage">
-            <img src={defaultProfile} />
-          </Link>
-        </div>
-      </Profile>
+      {isLogin ? (
+        <Profile>
+          <div>
+            <Link to="/myPage">
+              <img src={defaultProfile} />
+            </Link>
+          </div>
+        </Profile>
+      ) : (
+        <Link to="/login" className="links">
+          <LoginBtn>시작하기</LoginBtn>
+        </Link>
+      )}
     </Wrapper>
   );
 }
@@ -42,8 +51,8 @@ const Wrapper = styled.div`
   align-items: center;
   height: 70px;
   width: 100%;
-  background-color: #eff6e0;
-  border-bottom: 2px solid #cde4a0;
+  background-color: ${(props) => props.theme.bgColor};
+  border-bottom: 2px solid ${(props) => props.theme.green[1]};
   a {
     margin: 0;
     text-decoration: none;
@@ -60,7 +69,7 @@ const Logo = styled.div`
   font-family: "Allan", cursive;
   letter-spacing: 8px;
   svg {
-    color: #9bc940;
+    color: ${(props) => props.theme.green[2]};
     margin-right: 8px;
   }
 `;
@@ -72,7 +81,7 @@ const Menu = styled.div`
   font-size: 16px;
   font-weight: 700;
   a:hover {
-    color: #9bc940;
+    color: ${(props) => props.theme.green[2]};
   }
   div:nth-child(n + 2) {
     position: relative;
@@ -106,5 +115,24 @@ const Profile = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+`;
+
+const LoginBtn = styled.button`
+  box-sizing: border-box;
+  appearance: none;
+  background-color: transparent;
+  padding: 0.8em 2em;
+  border-radius: 20px;
+  text-decoration: none;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: "Noto Sans KR", sans-serif;
+  cursor: pointer;
+  border: 2px solid ${(props) => props.theme.green[2]};
+  transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+  &:hover {
+    box-shadow: 0 0 40px 40px ${(props) => props.theme.green[2]} inset;
   }
 `;

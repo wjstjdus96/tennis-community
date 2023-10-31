@@ -43,8 +43,13 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-family: "Noto Sans KR", sans-serif;
   min-height: 100vh;
-  background: linear-gradient(-45deg, #eff6e0 50%, #cde4a0 50%);
+  background: linear-gradient(
+    -45deg,
+    ${(props) => props.theme.bgColor} 50%,
+    ${(props) => props.theme.green[1]} 50%
+  );
 `;
 
 const Logo = styled.div`
@@ -55,7 +60,7 @@ const Logo = styled.div`
   margin-bottom: 20px;
   letter-spacing: 20px;
   svg {
-    color: #9bc940;
+    color: ${(props) => props.theme.green[2]};
   }
 `;
 
@@ -66,13 +71,13 @@ const Box = styled.div`
   border-radius: 30px;
   padding: 30px 70px;
   background-color: rgb(255, 255, 255, 0.5);
-  font-family: "Do Hyeon", sans-serif;
 `;
 
 const Title = styled.div`
   font-size: 30px;
   text-align: center;
   margin-bottom: 20px;
+  font-weight: 700;
 `;
 
 const Others = styled.div`
@@ -80,6 +85,8 @@ const Others = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 30px;
+  font-weight: 700;
+  font-size: 15px;
   div {
     margin-right: 10px;
   }

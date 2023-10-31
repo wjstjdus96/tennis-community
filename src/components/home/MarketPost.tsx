@@ -3,8 +3,8 @@ import { FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
 import { getStorage, ref, getDownloadURL, listAll } from "firebase/storage";
 import { storage } from "../../firebase/firebase";
 import { useState, useEffect } from "react";
-import { IMarketPost } from "./Board";
 import { useNavigate } from "react-router-dom";
+import { IMarketPost } from "../../interfaces/IValue";
 
 export default function MarketPost({ post }: { post: IMarketPost }) {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export default function MarketPost({ post }: { post: IMarketPost }) {
 }
 
 const Wrapper = styled.div`
-  border-bottom: 1px solid #cde4a0;
+  border-bottom: 1px solid ${(props) => props.theme.green[1]};
   padding: 15px;
   display: grid;
   grid-template-columns: 1fr 8fr;
@@ -67,7 +67,7 @@ const ItemTitle = styled.div`
 `;
 
 const ItemPrice = styled.div`
-  color: #2a6c23;
+  color: ${(props) => props.theme.green[3]};
   font-size: 14px;
 `;
 
