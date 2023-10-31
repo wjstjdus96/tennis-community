@@ -6,7 +6,7 @@ import {
   FaAngleRight,
   FaAngleDoubleRight,
 } from "react-icons/fa";
-import { IPagination } from "../interfaces/IComponent";
+import { IPagination } from "../../interfaces/IComponent";
 
 export function Pagination({ totalPage, limit, page, setPage }: IPagination) {
   const [currentPageArray, setCurrentPageArray] = useState<any>([]);

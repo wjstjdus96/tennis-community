@@ -45,3 +45,14 @@ export interface IWritingInput {
   register: UseFormRegister<ICommunityWritingValue>;
   errorMsg?: string;
 }
+
+export interface IBoardSearch {
+  keyword: string;
+  setKeyword: React.Dispatch<React.SetStateAction<string>>;
+  setSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export interface IBoardHead {
+  title: string;
+  summary: string;
+}

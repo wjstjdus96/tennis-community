@@ -1,9 +1,5 @@
 import styled from "styled-components";
-
-interface IBoardHead {
-  title: string;
-  summary: string;
-}
+import { IBoardHead } from "../../interfaces/IComponent";
 
 export function BoardHead({ title, summary }: IBoardHead) {
   return (

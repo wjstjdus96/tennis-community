@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { HiOutlineSortDescending, HiPencil } from "react-icons/hi";
-import { IBoardFilter } from "../interfaces/IComponent";
+import { IBoardFilter } from "../../interfaces/IComponent";
 
 export default function BoardFilter({
   filterType,
