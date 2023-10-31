@@ -17,7 +17,7 @@ export function HomeLayout({ children }: { children: React.ReactNode }) {
 }
 
 const Wrapper = styled.div`
-  background-color: #eff6e0;
+  background-color: ${(props) => props.theme.bgColor};
   min-height: 100vh;
   font-family: "Noto Sans KR", sans-serif;
   display: flex;

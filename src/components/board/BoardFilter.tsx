@@ -65,10 +65,10 @@ const SelectedType = styled.div`
   background-color: white;
   padding: 7px 13px;
   border-radius: 10px;
-  border: 1px solid #9bc940;
+  border: 1px solid ${(props) => props.theme.green[2]};
   font-size: 14px;
   &:hover {
-    outline: 1px solid #9bc940;
+    outline: 1px solid ${(props) => props.theme.green[2]};
   }
   .filterIcon {
     margin-right: 5px;
@@ -88,6 +88,6 @@ const DropdownItem = styled.div`
   font-size: 14px;
   cursor: pointer;
   &:hover {
-    color: #9bc940;
+    color: ${(props) => props.theme.green[2]};
   }
 `;

@@ -62,7 +62,7 @@ const Wrapper = styled.div`
 
 const Head = styled.div`
   height: 10px;
-  background-color: #cde4a0;
+  background-color: ${(props) => props.theme.green[1]};
   display: flex;
   align-items: center;
   padding: 20px;
@@ -70,7 +70,7 @@ const Head = styled.div`
   font-family: "Noto Sans KR", sans-serif;
   font-weight: 700;
   &:hover {
-    color: #2a6c23;
+    color: ${(props) => props.theme.green[3]};
     cursor: pointer;
   }
 `;

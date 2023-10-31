@@ -5,13 +5,13 @@ import { useEffect } from "react";
 import { getElapsedTime } from "../utils/getElapsedTime";
 import { getComments } from "../firebase/getComments";
 import { useState } from "react";
-import CommentCard from "../components/CommentCard";
+import CommentCard from "../components/comment/CommentCard";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { db } from "../firebase/firebase";
 import { doc, setDoc, collection, serverTimestamp } from "firebase/firestore";
 import { updateOneData } from "../firebase/updateData";
 import { getOnePost } from "../firebase/getPost";
-import BookmarkBtn from "../components/BookmarkBtn";
+import BookmarkBtn from "../components/post/BookmarkBtn";
 import { IPost } from "../interfaces/IValue";
 import { ISetComment, RouteState } from "../interfaces/IFunction";
 
@@ -189,7 +189,7 @@ const WritingComment = styled.form`
     padding: 8px 13px;
     border-radius: 10px;
     border: none;
-    background-color: #9bc940;
+    background-color: ${(props) => props.theme.green[2]};
     font-family: "Noto Sans KR", sans-serif;
     &:hover {
       box-shadow: 100px 0 0 0 rgba(0, 0, 0, 0.1) inset;

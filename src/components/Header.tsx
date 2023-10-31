@@ -51,8 +51,8 @@ const Wrapper = styled.div`
   align-items: center;
   height: 70px;
   width: 100%;
-  background-color: #eff6e0;
-  border-bottom: 2px solid #cde4a0;
+  background-color: ${(props) => props.theme.bgColor};
+  border-bottom: 2px solid ${(props) => props.theme.green[1]};
   a {
     margin: 0;
     text-decoration: none;
@@ -69,7 +69,7 @@ const Logo = styled.div`
   font-family: "Allan", cursive;
   letter-spacing: 8px;
   svg {
-    color: #9bc940;
+    color: ${(props) => props.theme.green[2]};
     margin-right: 8px;
   }
 `;
@@ -81,7 +81,7 @@ const Menu = styled.div`
   font-size: 16px;
   font-weight: 700;
   a:hover {
-    color: #9bc940;
+    color: ${(props) => props.theme.green[2]};
   }
   div:nth-child(n + 2) {
     position: relative;
@@ -130,9 +130,9 @@ const LoginBtn = styled.button`
   font-weight: 700;
   font-family: "Noto Sans KR", sans-serif;
   cursor: pointer;
-  border: 2px solid #9bc940;
+  border: 2px solid ${(props) => props.theme.green[2]};
   transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
   &:hover {
-    box-shadow: 0 0 40px 40px #9bc940 inset;
+    box-shadow: 0 0 40px 40px ${(props) => props.theme.green[2]} inset;
   }
 `;

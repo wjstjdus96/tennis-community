@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getImage } from "../firebase/getImage";
-import { getElapsedTime } from "../utils/getElapsedTime";
-import { ICommentCard } from "../interfaces/IComponent";
+import { getImage } from "../../firebase/getImage";
+import { getElapsedTime } from "../../utils/getElapsedTime";
+import { ICommentCard } from "../../interfaces/IComponent";
 
 export default function CommentCard({ comment }: ICommentCard) {
   const [profileImg, setProfileImg] = useState("");
@@ -26,7 +26,7 @@ export default function CommentCard({ comment }: ICommentCard) {
 }
 
 const Wrapper = styled.div`
-  border-bottom: 1px solid #9bc940;
+  border-bottom: 1px solid ${(props) => props.theme.green[2]};
   padding: 20px 0;
   & > div:last-child {
     font-size: 15px;

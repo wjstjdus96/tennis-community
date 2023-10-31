@@ -72,7 +72,7 @@ const Wrapper = styled.div`
   gap: 10px;
   margin: 30px 0px;
   .icon {
-    color: #9bc940;
+    color: ${(props) => props.theme.green[2]};
     cursor: pointer;
   }
 `;

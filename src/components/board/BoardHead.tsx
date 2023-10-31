@@ -11,7 +11,7 @@ export function BoardHead({ title, summary }: IBoardHead) {
 }
 
 const Head = styled.div`
-  background-color: #cde4a0;
+  background-color: ${(props) => props.theme.green[1]};
   display: flex;
   flex-direction: column;
   padding: 20px;

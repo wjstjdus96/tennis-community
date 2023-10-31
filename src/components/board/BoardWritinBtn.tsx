@@ -22,7 +22,7 @@ const WritingBtn = styled.button`
   padding: 8px 13px;
   border-radius: 10px;
   border: none;
-  background-color: #9bc940;
+  background-color: ${(props) => props.theme.green[2]};
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
   transition: background-color 300ms ease-in-out, color 300ms ease-in-out;

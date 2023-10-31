@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Path, UseFormRegister } from "react-hook-form";
-import { IWritingInput } from "../interfaces/IComponent";
+import { IWritingInput } from "../../interfaces/IComponent";
 
 export default function WritingInput({
   name,
@@ -35,7 +35,7 @@ const Wrapper = styled.div<{ isBody: boolean }>`
   flex-direction: column;
   margin-top: 15px;
   label {
-    color: #aaa;
+    color: grey;
     font-size: 15px;
     margin-bottom: 15px;
   }

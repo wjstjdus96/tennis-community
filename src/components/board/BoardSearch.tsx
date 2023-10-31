@@ -36,12 +36,12 @@ const Search = styled.div`
   position: relative;
   input {
     width: 350px;
-    border: 2px solid #cde4a0;
+    border: 2px solid ${(props) => props.theme.green[1]};
     border-radius: 18px;
     padding: 9px 20px 9px 28px;
   }
   input:focus {
-    outline: 2px solid #9bc940;
+    outline: 2px solid ${(props) => props.theme.green[2]};
   }
   .searchIcon {
     position: absolute;

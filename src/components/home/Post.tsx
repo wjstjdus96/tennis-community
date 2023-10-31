@@ -63,7 +63,7 @@ export default function Post({
 const Wrapper = styled.div<{ isHome: boolean }>`
   padding: ${(props) => (props.isHome ? "15px" : "15px 3px")};
   font-family: "Noto Sans KR", sans-serif;
-  border-bottom: 1px solid #cde4a0;
+  border-bottom: 1px solid ${(props) => props.theme.green[1]};
   max-width: 100%;
 `;
 

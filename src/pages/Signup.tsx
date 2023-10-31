@@ -89,7 +89,7 @@ const SubmitBtn = styled.button`
   margin: 20px 0px 30px 0px;
   box-sizing: border-box;
   appearance: none;
-  background-color: #9bc940;
+  background-color: ${(props) => props.theme.green[2]};
   padding: 0.8em 2em;
   border-radius: 20px;
   text-decoration: none;
@@ -97,7 +97,7 @@ const SubmitBtn = styled.button`
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  border: 2px solid #9bc940;
+  border: 2px solid ${(props) => props.theme.green[2]};
   transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
   &:hover {
     background-color: transparent;
