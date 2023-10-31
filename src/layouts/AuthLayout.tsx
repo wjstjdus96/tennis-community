@@ -43,7 +43,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  min-height: 100vh;
   background: linear-gradient(-45deg, #eff6e0 50%, #cde4a0 50%);
 `;
 

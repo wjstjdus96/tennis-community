@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export function HomeBeforeLoginLayout({
   children,
@@ -14,7 +15,7 @@ const BeforeLoginWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: 100vh;
   background: linear-gradient(-45deg, #eff6e0 50%, #cde4a0 50%);
 `;
 
@@ -31,17 +32,28 @@ export function HomeAfterLoginLayout({
         <div>{children}</div>
         <div></div>
       </Body>
+      <Footer />
     </AfterLoginWrapper>
   );
 }
 
 const AfterLoginWrapper = styled.div`
   background-color: #eff6e0;
-  height: 100%;
+  min-height: 100vh;
+  font-family: "Noto Sans KR", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const Body = styled.div`
+  padding-top: 90px;
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
-  font-family: "Noto Sans KR", sans-serif;
+  & > div {
+    overflow-x: auto;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
 `;

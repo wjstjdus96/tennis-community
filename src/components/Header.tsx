@@ -35,12 +35,15 @@ export default function Header() {
 }
 
 const Wrapper = styled.div`
+  z-index: 5;
+  position: fixed;
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   align-items: center;
   height: 70px;
   width: 100%;
   background-color: #eff6e0;
+  border-bottom: 2px solid #cde4a0;
   a {
     margin: 0;
     text-decoration: none;

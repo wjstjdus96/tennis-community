@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import defaultProfile from "../../assets/defaultProfile.png";
 import { FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
 import { IPost } from "./Board";
 import { getElapsedTime } from "../../utils/getElapsedTime";
-import { ref, getDownloadURL, listAll, getStorage } from "firebase/storage";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getImage } from "../../firebase/getImage";
 
 export default function Post({
   post,
@@ -15,22 +14,16 @@ export default function Post({
   isHome: boolean;
 }) {
   const navigate = useNavigate();
-  const storage = getStorage();
-  const imageRef = ref(storage, `${post.creatorImage}`);
   const [profileImage, setProfileImage] = useState("");
 
   useEffect(() => {
-    if (post.creatorImage) {
-      getDownloadURL(imageRef).then((url) => {
-        setProfileImage(url);
-      });
-    } else {
-      setProfileImage(defaultProfile);
-    }
+    getImage({ imageURL: post.creatorImage, setImage: setProfileImage });
   });
 
   const onClickTitle = () => {
-    navigate(`/${post.field}/${post.id}`);
+    navigate(`/${post.field}/${post.id}`, {
+      state: { field: post.field, id: post.id, creatorImage: profileImage },
+    });
   };
 
   return (
@@ -58,7 +51,11 @@ export default function Post({
         {post.type && <p>{post.type}</p>}
         <div onClick={onClickTitle}>{post.title}</div>
       </Title>
-      {!isHome && <Body>{post.body}</Body>}
+      {!isHome && (
+        <Body>
+          <div>{post.body}</div>
+        </Body>
+      )}
     </Wrapper>
   );
 }
@@ -67,6 +64,7 @@ const Wrapper = styled.div<{ isHome: boolean }>`
   padding: ${(props) => (props.isHome ? "15px" : "15px 3px")};
   font-family: "Noto Sans KR", sans-serif;
   border-bottom: 1px solid #cde4a0;
+  max-width: 100%;
 `;
 
 const Infos = styled.div`
@@ -149,4 +147,11 @@ const Body = styled.div`
   font-size: 13px;
   color: grey;
   margin-top: 10px;
+  max-width: 100%;
+  & > div {
+    height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 `;
