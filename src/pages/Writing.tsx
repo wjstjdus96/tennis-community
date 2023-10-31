@@ -1,4 +1,4 @@
-import { HomeAfterLoginLayout } from "../layouts/HomeLayout";
+import { HomeLayout } from "../layouts/HomeLayout";
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -39,7 +39,7 @@ export function Writing() {
   };
 
   return (
-    <HomeAfterLoginLayout>
+    <HomeLayout>
       <Head>글쓰기</Head>
       <Body>
         <form onSubmit={handleSubmit(onClickSubmit)}>
@@ -60,7 +60,7 @@ export function Writing() {
           </div>
         </form>
       </Body>
-    </HomeAfterLoginLayout>
+    </HomeLayout>
   );
 }
 

@@ -1,4 +1,4 @@
-import { HomeAfterLoginLayout } from "../layouts/HomeLayout";
+import { HomeLayout } from "../layouts/HomeLayout";
 import styled from "styled-components";
 import { FiSearch } from "react-icons/fi";
 import { HiOutlineSortDescending, HiPencil } from "react-icons/hi";
@@ -145,7 +145,7 @@ export default function Community() {
   }, [page, searchKeyword, filterType]);
 
   return (
-    <HomeAfterLoginLayout>
+    <HomeLayout>
       <Head>
         <div>커뮤니티</div>
         <div>테니스에 대한 다양한 생각을 공유해보세요</div>
@@ -183,7 +183,7 @@ export default function Community() {
         page={page}
         setPage={setPage}
       />
-    </HomeAfterLoginLayout>
+    </HomeLayout>
   );
 }
 

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { HomeAfterLoginLayout } from "../layouts/HomeLayout";
+import { HomeLayout } from "../layouts/HomeLayout";
 import { useLocation } from "react-router-dom";
 import { IPost } from "../components/home/Board";
 import { useEffect } from "react";
@@ -76,7 +76,7 @@ export default function PostDetail() {
   }, []);
 
   return (
-    <HomeAfterLoginLayout>
+    <HomeLayout>
       {postData && (
         <Wrapper>
           <InfoWrapper>
@@ -120,7 +120,7 @@ export default function PostDetail() {
           </div>
         </Wrapper>
       )}
-    </HomeAfterLoginLayout>
+    </HomeLayout>
   );
 }
 
