@@ -1,3 +1,3 @@
 export function checkIsLogin() {
-  return window.sessionStorage;
+  return window.sessionStorage.length != 0;
 }

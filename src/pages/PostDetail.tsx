@@ -10,8 +10,9 @@ import CommentCard from "../components/CommentCard";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { db } from "../firebase/firebase";
 import { doc, setDoc, collection, serverTimestamp } from "firebase/firestore";
-import { updateData } from "../firebase/updateData";
+import { updateOneData } from "../firebase/updateData";
 import { getPost } from "../firebase/getPost";
+import BookmarkBtn from "../components/BookmarkBtn";
 
 interface RouteState {
   state: IPost;
@@ -49,7 +50,12 @@ export default function PostDetail() {
         docId: state.id,
         setComments: setComments,
       });
-      updateData({ collectionName: "community", docId: state.id });
+      updateOneData({
+        collectionName: "community",
+        docId: state.id,
+        docField: "commentNum",
+        incrementNum: 1,
+      });
       reset();
     } catch (error) {
       alert("댓글 작성을 실패하였습니다");
@@ -84,7 +90,11 @@ export default function PostDetail() {
             <div>{postData.title}</div>
             <div>{postData.body}</div>
             <div>
-              <button>북마크</button>
+              <BookmarkBtn
+                bookmarkNum={postData.bookmarkNum}
+                collectionName={state.field}
+                docId={state.id}
+              />
             </div>
           </DetailWrapper>
           <div>
@@ -149,8 +159,6 @@ const DetailWrapper = styled.div`
     margin-top: 30px;
     display: flex;
     justify-content: center;
-    button {
-    }
   }
 `;
 

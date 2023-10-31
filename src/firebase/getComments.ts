@@ -11,7 +11,10 @@ export async function getComments({
   docId,
   setComments,
 }: IGetComments) {
-  const q = query(collection(db, collectionName, docId, "comments"));
+  const q = query(
+    collection(db, collectionName, docId, "comments"),
+    orderBy("createdAt", "desc")
+  );
   const querySnapShot = await getDocs(q);
   querySnapShot.forEach((doc) => {
     const docObj = {
