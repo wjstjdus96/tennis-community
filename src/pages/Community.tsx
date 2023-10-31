@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import BoardFilter from "../components/BoardFilter";
 import { getPosts, getPostsByPage } from "../firebase/getPost";
 import { IPost } from "../interfaces/IValue";
+import { BoardHead } from "../components/board/BoardHead";
 
 export default function Community() {
   const navigate = useNavigate();
@@ -58,10 +59,10 @@ export default function Community() {
 
   return (
     <HomeLayout>
-      <Head>
-        <div>커뮤니티</div>
-        <div>테니스에 대한 다양한 생각을 공유해보세요</div>
-      </Head>
+      <BoardHead
+        title="커뮤니티"
+        summary="테니스에 대한 다양한 생각을 공유해보세요"
+      />
       <Settings>
         <WritingBtn onClick={onClickWritingBtn}>
           <HiPencil className="writingIcon" />
@@ -98,19 +99,6 @@ export default function Community() {
     </HomeLayout>
   );
 }
-
-const Head = styled.div`
-  background-color: #cde4a0;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  border-radius: 15px;
-  & > div:last-child {
-    font-size: 12px;
-    color: grey;
-    margin-top: 5px;
-  }
-`;
 
 const Settings = styled.div`
   display: flex;
