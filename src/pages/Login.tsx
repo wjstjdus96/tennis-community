@@ -9,11 +9,7 @@ import {
 import { auth } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 import AuthLayout from "../layouts/AuthLayout";
-
-export interface ILoginValue {
-  email: string;
-  password: string;
-}
+import { ILoginValue } from "../interfaces/IValue";
 
 export default function Login() {
   const {

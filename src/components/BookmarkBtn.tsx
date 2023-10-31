@@ -3,12 +3,7 @@ import { FaRegBookmark, FaBookmark } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { updateOneData } from "../firebase/updateData";
 import useDidMountEffect from "../hooks/useDidMountEffect";
-
-interface IBookmarkBtn {
-  bookmarkNum: number;
-  collectionName: string;
-  docId: string;
-}
+import { IBookmarkBtn } from "../interfaces/IComponent";
 
 export default function BookmarkBtn({
   bookmarkNum,

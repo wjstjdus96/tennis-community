@@ -3,8 +3,8 @@ import { FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
 import { getStorage, ref, getDownloadURL, listAll } from "firebase/storage";
 import { storage } from "../../firebase/firebase";
 import { useState, useEffect } from "react";
-import { IMarketPost } from "./Board";
 import { useNavigate } from "react-router-dom";
+import { IMarketPost } from "../../interfaces/IValue";
 
 export default function MarketPost({ post }: { post: IMarketPost }) {
   const navigate = useNavigate();

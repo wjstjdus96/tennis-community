@@ -1,120 +1,25 @@
 import { HomeLayout } from "../layouts/HomeLayout";
 import styled from "styled-components";
 import { FiSearch } from "react-icons/fi";
-import { HiOutlineSortDescending, HiPencil } from "react-icons/hi";
+import { HiPencil } from "react-icons/hi";
 import { useState, useEffect } from "react";
-import {
-  collection,
-  getDocs,
-  query,
-  orderBy,
-  limit,
-  startAfter,
-  where,
-} from "firebase/firestore";
-import { db } from "../firebase/firebase";
 import Post from "../components/home/Post";
 import { Pagination } from "../components/Pagination";
 import { useNavigate } from "react-router-dom";
 import BoardFilter from "../components/BoardFilter";
+import { getPosts, getPostsByPage } from "../firebase/getPost";
+import { IPost } from "../interfaces/IValue";
 
 export default function Community() {
   const navigate = useNavigate();
-  const [totalPosts, setTotalPosts] = useState<any>([]);
-  const [posts, setPosts] = useState<any>([]);
+  const [totalPosts, setTotalPosts] = useState<IPost[]>([]);
+  const [posts, setPosts] = useState<IPost[]>([]);
   const [page, setPage] = useState<number>(1);
   const [keyword, setKeyword] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [filterType, setFilterType] = useState(["최신순", "createdAt"]);
   const [isExpanded, setIsExpanded] = useState(false);
   const postsPerPage = 5;
-
-  const getPosts = async (keyword: string, filterType: string[]) => {
-    const collectionRef = collection(db, "community");
-    const querySnapShot = await getDocs(
-      keyword
-        ? query(
-            collectionRef,
-            where("titleKeyword", "array-contains", keyword),
-            orderBy(filterType[1], "desc")
-          )
-        : query(collectionRef, orderBy(filterType[1], "desc"))
-    );
-
-    querySnapShot.forEach((doc) => {
-      const postObject = {
-        ...doc.data(),
-        id: doc.id,
-      };
-      setTotalPosts((prev: any) => [...prev, postObject]);
-    });
-  };
-
-  const getPostsByPage = async (
-    offset: number,
-    field: string,
-    keyword: string,
-    filterType: string[]
-  ) => {
-    const collectionRef = collection(db, field);
-    if (offset == 0) {
-      const querySnapShot = await getDocs(
-        keyword
-          ? query(
-              collectionRef,
-              where("titleKeyword", "array-contains", keyword),
-              orderBy(filterType[1], "desc"),
-              limit(postsPerPage)
-            )
-          : query(
-              collectionRef,
-              orderBy(filterType[1], "desc"),
-              limit(postsPerPage)
-            )
-      );
-      querySnapShot.forEach((doc) => {
-        const postObject = {
-          ...doc.data(),
-          id: doc.id,
-        };
-        setPosts((prev: any) => [...prev, postObject]);
-      });
-    } else {
-      const prev = keyword
-        ? query(
-            collectionRef,
-            where("titleKeyword", "array-contains", keyword),
-            orderBy(filterType[1], "desc"),
-            limit(offset)
-          )
-        : query(collectionRef, orderBy(filterType[1], "desc"), limit(offset));
-      const documentSnapshots = await getDocs(prev);
-      const lastVisible =
-        documentSnapshots.docs[documentSnapshots.docs.length - 1];
-      const next = keyword
-        ? query(
-            collectionRef,
-            where("titleKeyword", "array-contains", keyword),
-            orderBy(filterType[1], "desc"),
-            startAfter(lastVisible),
-            limit(postsPerPage)
-          )
-        : query(
-            collectionRef,
-            orderBy(filterType[1], "desc"),
-            startAfter(lastVisible),
-            limit(postsPerPage)
-          );
-
-      (await getDocs(next)).forEach((doc: any) => {
-        const postObject = {
-          ...doc.data(),
-          id: doc.id,
-        };
-        setPosts((prev: any) => [...prev, postObject]);
-      });
-    }
-  };
 
   const onClickWritingBtn = () => {
     navigate("/community/write");
@@ -131,17 +36,24 @@ export default function Community() {
 
   useEffect(() => {
     setTotalPosts([]);
-    getPosts(searchKeyword, filterType);
+    getPosts({
+      collectionName: "community",
+      keyword: searchKeyword,
+      filterType: filterType,
+      setPosts: setTotalPosts,
+    });
   }, [searchKeyword, filterType]);
 
   useEffect(() => {
     setPosts([]);
-    getPostsByPage(
-      (page - 1) * postsPerPage,
-      "community",
-      searchKeyword,
-      filterType
-    );
+    getPostsByPage({
+      offset: (page - 1) * postsPerPage,
+      collectionName: "community",
+      keyword: searchKeyword,
+      filterType: filterType,
+      postsPerPage: postsPerPage,
+      setPosts: setPosts,
+    });
   }, [page, searchKeyword, filterType]);
 
   return (

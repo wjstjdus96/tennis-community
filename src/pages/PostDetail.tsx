@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { HomeLayout } from "../layouts/HomeLayout";
 import { useLocation } from "react-router-dom";
-import { IPost } from "../components/home/Board";
 import { useEffect } from "react";
 import { getElapsedTime } from "../utils/getElapsedTime";
 import { getComments } from "../firebase/getComments";
@@ -11,16 +10,10 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { db } from "../firebase/firebase";
 import { doc, setDoc, collection, serverTimestamp } from "firebase/firestore";
 import { updateOneData } from "../firebase/updateData";
-import { getPost } from "../firebase/getPost";
+import { getOnePost } from "../firebase/getPost";
 import BookmarkBtn from "../components/BookmarkBtn";
-
-interface RouteState {
-  state: IPost;
-}
-
-interface ISetComment {
-  comment: string;
-}
+import { IPost } from "../interfaces/IValue";
+import { ISetComment, RouteState } from "../interfaces/IFunction";
 
 export default function PostDetail() {
   const state = (useLocation() as RouteState).state;
@@ -63,7 +56,7 @@ export default function PostDetail() {
   };
 
   useEffect(() => {
-    getPost({
+    getOnePost({
       collectionName: state.field,
       docId: state.id,
       setPostData: setPostData,

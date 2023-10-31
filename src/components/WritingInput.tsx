@@ -1,14 +1,6 @@
 import styled from "styled-components";
 import { Path, UseFormRegister } from "react-hook-form";
-import { ICommunityValue } from "../pages/Writing";
-
-interface IWritingInput {
-  name: Path<ICommunityValue>;
-  text?: string;
-  inputType?: string;
-  register: UseFormRegister<ICommunityValue>;
-  errorMsg?: string;
-}
+import { IWritingInput } from "../interfaces/IComponent";
 
 export default function WritingInput({
   name,

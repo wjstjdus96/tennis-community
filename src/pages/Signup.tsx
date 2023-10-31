@@ -11,12 +11,7 @@ import {
 } from "@firebase/auth";
 import { auth } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
-
-export interface ISignupValue {
-  email: string;
-  password: string;
-  passwordConfirm?: string;
-}
+import { ISignupValue } from "../interfaces/IValue";
 
 export default function Signup() {
   const navigate = useNavigate();

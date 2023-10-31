@@ -1,14 +1,5 @@
 import styled from "styled-components";
-import { Path, UseFormRegister } from "react-hook-form";
-import { ISignupValue } from "../pages/Signup";
-
-interface IAuthInput {
-  name: Path<ISignupValue>;
-  text?: string;
-  inputType?: string;
-  register: UseFormRegister<ISignupValue>;
-  errorMsg?: string;
-}
+import { IAuthInput } from "../interfaces/IComponent";
 
 export default function AuthInput({
   name,

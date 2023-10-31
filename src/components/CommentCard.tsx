@@ -2,19 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getImage } from "../firebase/getImage";
 import { getElapsedTime } from "../utils/getElapsedTime";
-
-export interface IComment {
-  comment: string;
-  createdAt: any;
-  creatorId: string;
-  creatorName: string;
-  creatorPhotoURL: string;
-  id: string;
-}
-
-interface ICommentCard {
-  comment: IComment;
-}
+import { ICommentCard } from "../interfaces/IComponent";
 
 export default function CommentCard({ comment }: ICommentCard) {
   const [profileImg, setProfileImg] = useState("");

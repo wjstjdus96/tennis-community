@@ -5,20 +5,16 @@ import { useNavigate } from "react-router-dom";
 import WritingInput from "../components/WritingInput";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase/firebase";
-
-export interface ICommunityValue {
-  title: string;
-  body: string;
-}
+import { ICommunityWritingValue } from "../interfaces/IValue";
 
 export function Writing() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ICommunityValue>();
+  } = useForm<ICommunityWritingValue>();
   const navigate = useNavigate();
-  const onClickSubmit: SubmitHandler<ICommunityValue> = async (data) => {
+  const onClickSubmit: SubmitHandler<ICommunityWritingValue> = async (data) => {
     try {
       let docData = {
         body: data.body,

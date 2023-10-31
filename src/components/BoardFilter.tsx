@@ -1,12 +1,6 @@
 import styled from "styled-components";
 import { HiOutlineSortDescending, HiPencil } from "react-icons/hi";
-
-interface IBoardFilter {
-  filterType: string[];
-  setFilterType: React.Dispatch<React.SetStateAction<string[]>>;
-  isExpanded: boolean;
-  setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { IBoardFilter } from "../interfaces/IComponent";
 
 export default function BoardFilter({
   filterType,

@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
-import { IPost } from "./Board";
 import { getElapsedTime } from "../../utils/getElapsedTime";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getImage } from "../../firebase/getImage";
+import { IPost } from "../../interfaces/IValue";
 
 export default function Post({
   post,
