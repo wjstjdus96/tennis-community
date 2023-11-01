@@ -1,3 +1,6 @@
+import { getDownloadURL, getStorage, ref } from "firebase/storage";
+import defaultProfile from "../assets/defaultProfile.png";
+import { IGetImage } from "../interfaces/IFunction";
 import {
   collection,
   doc,
@@ -10,7 +13,43 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "./firebase";
-import { IGetPost, IGetPosts, IGetPostsByPage } from "../interfaces/IFunction";
+import {
+  IGetPost,
+  IGetPosts,
+  IGetPostsByPage,
+  IGetComments,
+} from "../interfaces/IFunction";
+
+export async function getComments({
+  collectionName,
+  docId,
+  setComments,
+}: IGetComments) {
+  const q = query(
+    collection(db, collectionName, docId, "comments"),
+    orderBy("createdAt", "desc")
+  );
+  const querySnapShot = await getDocs(q);
+  querySnapShot.forEach((doc) => {
+    const docObj = {
+      ...doc.data(),
+      id: doc.id,
+    };
+    setComments((prev: any) => [...prev, docObj]);
+  });
+}
+
+export const getImage = ({ imageURL, setImage }: IGetImage) => {
+  const storage = getStorage();
+  if (imageURL) {
+    const imageRef = ref(storage, `${imageURL}`);
+    getDownloadURL(imageRef).then((url) => {
+      setImage(url);
+    });
+  } else {
+    setImage(defaultProfile);
+  }
+};
 
 export function getOnePost({ collectionName, docId, setPostData }: IGetPost) {
   const docRef = doc(db, collectionName, docId);

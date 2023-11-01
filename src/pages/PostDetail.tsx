@@ -2,16 +2,14 @@ import styled from "styled-components";
 import { HomeLayout } from "../layouts/HomeLayout";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import { getComments } from "../firebase/getComments";
 import { useState } from "react";
 import CommentCard from "../components/comment/CommentCard";
-import { getOnePost } from "../firebase/getPost";
 import { IPost } from "../interfaces/IValue";
 import { RouteState } from "../interfaces/IFunction";
 import { WritingComment } from "../components/comment/WritingComment";
 import { PostBody } from "../components/post/PostBody";
 import { PostHead } from "../components/post/PostHead";
-import { getImage } from "../firebase/getImage";
+import { getComments, getImage, getOnePost } from "../firebase/getData";
 
 export default function PostDetail() {
   const state = (useLocation() as RouteState).state;

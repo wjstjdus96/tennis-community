@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getImage } from "../../firebase/getImage";
 import { getElapsedTime } from "../../utils/getElapsedTime";
 import { ICommentCard } from "../../interfaces/IComponent";
 import { EditDeleteBtn } from "../post/EditDeleteBtns";
+import { getImage } from "../../firebase/getData";
 
 export default function CommentCard({ comment }: ICommentCard) {
   const [profileImg, setProfileImg] = useState("");

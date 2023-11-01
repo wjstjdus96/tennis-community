@@ -3,9 +3,9 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { ISetComment } from "../../interfaces/IFunction";
 import { doc, setDoc, collection, serverTimestamp } from "firebase/firestore";
 import { updateOneData } from "../../firebase/updateData";
-import { getComments } from "../../firebase/getComments";
 import { db } from "../../firebase/firebase";
 import { IWritingComment } from "../../interfaces/IComponent";
+import { getComments } from "../../firebase/getData";
 
 export function WritingComment({
   writerImage,
