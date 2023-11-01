@@ -1,15 +1,32 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getImage } from "../../firebase/getImage";
 import { getElapsedTime } from "../../utils/getElapsedTime";
 import { ICommentCard } from "../../interfaces/IComponent";
+import { EditDeleteBtn } from "../post/EditDeleteBtns";
+import { getImage } from "../../firebase/getData";
+import { deleteComment } from "../../firebase/deleteData";
 
-export default function CommentCard({ comment }: ICommentCard) {
+export default function CommentCard({
+  comment,
+  collectionName,
+  docId,
+  getComments,
+}: ICommentCard) {
   const [profileImg, setProfileImg] = useState("");
+  const [isWriter, setIsWriter] = useState(true);
 
   useEffect(() => {
     getImage({ imageURL: comment.creatorPhotoURL, setImage: setProfileImg });
   }, []);
+
+  const clickDeleteComment = async () => {
+    await deleteComment({
+      collectionName: collectionName,
+      docId: docId,
+      commentId: comment.id,
+    });
+    await getComments();
+  };
 
   return (
     <Wrapper>
@@ -18,7 +35,10 @@ export default function CommentCard({ comment }: ICommentCard) {
           <img src={profileImg} />
           <div>{comment.creatorName}</div>
         </div>
-        <div>{getElapsedTime(comment.createdAt.seconds)}</div>
+        <div>
+          <div>{getElapsedTime(comment.createdAt.seconds)}</div>
+          {isWriter && <EditDeleteBtn clickDelelteBtn={clickDeleteComment} />}
+        </div>
       </InfoWrapper>
       <div>{comment.comment}</div>
     </Wrapper>
@@ -40,7 +60,7 @@ const InfoWrapper = styled.div`
   align-items: center;
   margin-bottom: 15px;
   font-size: 13px;
-  & > div:first-child {
+  & > div {
     display: flex;
     align-items: center;
     gap: 20px;

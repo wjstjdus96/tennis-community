@@ -1,5 +1,10 @@
 import { Path, UseFormRegister } from "react-hook-form";
-import { IComment, ICommunityWritingValue, ISignupValue } from "./IValue";
+import {
+  IComment,
+  ICommunityWritingValue,
+  IPost,
+  ISignupValue,
+} from "./IValue";
 
 export interface IBoard {
   title: string;
@@ -29,6 +34,9 @@ export interface IBookmarkBtn {
 
 export interface ICommentCard {
   comment: IComment;
+  collectionName: string;
+  docId: string;
+  getComments: any;
 }
 
 export interface IPagination {
@@ -55,4 +63,21 @@ export interface IBoardSearch {
 export interface IBoardHead {
   title: string;
   summary: string;
+}
+
+export interface IWritingComment {
+  writerImage: string;
+  collectionName: string;
+  docId: string;
+  setComments: React.Dispatch<React.SetStateAction<any>>;
+}
+
+export interface IPostBody {
+  postData: IPost;
+}
+
+export interface IPostHead {
+  writerImage: string;
+  writerName: string;
+  createdAt: number;
 }

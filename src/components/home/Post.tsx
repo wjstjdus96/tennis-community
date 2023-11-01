@@ -3,8 +3,8 @@ import { FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
 import { getElapsedTime } from "../../utils/getElapsedTime";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getImage } from "../../firebase/getImage";
 import { IPost } from "../../interfaces/IValue";
+import { getImage } from "../../firebase/getData";
 
 export default function Post({
   post,
@@ -22,7 +22,7 @@ export default function Post({
 
   const onClickTitle = () => {
     navigate(`/${post.field}/${post.id}`, {
-      state: { field: post.field, id: post.id, creatorImage: profileImage },
+      state: { field: post.field, id: post.id },
     });
   };
 
