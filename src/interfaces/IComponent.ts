@@ -34,6 +34,9 @@ export interface IBookmarkBtn {
 
 export interface ICommentCard {
   comment: IComment;
+  collectionName: string;
+  docId: string;
+  getComments: any;
 }
 
 export interface IPagination {

@@ -10,20 +10,26 @@ import { WritingComment } from "../components/comment/WritingComment";
 import { PostBody } from "../components/post/PostBody";
 import { PostHead } from "../components/post/PostHead";
 import { getComments, getImage, getOnePost } from "../firebase/getData";
+import useDidMountEffect from "../hooks/useDidMountEffect";
 
 export default function PostDetail() {
   const state = (useLocation() as RouteState).state;
   const [postData, setPostData] = useState<IPost>();
   const [comments, setComments] = useState([]);
   const [profileImage, setProfileImage] = useState("");
+  const bringBackComments = () => {
+    setComments([]);
+    getComments({
+      collectionName: state.field,
+      docId: state.id,
+      setComments: setComments,
+    });
+  };
 
   useEffect(() => {
     if (postData) {
       getImage({ imageURL: postData.creatorImage, setImage: setProfileImage });
     }
-  }, [postData]);
-
-  useEffect(() => {
     getOnePost({
       collectionName: state.field,
       docId: state.id,
@@ -56,7 +62,12 @@ export default function PostDetail() {
             />
             <CommentWrapper>
               {comments.map((comment) => (
-                <CommentCard comment={comment} />
+                <CommentCard
+                  comment={comment}
+                  collectionName={postData.field}
+                  docId={postData.id}
+                  getComments={bringBackComments}
+                />
               ))}
             </CommentWrapper>
           </div>

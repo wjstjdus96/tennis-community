@@ -4,14 +4,29 @@ import { getElapsedTime } from "../../utils/getElapsedTime";
 import { ICommentCard } from "../../interfaces/IComponent";
 import { EditDeleteBtn } from "../post/EditDeleteBtns";
 import { getImage } from "../../firebase/getData";
+import { deleteComment } from "../../firebase/deleteData";
 
-export default function CommentCard({ comment }: ICommentCard) {
+export default function CommentCard({
+  comment,
+  collectionName,
+  docId,
+  getComments,
+}: ICommentCard) {
   const [profileImg, setProfileImg] = useState("");
-  const [isWriter, setIsWriter] = useState(false);
+  const [isWriter, setIsWriter] = useState(true);
 
   useEffect(() => {
     getImage({ imageURL: comment.creatorPhotoURL, setImage: setProfileImg });
   }, []);
+
+  const clickDeleteComment = async () => {
+    await deleteComment({
+      collectionName: collectionName,
+      docId: docId,
+      commentId: comment.id,
+    });
+    await getComments();
+  };
 
   return (
     <Wrapper>
@@ -22,12 +37,7 @@ export default function CommentCard({ comment }: ICommentCard) {
         </div>
         <div>
           <div>{getElapsedTime(comment.createdAt.seconds)}</div>
-          {isWriter && (
-            <EditDeleteBtn
-              clickDelelteBtn={() => console.log("삭제")}
-              clickEditBtn={() => console.log("수정")}
-            />
-          )}
+          {isWriter && <EditDeleteBtn clickDelelteBtn={clickDeleteComment} />}
         </div>
       </InfoWrapper>
       <div>{comment.comment}</div>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface IEditDeleteBtn {
-  clickEditBtn: () => void;
+  clickEditBtn?: () => void;
   clickDelelteBtn: () => void;
 }
 
@@ -11,9 +11,11 @@ export function EditDeleteBtn({
 }: IEditDeleteBtn) {
   return (
     <ButtonsWrapper>
-      <Button usage="edit" onClick={clickEditBtn}>
-        수정
-      </Button>
+      {clickEditBtn && (
+        <Button usage="edit" onClick={clickEditBtn}>
+          수정
+        </Button>
+      )}
       <Button usage="delete" onClick={clickDelelteBtn}>
         삭제
       </Button>
