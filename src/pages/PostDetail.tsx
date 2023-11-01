@@ -11,11 +11,19 @@ import { RouteState } from "../interfaces/IFunction";
 import { WritingComment } from "../components/comment/WritingComment";
 import { PostBody } from "../components/post/PostBody";
 import { PostHead } from "../components/post/PostHead";
+import { getImage } from "../firebase/getImage";
 
 export default function PostDetail() {
   const state = (useLocation() as RouteState).state;
   const [postData, setPostData] = useState<IPost>();
   const [comments, setComments] = useState([]);
+  const [profileImage, setProfileImage] = useState("");
+
+  useEffect(() => {
+    if (postData) {
+      getImage({ imageURL: postData.creatorImage, setImage: setProfileImage });
+    }
+  }, [postData]);
 
   useEffect(() => {
     getOnePost({
@@ -35,16 +43,11 @@ export default function PostDetail() {
       {postData && (
         <Wrapper>
           <PostHead
-            writerImage={state.creatorImage}
+            writerImage={profileImage}
             writerName={postData.creatorName}
             createdAt={postData.createdAt.seconds}
           />
-          <PostBody
-            postTitle={postData.title}
-            postBody={postData.body}
-            bookmarkNum={postData.bookmarkNum}
-            docState={state}
-          />
+          <PostBody postData={postData} />
           <div>
             <div>{postData.commentNum}개의 댓글</div>
             <WritingComment

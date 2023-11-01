@@ -1,20 +1,27 @@
 import { HomeLayout } from "../layouts/HomeLayout";
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import WritingInput from "../components/post/WritingInput";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { ICommunityWritingValue } from "../interfaces/IValue";
+import { useEffect } from "react";
+import { updateDocData } from "../firebase/updateData";
 
 export function Writing() {
+  const { postId } = useParams();
+  const { state } = useLocation();
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<ICommunityWritingValue>();
   const navigate = useNavigate();
-  const onClickSubmit: SubmitHandler<ICommunityWritingValue> = async (data) => {
+  const onClickWriting: SubmitHandler<ICommunityWritingValue> = async (
+    data
+  ) => {
     try {
       let docData = {
         body: data.body,
@@ -34,11 +41,38 @@ export function Writing() {
     }
   };
 
+  const onClickEdit: SubmitHandler<ICommunityWritingValue> = async (data) => {
+    try {
+      let newData = {
+        body: data.body,
+        title: data.title,
+        titleKeyword: data.title.split(" "),
+      };
+      updateDocData({
+        collectionName: state.field,
+        docId: state.id,
+        newData: newData,
+      });
+      navigate(`/${state.field}/${state.id}`, {
+        state: { field: state.field, id: state.id },
+      });
+    } catch (e) {
+      alert("게시글 수정에 실패하였습니다");
+    }
+  };
+
+  useEffect(() => {
+    if (postId) {
+      setValue("title", state.title);
+      setValue("body", state.body);
+    }
+  }, [postId]);
+
   return (
     <HomeLayout>
-      <Head>커뮤니티 글쓰기</Head>
+      <Head>{postId ? "게시글 수정" : "게시글 작성"}</Head>
       <Body>
-        <form onSubmit={handleSubmit(onClickSubmit)}>
+        <form onSubmit={handleSubmit(postId ? onClickEdit : onClickWriting)}>
           <WritingInput
             name="title"
             text="제목"
@@ -52,7 +86,7 @@ export function Writing() {
             errorMsg={errors.body && "본문을 작성해주세요"}
           />
           <div>
-            <SubmitBtn>글쓰기</SubmitBtn>
+            <SubmitBtn>{postId ? "수정하기" : "글쓰기"}</SubmitBtn>
           </div>
         </form>
       </Body>

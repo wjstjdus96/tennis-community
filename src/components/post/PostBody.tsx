@@ -5,38 +5,39 @@ import { useState } from "react";
 import { deletePost } from "../../firebase/deleteData";
 import { useNavigate } from "react-router-dom";
 
-export function PostBody({
-  postTitle,
-  postBody,
-  bookmarkNum,
-  docState,
-}: IPostBody) {
+export function PostBody({ postData }: IPostBody) {
   const [isWriter, setIsWriter] = useState(true);
   const navigate = useNavigate();
 
   const clickDeletePost = () => {
     if (window.confirm("게시물을 삭제하시겠습니까?")) {
-      deletePost({ collectionName: docState.field, docId: docState.id });
-      navigate(`/${docState.field}`);
+      deletePost({ collectionName: postData.field, docId: postData.id });
+      navigate(`/${postData.field}`);
     }
   };
 
-  const clickEditPost = () => {};
+  const clickEditPost = () => {
+    navigate(`/${postData.field}/edit/${postData.id}`, {
+      state: postData,
+    });
+  };
 
   return (
     <Wrapper>
-      <div>{postTitle}</div>
-      <div>{postBody}</div>
+      <div>{postData.title}</div>
+      <div>{postData.body}</div>
       <div>
         <BookmarkBtn
-          bookmarkNum={bookmarkNum}
-          collectionName={docState.field}
-          docId={docState.id}
+          bookmarkNum={postData.bookmarkNum}
+          collectionName={postData.field}
+          docId={postData.id}
         />
       </div>
       {isWriter && (
         <ButtonsWrapper>
-          <Button usage="edit">수정</Button>
+          <Button usage="edit" onClick={clickEditPost}>
+            수정
+          </Button>
           <Button usage="delete" onClick={clickDeletePost}>
             삭제
           </Button>
@@ -69,7 +70,7 @@ const ButtonsWrapper = styled.div`
 
 const Button = styled.button<{ usage: string }>`
   border: none;
-  padding: 5px 10px;
+  padding: 4px 8px;
   border-radius: 10px;
   background-color: ${(props) => (props.usage == "edit" ? "lightgrey" : "red")};
   color: ${(props) => (props.usage == "edit" ? "black" : "white")};

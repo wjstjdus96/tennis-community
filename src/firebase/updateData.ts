@@ -8,6 +8,12 @@ interface IUpdateData {
   incrementNum: number;
 }
 
+interface IUpdateDocData {
+  collectionName: string;
+  docId: string;
+  newData: any;
+}
+
 export async function updateOneData({
   collectionName,
   docId,
@@ -19,4 +25,13 @@ export async function updateOneData({
     await updateDoc(docRef, { commentNum: increment(incrementNum) });
   if (docField == "bookmarkNum")
     await updateDoc(docRef, { bookmarkNum: increment(incrementNum) });
+}
+
+export async function updateDocData({
+  collectionName,
+  docId,
+  newData,
+}: IUpdateDocData) {
+  const docRef = doc(db, collectionName, docId);
+  await updateDoc(docRef, newData);
 }
