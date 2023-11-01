@@ -4,6 +4,7 @@ import { IPostBody } from "../../interfaces/IComponent";
 import { useState } from "react";
 import { deletePost } from "../../firebase/deleteData";
 import { useNavigate } from "react-router-dom";
+import { EditDeleteBtn } from "./EditDeleteBtns";
 
 export function PostBody({ postData }: IPostBody) {
   const [isWriter, setIsWriter] = useState(true);
@@ -34,14 +35,10 @@ export function PostBody({ postData }: IPostBody) {
         />
       </div>
       {isWriter && (
-        <ButtonsWrapper>
-          <Button usage="edit" onClick={clickEditPost}>
-            수정
-          </Button>
-          <Button usage="delete" onClick={clickDeletePost}>
-            삭제
-          </Button>
-        </ButtonsWrapper>
+        <EditDeleteBtn
+          clickDelelteBtn={clickDeletePost}
+          clickEditBtn={clickEditPost}
+        />
       )}
     </Wrapper>
   );
@@ -55,28 +52,8 @@ const Wrapper = styled.div`
     font-weight: 700;
   }
   & > div:nth-child(3) {
-    margin-top: 30px;
+    margin: 30px 0;
     display: flex;
     justify-content: center;
-  }
-`;
-
-const ButtonsWrapper = styled.div`
-  display: flex;
-  justify-content: end;
-  gap: 10px;
-  margin-top: 30px;
-`;
-
-const Button = styled.button<{ usage: string }>`
-  border: none;
-  padding: 4px 8px;
-  border-radius: 10px;
-  background-color: ${(props) => (props.usage == "edit" ? "lightgrey" : "red")};
-  color: ${(props) => (props.usage == "edit" ? "black" : "white")};
-  font-family: "Noto Sans KR", sans-serif;
-  &:hover {
-    cursor: pointer;
-    box-shadow: 100px 0 0 0 rgba(0, 0, 0, 0.1) inset;
   }
 `;

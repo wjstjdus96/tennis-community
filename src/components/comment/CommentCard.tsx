@@ -3,9 +3,11 @@ import styled from "styled-components";
 import { getImage } from "../../firebase/getImage";
 import { getElapsedTime } from "../../utils/getElapsedTime";
 import { ICommentCard } from "../../interfaces/IComponent";
+import { EditDeleteBtn } from "../post/EditDeleteBtns";
 
 export default function CommentCard({ comment }: ICommentCard) {
   const [profileImg, setProfileImg] = useState("");
+  const [isWriter, setIsWriter] = useState(false);
 
   useEffect(() => {
     getImage({ imageURL: comment.creatorPhotoURL, setImage: setProfileImg });
@@ -18,7 +20,15 @@ export default function CommentCard({ comment }: ICommentCard) {
           <img src={profileImg} />
           <div>{comment.creatorName}</div>
         </div>
-        <div>{getElapsedTime(comment.createdAt.seconds)}</div>
+        <div>
+          <div>{getElapsedTime(comment.createdAt.seconds)}</div>
+          {isWriter && (
+            <EditDeleteBtn
+              clickDelelteBtn={() => console.log("삭제")}
+              clickEditBtn={() => console.log("수정")}
+            />
+          )}
+        </div>
       </InfoWrapper>
       <div>{comment.comment}</div>
     </Wrapper>
@@ -40,7 +50,7 @@ const InfoWrapper = styled.div`
   align-items: center;
   margin-bottom: 15px;
   font-size: 13px;
-  & > div:first-child {
+  & > div {
     display: flex;
     align-items: center;
     gap: 20px;
