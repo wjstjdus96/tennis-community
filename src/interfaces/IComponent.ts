@@ -56,3 +56,23 @@ export interface IBoardHead {
   title: string;
   summary: string;
 }
+
+export interface IWritingComment {
+  writerImage: string;
+  collectionName: string;
+  docId: string;
+  setComments: React.Dispatch<React.SetStateAction<any>>;
+}
+
+export interface IPostBody {
+  postTitle: string;
+  postBody: string;
+  bookmarkNum: number;
+  docState: any;
+}
+
+export interface IPostHead {
+  writerImage: string;
+  writerName: string;
+  createdAt: number;
+}
