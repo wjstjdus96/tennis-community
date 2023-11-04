@@ -6,6 +6,7 @@ import { updateOneData } from "../../firebase/updateData";
 import { db } from "../../firebase/firebase";
 import { IWritingComment } from "../../interfaces/IComponent";
 import { getComments } from "../../firebase/getData";
+import { checkIsLogin } from "../../utils/checkIsLogin";
 
 export function WritingComment({
   writerImage,
@@ -19,6 +20,7 @@ export function WritingComment({
     formState: { errors },
     reset,
   } = useForm<ISetComment>();
+  const isLogin = checkIsLogin();
 
   const onClickCommentWriting: SubmitHandler<ISetComment> = async (data) => {
     try {
@@ -53,15 +55,20 @@ export function WritingComment({
     <Wrapper onSubmit={handleSubmit(onClickCommentWriting)}>
       <div>
         <img src={writerImage} />
-        <textarea
-          id="comment"
-          {...register("comment")}
-          placeholder={"댓글을 입력해주세요"}
-        />
+        {isLogin ? (
+          <textarea
+            id="comment"
+            {...register("comment")}
+            placeholder={"댓글을 입력해주세요"}
+          />
+        ) : (
+          <textarea
+            placeholder="로그인 후 작성 가능합니다."
+            readOnly
+          ></textarea>
+        )}
       </div>
-      <div>
-        <button>작성</button>
-      </div>
+      <div>{isLogin ? <button>작성</button> : <div></div>}</div>
     </Wrapper>
   );
 }
@@ -83,8 +90,9 @@ const Wrapper = styled.form`
   }
   textarea {
     width: 100%;
-    height: 60px;
+    height: 50px;
     resize: none;
+    padding: 5px;
     font-family: "Noto Sans KR", sans-serif;
     white-space: pre-wrap;
   }
