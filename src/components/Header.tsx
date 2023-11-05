@@ -29,7 +29,7 @@ export default function Header() {
       {isLogin ? (
         <Profile>
           <div>
-            <Link to="/my-page">
+            <Link to="/my-page/activities">
               <img src={defaultProfile} />
             </Link>
           </div>

@@ -7,6 +7,8 @@ import { Writing } from "../pages/Writing";
 import PostDetail from "../pages/PostDetail";
 import PrivateRoute from "./PrivateRoute";
 import MyPage from "../pages/MyPage";
+import { Setting } from "../components/myPage/Setting";
+import { MyActivities } from "../components/myPage/MyActivities";
 
 export default function Router() {
   return (
@@ -18,7 +20,10 @@ export default function Router() {
           <Route path="/signup" element={<Signup />} />
         </Route>
         <Route element={<PrivateRoute authentication={true} />}>
-          <Route path="/my-page" element={<MyPage />} />
+          <Route path="/my-page" element={<MyPage />}>
+            <Route path="setting" element={<Setting />} />
+            <Route path="activities" element={<MyActivities />} />
+          </Route>
           <Route path="/community/write" element={<Writing />} />
           <Route path="/community/edit/:postId" element={<Writing />} />
         </Route>

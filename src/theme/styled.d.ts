@@ -8,5 +8,6 @@ declare module "styled-components" {
       2: string;
       3: string;
     };
+    myPageBgColor: string;
   }
 }
