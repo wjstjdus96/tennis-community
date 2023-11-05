@@ -58,7 +58,7 @@ const NavLinkStyle = styled(NavLink)`
     cursor: pointer;
   }
   &.active {
-    color: ${(props) => props.theme.green[3]};
+    color: ${(props) => props.theme.green[2]};
     font-weight: 700;
   }
 `;
