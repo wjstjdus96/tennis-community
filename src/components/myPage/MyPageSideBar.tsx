@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import defaultProfile from "../../assets/defaultProfile.png";
 import { useLocation, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export function MyPageSideBar() {
   return (
@@ -8,8 +9,8 @@ export function MyPageSideBar() {
       <img src={defaultProfile} />
       <NickName>닉네임 님</NickName>
       <MyPageMenus>
-        <div>나의 활동</div>
-        <div>설정</div>
+        <NavLinkStyle to="activities">나의 활동</NavLinkStyle>
+        <NavLinkStyle to="setting">설정</NavLinkStyle>
         <div>로그아웃</div>
       </MyPageMenus>
     </Wrapper>
@@ -46,4 +47,18 @@ const MyPageMenus = styled.div`
 const NickName = styled.div`
   font-size: 20px;
   font-weight: 700;
+`;
+
+const NavLinkStyle = styled(NavLink)`
+  text-decoration: none;
+  color: black;
+  &:hover {
+    font-weight: 700;
+    color: ${(props) => props.theme.green[2]};
+    cursor: pointer;
+  }
+  &.active {
+    color: ${(props) => props.theme.green[3]};
+    font-weight: 700;
+  }
 `;
