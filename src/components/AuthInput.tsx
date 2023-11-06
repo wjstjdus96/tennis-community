@@ -27,9 +27,11 @@ export default function AuthInput({
 }
 
 const Wrapper = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+  min-width: 300px;
   label {
     color: grey;
     font-size: 15px;

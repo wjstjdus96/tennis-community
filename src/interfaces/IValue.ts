@@ -55,4 +55,5 @@ export interface ISignupValue {
   email: string;
   password: string;
   passwordConfirm?: string;
+  nickname: string;
 }
