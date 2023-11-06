@@ -30,7 +30,7 @@ export interface IGetComments {
 
 export interface IGetImage {
   imageURL: string;
-  setImage: React.Dispatch<React.SetStateAction<string>>;
+  setImage?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface RouteState {

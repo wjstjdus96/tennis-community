@@ -6,15 +6,20 @@ import {
   IoCaretDownOutline,
   IoEllipsisHorizontalOutline,
 } from "react-icons/io5";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../recoil/atom";
 
 export function MyPageSideBar() {
+  const userInfo = useRecoilValue(userState);
+
   return (
     <Wrapper>
-      <img src={defaultProfile} />
-      <NickName>닉네임 님</NickName>
+      <img src={userInfo.photo} />
+      <UserInfo>
+        <div>{userInfo.displayName} 님</div>
+        <div>{userInfo.email}</div>
+      </UserInfo>
       <MiddleLine>
-        <IoEllipsisHorizontalOutline />
-        <IoCaretDownOutline />
         <IoEllipsisHorizontalOutline />
       </MiddleLine>
       <MyPageMenus>
@@ -54,9 +59,21 @@ const MyPageMenus = styled.div`
   }
 `;
 
-const NickName = styled.div`
-  font-size: 20px;
-  font-weight: 700;
+const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  & > div:first-child {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  & > div:last-child {
+    font-size: 12px;
+    color: gray;
+  }
 `;
 
 const NavLinkStyle = styled(NavLink)`

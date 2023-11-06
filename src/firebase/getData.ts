@@ -19,6 +19,7 @@ import {
   IGetPostsByPage,
   IGetComments,
 } from "../interfaces/IFunction";
+import { getAuth } from "firebase/auth";
 
 export async function getComments({
   collectionName,
@@ -41,6 +42,11 @@ export async function getComments({
 
 export const getImage = ({ imageURL, setImage }: IGetImage) => {
   const storage = getStorage();
+  if (!setImage) {
+    return imageURL != ""
+      ? getDownloadURL(ref(storage, `${imageURL}`))
+      : defaultProfile;
+  }
   if (imageURL) {
     const imageRef = ref(storage, `${imageURL}`);
     getDownloadURL(imageRef).then((url) => {
@@ -148,4 +154,14 @@ export const getPostsByPage = async ({
       setPosts((prev: any) => [...prev, postObject]);
     });
   }
+};
+
+export const getUserInfo = (field: string) => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  if (user == null) return "";
+  if (field == "id") return user.uid;
+  if (field == "displayName") return user.displayName;
+  if (field == "email") return user.email;
+  if (field == "photoURL") return user.photoURL;
 };

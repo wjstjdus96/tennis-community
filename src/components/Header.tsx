@@ -3,9 +3,12 @@ import { BiSolidTennisBall } from "react-icons/bi";
 import defaultProfile from "../assets/defaultProfile.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { checkIsLogin } from "../utils/checkIsLogin";
+import { userState } from "../recoil/atom";
+import { useRecoilValue } from "recoil";
 
 export default function Header() {
   const isLogin = checkIsLogin();
+  const userInfo = useRecoilValue(userState);
 
   return (
     <Wrapper>
@@ -30,7 +33,7 @@ export default function Header() {
         <Profile>
           <div>
             <Link to="/my-page/activities?field=writing">
-              <img src={defaultProfile} />
+              <img src={userInfo.photo} />
             </Link>
           </div>
         </Profile>
