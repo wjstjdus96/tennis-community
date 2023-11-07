@@ -37,7 +37,7 @@ export default function Signup() {
     nickname: yup
       .string()
       .required("닉네임을 입력해주세요")
-      .max(15, "최대 8자 까지만 가능합니다"),
+      .max(8, "최대 8자 까지만 가능합니다"),
   });
 
   const {
