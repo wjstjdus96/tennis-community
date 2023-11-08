@@ -7,6 +7,8 @@ import { db } from "../../firebase/firebase";
 import { IWritingComment } from "../../interfaces/IComponent";
 import { getComments } from "../../firebase/getData";
 import { checkIsLogin } from "../../utils/checkIsLogin";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../recoil/atom";
 
 export function WritingComment({
   writerImage,
@@ -21,15 +23,16 @@ export function WritingComment({
     reset,
   } = useForm<ISetComment>();
   const isLogin = checkIsLogin();
+  const userInfo = useRecoilValue(userState);
 
   const onClickCommentWriting: SubmitHandler<ISetComment> = async (data) => {
     try {
       let commentData = {
         comment: data.comment,
         createdAt: serverTimestamp(),
-        creatorId: "임시id",
-        creatorName: "댓글 임시 닉넴",
-        creatorPhotoURL: "",
+        creatorId: userInfo.id,
+        creatorName: userInfo.displayName,
+        creatorPhotoURL: userInfo.photo,
       };
       const commentRef = doc(collection(db, collectionName, docId, "comments"));
       await setDoc(commentRef, commentData);

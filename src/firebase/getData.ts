@@ -40,21 +40,11 @@ export async function getComments({
   });
 }
 
-export const getImage = ({ imageURL, setImage }: IGetImage) => {
+export const getImage = ({ imageURL }: IGetImage) => {
   const storage = getStorage();
-  if (!setImage) {
-    return imageURL != ""
-      ? getDownloadURL(ref(storage, `${imageURL}`))
-      : defaultProfile;
-  }
-  if (imageURL) {
-    const imageRef = ref(storage, `${imageURL}`);
-    getDownloadURL(imageRef).then((url) => {
-      setImage(url);
-    });
-  } else {
-    setImage(defaultProfile);
-  }
+  return imageURL != ""
+    ? getDownloadURL(ref(storage, `${imageURL}`))
+    : defaultProfile;
 };
 
 export function getOnePost({ collectionName, docId, setPostData }: IGetPost) {

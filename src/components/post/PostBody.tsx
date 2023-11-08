@@ -5,10 +5,12 @@ import { useState } from "react";
 import { deletePost } from "../../firebase/deleteData";
 import { useNavigate } from "react-router-dom";
 import { EditDeleteBtn } from "./EditDeleteBtns";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../recoil/atom";
 
 export function PostBody({ postData }: IPostBody) {
-  const [isWriter, setIsWriter] = useState(true);
   const navigate = useNavigate();
+  const userInfo = useRecoilValue(userState);
 
   const clickDeletePost = () => {
     if (window.confirm("게시물을 삭제하시겠습니까?")) {
@@ -34,7 +36,7 @@ export function PostBody({ postData }: IPostBody) {
           docId={postData.id}
         />
       </div>
-      {isWriter && (
+      {userInfo.id == postData.creatorId && (
         <EditDeleteBtn
           clickDelelteBtn={clickDeletePost}
           clickEditBtn={clickEditPost}

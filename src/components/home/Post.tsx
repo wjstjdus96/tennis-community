@@ -1,10 +1,8 @@
 import styled from "styled-components";
 import { FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
 import { getElapsedTime } from "../../utils/getElapsedTime";
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IPost } from "../../interfaces/IValue";
-import { getImage } from "../../firebase/getData";
 
 export default function Post({
   post,
@@ -14,11 +12,6 @@ export default function Post({
   isHome: boolean;
 }) {
   const navigate = useNavigate();
-  const [profileImage, setProfileImage] = useState("");
-
-  useEffect(() => {
-    getImage({ imageURL: post.creatorImage, setImage: setProfileImage });
-  });
 
   const onClickTitle = () => {
     navigate(`/${post.field}/${post.id}`, {
@@ -31,7 +24,7 @@ export default function Post({
       <Infos>
         <InfoGroup>
           <IconItem>
-            <img src={profileImage} />
+            <img src={post.creatorImage} />
             <div>{post.creatorName}</div>
           </IconItem>
           <div>{getElapsedTime(post.createdAt.seconds)}</div>

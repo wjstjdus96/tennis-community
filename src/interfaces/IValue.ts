@@ -8,6 +8,7 @@ export interface IPost {
   };
   creatorImage: string;
   creatorName: string;
+  creatorId: string;
   id: string;
   title: string;
   type?: string;

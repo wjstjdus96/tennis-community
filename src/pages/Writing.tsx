@@ -47,7 +47,7 @@ export function Writing() {
       };
       await addDoc(collection(db, "community"), docData);
       await setDoc(
-        doc(collection(db, "users", userInfo.id, "writing")),
+        doc(collection(db, "users", "임시 아이디", "writing")),
         docData
       );
       navigate("/community");
