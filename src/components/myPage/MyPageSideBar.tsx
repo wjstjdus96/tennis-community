@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import defaultProfile from "../../assets/defaultProfile.png";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import {
   IoCaretDownOutline,
@@ -11,6 +11,13 @@ import { userState } from "../../recoil/atom";
 
 export function MyPageSideBar() {
   const userInfo = useRecoilValue(userState);
+  const navigate = useNavigate();
+  const clickLogout = () => {
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      sessionStorage.clear();
+      navigate("/");
+    }
+  };
 
   return (
     <Wrapper>
@@ -25,7 +32,7 @@ export function MyPageSideBar() {
       <MyPageMenus>
         <NavLinkStyle to="activities?field=writing">나의 활동</NavLinkStyle>
         <NavLinkStyle to="setting">설정</NavLinkStyle>
-        <div>로그아웃</div>
+        <div onClick={clickLogout}>로그아웃</div>
       </MyPageMenus>
     </Wrapper>
   );

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import BookmarkBtn from "./BookmarkBtn";
 import { IPostBody } from "../../interfaces/IComponent";
-import { useState } from "react";
 import { deletePost } from "../../firebase/deleteData";
 import { useNavigate } from "react-router-dom";
 import { EditDeleteBtn } from "./EditDeleteBtns";
