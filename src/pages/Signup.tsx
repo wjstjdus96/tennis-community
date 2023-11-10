@@ -10,12 +10,15 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from "@firebase/auth";
-import { auth } from "../firebase/firebase";
+import { auth, db } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 import { ISignupValue } from "../interfaces/IValue";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { useState } from "react";
 
 export default function Signup() {
   const navigate = useNavigate();
+  const [userId, setUserId] = useState("");
 
   const formSchema = yup.object({
     email: yup
@@ -58,11 +61,16 @@ export default function Signup() {
         data.password
       ).then((res) => {
         updateProfile(res.user, { displayName: data.nickname });
+        setDoc(doc(db, "users", res.user.uid), {
+          communityWriting: [],
+          communityBookmark: [],
+        });
       });
+
       alert("회원가입에 성공하였습니다");
       navigate("/login");
     } catch (error) {
-      alert("회원가입에 실패하였습니다.");
+      alert("회원가입에 실패하였습니다." + error);
     }
   };
 

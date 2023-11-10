@@ -9,10 +9,13 @@ import {
   doc,
   serverTimestamp,
   setDoc,
+  updateDoc,
+  FieldValue,
+  arrayUnion,
 } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { ICommunityWritingValue } from "../interfaces/IValue";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { updateDocData } from "../firebase/updateData";
 import { userState } from "../recoil/atom";
 import { useRecoilValue } from "recoil";
@@ -45,11 +48,11 @@ export function Writing() {
         title: data.title,
         titleKeyword: data.title.split(" "),
       };
-      await addDoc(collection(db, "community"), docData);
-      await setDoc(
-        doc(collection(db, "users", "임시 아이디", "writing")),
-        docData
-      );
+      await addDoc(collection(db, "community"), docData).then((docRef) => {
+        updateDoc(doc(db, "users", userInfo.id), {
+          communityWriting: arrayUnion(docRef.id),
+        });
+      });
       navigate("/community");
     } catch (error) {
       alert("글쓰기에 실패하였습니다" + error);
