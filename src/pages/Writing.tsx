@@ -8,9 +8,7 @@ import {
   collection,
   doc,
   serverTimestamp,
-  setDoc,
   updateDoc,
-  FieldValue,
   arrayUnion,
 } from "firebase/firestore";
 import { db } from "../firebase/firebase";

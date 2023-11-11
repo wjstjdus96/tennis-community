@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { EditDeleteBtn } from "./EditDeleteBtns";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../recoil/atom";
+import { arrayRemove, doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
 
 export function PostBody({ postData }: IPostBody) {
   const navigate = useNavigate();
@@ -14,6 +16,9 @@ export function PostBody({ postData }: IPostBody) {
   const clickDeletePost = () => {
     if (window.confirm("게시물을 삭제하시겠습니까?")) {
       deletePost({ collectionName: postData.field, docId: postData.id });
+      updateDoc(doc(db, "users", userInfo.id), {
+        communityWriting: arrayRemove(postData.id),
+      });
       navigate(`/${postData.field}`);
     }
   };
