@@ -5,8 +5,7 @@ import { EditDeleteBtn } from "../post/EditDeleteBtns";
 import { deleteComment } from "../../firebase/deleteData";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../recoil/atom";
-import { arrayRemove, doc, updateDoc } from "firebase/firestore";
-import { db } from "../../firebase/firebase";
+import { updateUserArrayData } from "../../firebase/updateData";
 
 export default function CommentCard({
   comment,
@@ -22,8 +21,11 @@ export default function CommentCard({
       docId: docId,
       commentId: comment.id,
     }).then(() => {
-      updateDoc(doc(db, "users", userInfo.id), {
-        communityComment: arrayRemove(docId + "+" + comment.id),
+      updateUserArrayData({
+        userId: userInfo.id,
+        docField: "communityComment",
+        changing: "remove",
+        arrayItem: docId + "+" + comment.id,
       });
     });
     await getComments();

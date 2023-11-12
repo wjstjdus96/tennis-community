@@ -10,7 +10,7 @@ import {
   arrayUnion,
   addDoc,
 } from "firebase/firestore";
-import { updateOneData } from "../../firebase/updateData";
+import { updateOneData, updateUserArrayData } from "../../firebase/updateData";
 import { db } from "../../firebase/firebase";
 import { IWritingComment } from "../../interfaces/IComponent";
 import { getComments } from "../../firebase/getData";
@@ -44,8 +44,11 @@ export function WritingComment({
       };
       const commentRef = collection(db, collectionName, docId, "comments");
       await addDoc(commentRef, commentData).then((docRef) => {
-        updateDoc(doc(db, "users", userInfo.id), {
-          communityComment: arrayUnion(docId + "+" + docRef.id),
+        updateUserArrayData({
+          userId: userInfo.id,
+          docField: "communityComment",
+          changing: "add",
+          arrayItem: docId + "+" + docRef.id,
         });
       });
       setComments([]);

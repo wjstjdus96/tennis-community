@@ -3,18 +3,11 @@ import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import WritingInput from "../components/post/WritingInput";
-import {
-  addDoc,
-  collection,
-  doc,
-  serverTimestamp,
-  updateDoc,
-  arrayUnion,
-} from "firebase/firestore";
+import { addDoc, collection, doc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { ICommunityWritingValue } from "../interfaces/IValue";
 import { useEffect, useState } from "react";
-import { updateDocData } from "../firebase/updateData";
+import { updateDocData, updateUserArrayData } from "../firebase/updateData";
 import { userState } from "../recoil/atom";
 import { useRecoilValue } from "recoil";
 
@@ -47,8 +40,11 @@ export function Writing() {
         titleKeyword: data.title.split(" "),
       };
       await addDoc(collection(db, "community"), docData).then((docRef) => {
-        updateDoc(doc(db, "users", userInfo.id), {
-          communityWriting: arrayUnion(docRef.id),
+        updateUserArrayData({
+          userId: userInfo.id,
+          docField: "communityWriting",
+          changing: "add",
+          arrayItem: docRef.id,
         });
       });
       navigate("/community");

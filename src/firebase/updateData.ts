@@ -23,6 +23,7 @@ interface IUpdateDocData {
 interface IUpdateUserArrayData {
   userId: string;
   docField: string;
+  changing: string;
   arrayItem: string;
 }
 
@@ -48,21 +49,18 @@ export async function updateDocData({
   await updateDoc(docRef, newData);
 }
 
-// export function updateUserArrayData({
-//   userId,
-//   docField,
-//   arrayItem,
-// }: IUpdateUserArrayData) {
-//   const obj = [
-//     {
-//       communityWritingAdd: { communityWriting: arrayUnion(arrayItem) },
-//     },
-//     {
-//       communityWritingRemove: { communityWriting: arrayRemove(arrayItem) },
-//     },
-//   ];
-
-//   updateDoc(doc(db, "users", userId), {
-
-//   });
-// }
+export function updateUserArrayData({
+  userId,
+  docField,
+  changing,
+  arrayItem,
+}: IUpdateUserArrayData) {
+  if (changing == "add")
+    updateDoc(doc(db, "users", userId), {
+      [docField]: arrayUnion(arrayItem),
+    });
+  if (changing == "remove")
+    updateDoc(doc(db, "users", userId), {
+      [docField]: arrayRemove(arrayItem),
+    });
+}
