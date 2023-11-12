@@ -11,6 +11,7 @@ import {
   query,
   startAfter,
   where,
+  getDoc,
 } from "firebase/firestore";
 import { db } from "./firebase";
 import {
@@ -151,13 +152,43 @@ export const getUserBookmark = ({ userId, setUserState }: IGetUserBookmark) => {
   const docRef = doc(db, "users", userId);
   onSnapshot(docRef, (doc) => {
     const data = doc.data();
-    var communityBookmark = data ? data.communityBookmark : [];
-    var recruitBookmark = data ? data.recruitBookmark : [];
-    var marketBookmark = data ? data.marketBookmark : [];
     setUserState({
-      community: communityBookmark,
-      recruit: recruitBookmark,
-      market: marketBookmark,
+      community: data ? data.communityBookmark : [],
+      recruit: data ? data.recruitBookmark : [],
+      market: data ? data.marketBookmark : [],
     });
   });
+};
+
+interface IGetUserActivities {
+  userId: string;
+  field: string;
+  setFieldItems: React.Dispatch<React.SetStateAction<any>>;
+}
+
+export const getUserActivities = async ({
+  userId,
+  field,
+  setFieldItems,
+}: IGetUserActivities) => {
+  const docRef = doc(db, "users", userId);
+  const docSnap = await getDoc(docRef);
+  const data = docSnap.data();
+
+  if (field == "writing") {
+    const fieldData = {
+      community: data ? data.communityWriting : [],
+      recruit: data ? data.recruitWriting : [],
+      market: data ? data.marketWriting : [],
+    };
+    setFieldItems(fieldData);
+  }
+  if (field == "comment") {
+    const fieldData = {
+      community: data ? data.communityComment : [],
+      recruit: data ? data.recruitComment : [],
+      market: data ? data.marketComment : [],
+    };
+    setFieldItems(fieldData);
+  }
 };

@@ -24,7 +24,7 @@ export function ActivityFieldBtn({
       >
         {fieldName}
       </NavLink>
-      <div>{count}</div>
+      {/* <div>{count}</div> */}
     </Wrapper>
   );
 }

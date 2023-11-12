@@ -19,6 +19,6 @@ export const userState = atom<IUserState>({
 });
 
 export const userBookmarkState = atom<IUserBookmarkState>({
-  key: "userActivity",
+  key: "userBookmark",
   default: { community: [], recruit: [], market: [] },
 });
