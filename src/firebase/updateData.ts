@@ -1,4 +1,10 @@
-import { doc, increment, updateDoc } from "firebase/firestore";
+import {
+  arrayRemove,
+  arrayUnion,
+  doc,
+  increment,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "./firebase";
 
 interface IUpdateData {
@@ -12,6 +18,12 @@ interface IUpdateDocData {
   collectionName: string;
   docId: string;
   newData: any;
+}
+
+interface IUpdateUserArrayData {
+  userId: string;
+  docField: string;
+  arrayItem: string;
 }
 
 export async function updateOneData({
@@ -35,3 +47,22 @@ export async function updateDocData({
   const docRef = doc(db, collectionName, docId);
   await updateDoc(docRef, newData);
 }
+
+// export function updateUserArrayData({
+//   userId,
+//   docField,
+//   arrayItem,
+// }: IUpdateUserArrayData) {
+//   const obj = [
+//     {
+//       communityWritingAdd: { communityWriting: arrayUnion(arrayItem) },
+//     },
+//     {
+//       communityWritingRemove: { communityWriting: arrayRemove(arrayItem) },
+//     },
+//   ];
+
+//   updateDoc(doc(db, "users", userId), {
+
+//   });
+// }

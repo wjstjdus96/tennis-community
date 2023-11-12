@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getElapsedTime } from "../../utils/getElapsedTime";
 import { ICommentCard } from "../../interfaces/IComponent";
@@ -6,6 +5,8 @@ import { EditDeleteBtn } from "../post/EditDeleteBtns";
 import { deleteComment } from "../../firebase/deleteData";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../recoil/atom";
+import { arrayRemove, doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
 
 export default function CommentCard({
   comment,
@@ -13,7 +14,6 @@ export default function CommentCard({
   docId,
   getComments,
 }: ICommentCard) {
-  const [isWriter, setIsWriter] = useState(true);
   const userInfo = useRecoilValue(userState);
 
   const clickDeleteComment = async () => {
@@ -21,6 +21,10 @@ export default function CommentCard({
       collectionName: collectionName,
       docId: docId,
       commentId: comment.id,
+    }).then(() => {
+      updateDoc(doc(db, "users", userInfo.id), {
+        communityComment: arrayRemove(docId + "+" + comment.id),
+      });
     });
     await getComments();
   };

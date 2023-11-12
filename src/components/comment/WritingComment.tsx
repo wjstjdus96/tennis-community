@@ -1,7 +1,15 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ISetComment } from "../../interfaces/IFunction";
-import { doc, setDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  collection,
+  serverTimestamp,
+  updateDoc,
+  arrayUnion,
+  addDoc,
+} from "firebase/firestore";
 import { updateOneData } from "../../firebase/updateData";
 import { db } from "../../firebase/firebase";
 import { IWritingComment } from "../../interfaces/IComponent";
@@ -34,8 +42,12 @@ export function WritingComment({
         creatorName: userInfo.displayName,
         creatorPhotoURL: userInfo.photo,
       };
-      const commentRef = doc(collection(db, collectionName, docId, "comments"));
-      await setDoc(commentRef, commentData);
+      const commentRef = collection(db, collectionName, docId, "comments");
+      await addDoc(commentRef, commentData).then((docRef) => {
+        updateDoc(doc(db, "users", userInfo.id), {
+          communityComment: arrayUnion(docId + "+" + docRef.id),
+        });
+      });
       setComments([]);
       getComments({
         collectionName: collectionName,

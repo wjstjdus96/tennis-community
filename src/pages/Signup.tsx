@@ -64,6 +64,7 @@ export default function Signup() {
         setDoc(doc(db, "users", res.user.uid), {
           communityWriting: [],
           communityBookmark: [],
+          communityComment: [],
         });
       });
 

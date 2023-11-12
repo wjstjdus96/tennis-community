@@ -15,13 +15,13 @@ export function MyActivities() {
             curField={curField}
             field="writing"
             count={3}
-            fieldName="작성한 게시글"
+            fieldName="작성한 글"
           />
           <ActivityFieldBtn
             curField={curField}
             field="comment"
             count={6}
-            fieldName="작성한 댓글"
+            fieldName="댓글 단 글"
           />
           <ActivityFieldBtn
             curField={curField}
