@@ -1,3 +1,4 @@
+import { IUserBookmarkState } from "../recoil/atom";
 import { IComment, IPost } from "./IValue";
 
 export interface IGetPost {
@@ -39,4 +40,9 @@ export interface RouteState {
 
 export interface ISetComment {
   comment: string;
+}
+
+export interface IGetUserBookmark {
+  userId: string;
+  setUserState: React.Dispatch<React.SetStateAction<IUserBookmarkState>>;
 }

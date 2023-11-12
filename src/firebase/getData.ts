@@ -1,6 +1,6 @@
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import defaultProfile from "../assets/defaultProfile.png";
-import { IGetImage } from "../interfaces/IFunction";
+import { IGetImage, IGetUserBookmark } from "../interfaces/IFunction";
 import {
   collection,
   doc,
@@ -20,6 +20,7 @@ import {
   IGetComments,
 } from "../interfaces/IFunction";
 import { getAuth } from "firebase/auth";
+import { IUserBookmarkState } from "../recoil/atom";
 
 export async function getComments({
   collectionName,
@@ -146,12 +147,17 @@ export const getPostsByPage = async ({
   }
 };
 
-export const getUserInfo = (field: string) => {
-  const auth = getAuth();
-  const user = auth.currentUser;
-  if (user == null) return "";
-  if (field == "id") return user.uid;
-  if (field == "displayName") return user.displayName;
-  if (field == "email") return user.email;
-  if (field == "photoURL") return user.photoURL;
+export const getUserBookmark = ({ userId, setUserState }: IGetUserBookmark) => {
+  const docRef = doc(db, "users", userId);
+  onSnapshot(docRef, (doc) => {
+    const data = doc.data();
+    var communityBookmark = data ? data.communityBookmark : [];
+    var recruitBookmark = data ? data.recruitBookmark : [];
+    var marketBookmark = data ? data.marketBookmark : [];
+    setUserState({
+      community: communityBookmark,
+      recruit: recruitBookmark,
+      market: marketBookmark,
+    });
+  });
 };

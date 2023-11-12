@@ -7,10 +7,10 @@ interface IUserState {
   id: string;
 }
 
-interface IUserActivityState {
-  writing: any[];
-  comment: any[];
-  bookmark: any[];
+export interface IUserBookmarkState {
+  community: string[];
+  recruit: string[];
+  market: string[];
 }
 
 export const userState = atom<IUserState>({
@@ -18,7 +18,7 @@ export const userState = atom<IUserState>({
   default: { email: "", displayName: "", photo: "", id: "" },
 });
 
-export const userActivityState = atom<IUserActivityState>({
+export const userBookmarkState = atom<IUserBookmarkState>({
   key: "userActivity",
-  default: { writing: [], comment: [], bookmark: [] },
+  default: { community: [], recruit: [], market: [] },
 });
