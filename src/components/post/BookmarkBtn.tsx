@@ -1,31 +1,55 @@
 import styled from "styled-components";
 import { FaRegBookmark, FaBookmark } from "react-icons/fa6";
 import { useEffect, useState } from "react";
-import { updateOneData } from "../../firebase/updateData";
+import { updateOneData, updateUserArrayData } from "../../firebase/updateData";
 import useDidMountEffect from "../../hooks/useDidMountEffect";
 import { IBookmarkBtn } from "../../interfaces/IComponent";
+import { useRecoilValue } from "recoil";
+import {
+  IUserBookmarkState,
+  userBookmarkState,
+  userState,
+} from "../../recoil/atom";
 
 export default function BookmarkBtn({
   bookmarkNum,
   collectionName,
   docId,
 }: IBookmarkBtn) {
-  const [isChecked, setIsChecked] = useState(false);
+  const userBookmark = useRecoilValue(userBookmarkState);
+  const userInfo = useRecoilValue(userState);
+  const [isChecked, setIsChecked] = useState(
+    userBookmark[collectionName as keyof IUserBookmarkState].includes(docId)
+  );
 
   useDidMountEffect(() => {
-    isChecked
-      ? updateOneData({
-          collectionName: collectionName,
-          docId: docId,
-          docField: "bookmarkNum",
-          incrementNum: 1,
-        })
-      : updateOneData({
-          collectionName: collectionName,
-          docId: docId,
-          docField: "bookmarkNum",
-          incrementNum: -1,
-        });
+    if (isChecked) {
+      updateOneData({
+        collectionName: collectionName,
+        docId: docId,
+        docField: "bookmarkNum",
+        incrementNum: 1,
+      });
+      updateUserArrayData({
+        userId: userInfo.id,
+        docField: collectionName + "Bookmark",
+        changing: "add",
+        arrayItem: docId,
+      });
+    } else {
+      updateOneData({
+        collectionName: collectionName,
+        docId: docId,
+        docField: "bookmarkNum",
+        incrementNum: -1,
+      });
+      updateUserArrayData({
+        userId: userInfo.id,
+        docField: collectionName + "Bookmark",
+        changing: "remove",
+        arrayItem: docId,
+      });
+    }
   }, [isChecked]);
 
   const toggleBookmark = async () => {

@@ -34,10 +34,7 @@ export async function updateOneData({
   incrementNum,
 }: IUpdateData) {
   const docRef = doc(db, collectionName, docId);
-  if (docField == "commentNum")
-    await updateDoc(docRef, { commentNum: increment(incrementNum) });
-  if (docField == "bookmarkNum")
-    await updateDoc(docRef, { bookmarkNum: increment(incrementNum) });
+  await updateDoc(docRef, { [docField]: increment(incrementNum) });
 }
 
 export async function updateDocData({
