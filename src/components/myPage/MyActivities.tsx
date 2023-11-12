@@ -5,13 +5,20 @@ import { ActivityFieldBtn } from "./ActivityFieldBtn";
 import { getUserActivities } from "../../firebase/getData";
 import { useRecoilValue } from "recoil";
 import { userBookmarkState, userState } from "../../recoil/atom";
+import { ActivityFieldItem } from "./ActivityFieldItem";
+
+interface IFieldItems {
+  community: string[];
+  recruit: string[];
+  market: string[];
+}
 
 export function MyActivities() {
   const { search } = useLocation();
   const curField = new URLSearchParams(search).get("field");
   const userInfo = useRecoilValue(userState);
   const userBookmark = useRecoilValue(userBookmarkState);
-  const [fieldItems, setFieldItems] = useState<any>();
+  const [fieldItems, setFieldItems] = useState<IFieldItems>();
 
   useEffect(() => {
     if (curField == "writing" || curField == "comment") {
@@ -50,6 +57,13 @@ export function MyActivities() {
           />
         </FieldBoxWrapper>
       )}
+      {fieldItems && (
+        <PostWrapper>
+          {fieldItems["community"].map((itemId: string) => (
+            <ActivityFieldItem itemId={itemId} collectionName="community" />
+          ))}
+        </PostWrapper>
+      )}
     </Wrapper>
   );
 }
@@ -66,3 +80,5 @@ const FieldBoxWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
+
+const PostWrapper = styled.div``;

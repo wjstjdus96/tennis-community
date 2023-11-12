@@ -1,7 +1,7 @@
 import { IUserBookmarkState } from "../recoil/atom";
 import { IComment, IPost } from "./IValue";
 
-export interface IGetPost {
+export interface IGetOnePost {
   collectionName: string;
   docId: string;
   setPostData: React.Dispatch<any>;

@@ -1,6 +1,10 @@
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import defaultProfile from "../assets/defaultProfile.png";
-import { IGetImage, IGetUserBookmark } from "../interfaces/IFunction";
+import {
+  IGetImage,
+  IGetOnePost,
+  IGetUserBookmark,
+} from "../interfaces/IFunction";
 import {
   collection,
   doc,
@@ -15,13 +19,13 @@ import {
 } from "firebase/firestore";
 import { db } from "./firebase";
 import {
-  IGetPost,
   IGetPosts,
   IGetPostsByPage,
   IGetComments,
 } from "../interfaces/IFunction";
 import { getAuth } from "firebase/auth";
 import { IUserBookmarkState } from "../recoil/atom";
+import { IPost } from "../interfaces/IValue";
 
 export async function getComments({
   collectionName,
@@ -49,7 +53,11 @@ export const getImage = ({ imageURL }: IGetImage) => {
     : defaultProfile;
 };
 
-export function getOnePost({ collectionName, docId, setPostData }: IGetPost) {
+export function getOnePost({
+  collectionName,
+  docId,
+  setPostData,
+}: IGetOnePost) {
   const docRef = doc(db, collectionName, docId);
   onSnapshot(docRef, (doc) => setPostData({ ...doc.data(), id: docId }));
 }
@@ -192,3 +200,14 @@ export const getUserActivities = async ({
     setFieldItems(fieldData);
   }
 };
+
+interface IGetPost {
+  collectionName: string;
+  docId: string;
+}
+
+export async function getPost({ collectionName, docId }: IGetPost) {
+  const docRef = doc(db, collectionName, docId);
+  const docSnap = await getDoc(docRef);
+  return docSnap.data() ?? {};
+}
