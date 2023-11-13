@@ -6,15 +6,20 @@ import {
   IoCaretDownOutline,
   IoEllipsisHorizontalOutline,
 } from "react-icons/io5";
-import { useRecoilValue } from "recoil";
-import { userState } from "../../recoil/atom";
+import { useRecoilValue, useResetRecoilState } from "recoil";
+import { userBookmarkState, userState } from "../../recoil/atom";
 
 export function MyPageSideBar() {
   const userInfo = useRecoilValue(userState);
   const navigate = useNavigate();
+  const resetUserState = useResetRecoilState(userState);
+  const resetUserBookmarkState = useResetRecoilState(userBookmarkState);
   const clickLogout = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
+      resetUserState();
+      resetUserBookmarkState();
       sessionStorage.clear();
+
       navigate("/");
     }
   };

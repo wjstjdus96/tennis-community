@@ -1,3 +1,5 @@
+import { authSessionKey } from "./../firebase/firebase";
+
 export function checkIsLogin() {
-  return window.sessionStorage.length != 0;
+  return window.sessionStorage.getItem(authSessionKey) ? true : false;
 }

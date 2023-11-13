@@ -10,6 +10,7 @@ import {
   userBookmarkState,
   userState,
 } from "../../recoil/atom";
+import { checkIsLogin } from "../../utils/checkIsLogin";
 
 export default function BookmarkBtn({
   bookmarkNum,
@@ -21,6 +22,7 @@ export default function BookmarkBtn({
   const [isChecked, setIsChecked] = useState(
     userBookmark[collectionName as keyof IUserBookmarkState].includes(docId)
   );
+  const isLogin = checkIsLogin();
 
   useDidMountEffect(() => {
     if (isChecked) {
@@ -53,7 +55,12 @@ export default function BookmarkBtn({
   }, [isChecked]);
 
   const toggleBookmark = async () => {
-    setIsChecked((prev) => !prev);
+    if (!isLogin) {
+      alert("로그인 후 사용 가능합니다.");
+    }
+    if (isLogin) {
+      setIsChecked((prev) => !prev);
+    }
   };
 
   return (

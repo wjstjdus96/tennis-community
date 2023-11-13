@@ -9,6 +9,8 @@ import PrivateRoute from "./PrivateRoute";
 import MyPage from "../pages/MyPage";
 import { Setting } from "../components/myPage/Setting";
 import { MyActivities } from "../components/myPage/MyActivities";
+import Recruit from "../pages/Recruit";
+import Market from "../pages/Market";
 
 export default function Router() {
   return (
@@ -29,6 +31,12 @@ export default function Router() {
         </Route>
         <Route path="/community" element={<Community />} />
         <Route path="/community/:id" element={<PostDetail />} />
+        <Route path="/recruit" element={<Recruit />}>
+          <Route path=":id" element={<Recruit />} />
+        </Route>
+        <Route path="/market" element={<Market />}>
+          <Route path=":id" element={<Market />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

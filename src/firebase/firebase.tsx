@@ -4,16 +4,17 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB9aLg8dgi33Q3zLnXlTtk9T6AjjFY250M",
-  authDomain: "tennis-project-ce502.firebaseapp.com",
-  projectId: "tennis-project-ce502",
-  storageBucket: "tennis-project-ce502.appspot.com",
-  messagingSenderId: "63827663163",
-  appId: "1:63827663163:web:c7306d7bd002e65a07bf1e",
-  measurementId: "G-H1946QNGZV",
+  apiKey: process.env.REACT_APP_FB_API_KEY,
+  authDomain: process.env.REACT_APP_FB_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FB_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FB_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FB_MESSAGE_ID,
+  appId: process.env.REACT_APP_FB_APP_ID,
+  measurementId: process.env.REACT_APP_FB_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
+export const authSessionKey = `firebase:authUser:${firebaseConfig.apiKey}:[DEFAULT]`;
