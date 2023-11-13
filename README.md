@@ -1,46 +1,66 @@
-# Getting Started with Create React App
+# Tennig
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+테니스 커뮤니티입니다.
 
-## Available Scripts
+## 🌐 프로젝트 링크
 
-In the project directory, you can run:
+[Tenning 바로가기](https://loquacious-entremet-27ddda.netlify.app/)
 
-### `npm start`
+## 📃 실행 방법
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+$ git clone https://github.com/wjstjdus96/tennis-community.git
+$ cd tennis-community
+$ npm start
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 🚀 개발환경
 
-### `npm test`
+- 언어 : <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=TypeScript&logoColor=white">
+- 프론트 : <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white">
+- 데이터베이스 : <img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=firebase&logoColor=white">
+- 배포 : <img src="https://img.shields.io/badge/Netlify-00C7B7?style=flat&logo=netlify&logoColor=white">
+- 라이브러리 : <img src="https://img.shields.io/badge/Recoil-3578E5?style=flat&logo=recoil&logoColor=white"> <img src="https://img.shields.io/badge/ReactRouterDom-CA4245?style=flat&logo=reactrouter&logoColor=white"> <img src="https://img.shields.io/badge/Styled components-DB7093?style=flat&logo=styledcomponents&logoColor=white"> <img src="https://img.shields.io/badge/ReactHookForm-EC5990?style=flat&logo=reacthookform&logoColor=white"> 등
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🗂 폴더구조
 
-### `npm run build`
+```
+/src
+┣ 📁assets
+┣ 📁components
+    ┣ 📁board
+    ┣ 📁comment
+    ┣ 📁home
+    ┣ 📁myPage
+    ┣ 📁post
+┣ 📁firebase
+┣ 📁hooks
+┣ 📁interfaces
+┣ 📁recoil
+┣ 📁router
+┣ 📁theme
+┣ 📁utils
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## ⚙️ 기능 설명
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- 홈
+  - 모든 게시판 한눈에 보기 가능
+- 커뮤니티
+  - 게시글 CRUD 기능
+  - 게시글 댓글 생성, 삭제 기능
+  - 게시글 북마크 기능
+  - 검색 기능
+  - 필터링 기능
+  - 게시글 페이지네이션
+- 마이페이지
+  - 작성한 글, 댓글 단 글, 북마크한 글 조회 가능
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 추후 계획
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- 사람모집 게시판 추가
+- 플리마켓 게시판 추가
+- 정보 수정 기능 추가
+- algolia를 사용한 정밀한 검색 기능으로 디벨롭
+- 마이페이지 나의 활동 카테고리 별로 볼 수 있도록 디벨롭
+- 반응형 웹으로 디벨롭
