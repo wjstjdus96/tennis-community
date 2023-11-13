@@ -10,6 +10,9 @@ import { auth } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 import AuthLayout from "../layouts/AuthLayout";
 import { ILoginValue } from "../interfaces/IValue";
+import { userBookmarkState, userState } from "../recoil/atom";
+import { useSetRecoilState } from "recoil";
+import { getImage, getUserBookmark } from "../firebase/getData";
 
 export default function Login() {
   const {
@@ -19,14 +22,33 @@ export default function Login() {
     reset,
   } = useForm<ILoginValue>();
   const navigate = useNavigate();
+  const setUserState = useSetRecoilState(userState);
+  const setUserBookmarkState = useSetRecoilState(userBookmarkState);
 
   const onSubmitHandler: SubmitHandler<ILoginValue> = async (data) => {
     try {
       await setPersistence(auth, browserSessionPersistence);
-      await signInWithEmailAndPassword(auth, data.email, data.password);
+      await signInWithEmailAndPassword(auth, data.email, data.password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          setUserState({
+            email: user.email || "",
+            displayName: user.displayName || "",
+            photo: getImage({ imageURL: user.photoURL || "" }),
+            id: user.uid || "",
+          });
+          getUserBookmark({
+            userId: user.uid,
+            setUserState: setUserBookmarkState,
+          });
+        })
+        .catch((error) => {
+          alert(error);
+        });
+
       navigate("/");
     } catch (error) {
-      alert("로그인에 실패하였습니다. 다시 시도해주세요");
+      alert("로그인에 실패하였습니다. 다시 시도해주세요" + error);
       reset();
     }
   };

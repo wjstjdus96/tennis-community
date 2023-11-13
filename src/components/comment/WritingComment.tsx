@@ -1,11 +1,22 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ISetComment } from "../../interfaces/IFunction";
-import { doc, setDoc, collection, serverTimestamp } from "firebase/firestore";
-import { updateOneData } from "../../firebase/updateData";
+import {
+  doc,
+  setDoc,
+  collection,
+  serverTimestamp,
+  updateDoc,
+  arrayUnion,
+  addDoc,
+} from "firebase/firestore";
+import { updateOneData, updateUserArrayData } from "../../firebase/updateData";
 import { db } from "../../firebase/firebase";
 import { IWritingComment } from "../../interfaces/IComponent";
 import { getComments } from "../../firebase/getData";
+import { checkIsLogin } from "../../utils/checkIsLogin";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../recoil/atom";
 
 export function WritingComment({
   writerImage,
@@ -19,18 +30,27 @@ export function WritingComment({
     formState: { errors },
     reset,
   } = useForm<ISetComment>();
+  const isLogin = checkIsLogin();
+  const userInfo = useRecoilValue(userState);
 
   const onClickCommentWriting: SubmitHandler<ISetComment> = async (data) => {
     try {
       let commentData = {
         comment: data.comment,
         createdAt: serverTimestamp(),
-        creatorId: "임시id",
-        creatorName: "댓글 임시 닉넴",
-        creatorPhotoURL: "",
+        creatorId: userInfo.id,
+        creatorName: userInfo.displayName,
+        creatorPhotoURL: userInfo.photo,
       };
-      const commentRef = doc(collection(db, collectionName, docId, "comments"));
-      await setDoc(commentRef, commentData);
+      const commentRef = collection(db, collectionName, docId, "comments");
+      await addDoc(commentRef, commentData).then((docRef) => {
+        updateUserArrayData({
+          userId: userInfo.id,
+          docField: "communityComment",
+          changing: "add",
+          arrayItem: docId + "+" + docRef.id,
+        });
+      });
       setComments([]);
       getComments({
         collectionName: collectionName,
@@ -53,15 +73,20 @@ export function WritingComment({
     <Wrapper onSubmit={handleSubmit(onClickCommentWriting)}>
       <div>
         <img src={writerImage} />
-        <textarea
-          id="comment"
-          {...register("comment")}
-          placeholder={"댓글을 입력해주세요"}
-        />
+        {isLogin ? (
+          <textarea
+            id="comment"
+            {...register("comment")}
+            placeholder={"댓글을 입력해주세요"}
+          />
+        ) : (
+          <textarea
+            placeholder="로그인 후 작성 가능합니다."
+            readOnly
+          ></textarea>
+        )}
       </div>
-      <div>
-        <button>작성</button>
-      </div>
+      <div>{isLogin ? <button>작성</button> : <div></div>}</div>
     </Wrapper>
   );
 }
@@ -83,8 +108,9 @@ const Wrapper = styled.form`
   }
   textarea {
     width: 100%;
-    height: 60px;
+    height: 50px;
     resize: none;
+    padding: 5px;
     font-family: "Noto Sans KR", sans-serif;
     white-space: pre-wrap;
   }

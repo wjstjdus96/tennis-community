@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import { FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
+import { FaBookmark, FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
 import { getElapsedTime } from "../../utils/getElapsedTime";
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IPost } from "../../interfaces/IValue";
-import { getImage } from "../../firebase/getData";
+import { IUserBookmarkState, userBookmarkState } from "../../recoil/atom";
+import { useRecoilValue } from "recoil";
+import { useEffect, useState } from "react";
 
 export default function Post({
   post,
@@ -14,11 +15,20 @@ export default function Post({
   isHome: boolean;
 }) {
   const navigate = useNavigate();
-  const [profileImage, setProfileImage] = useState("");
+  const userBookmark = useRecoilValue(userBookmarkState);
+  const [isBookmarkChecked, setIsBookmarkChecked] = useState<boolean>();
 
   useEffect(() => {
-    getImage({ imageURL: post.creatorImage, setImage: setProfileImage });
-  });
+    // 사람 모집 게시판 완성 후 수정
+    if (post.field == "recruit") {
+      setIsBookmarkChecked(false);
+    }
+    if (post.field == "community") {
+      setIsBookmarkChecked(
+        userBookmark[post.field as keyof IUserBookmarkState].includes(post.id)
+      );
+    }
+  }, [userBookmark]);
 
   const onClickTitle = () => {
     navigate(`/${post.field}/${post.id}`, {
@@ -31,14 +41,14 @@ export default function Post({
       <Infos>
         <InfoGroup>
           <IconItem>
-            <img src={profileImage} />
+            <img src={post.creatorImage} />
             <div>{post.creatorName}</div>
           </IconItem>
           <div>{getElapsedTime(post.createdAt.seconds)}</div>
         </InfoGroup>
         <InfoGroup>
           <IconItem>
-            <FaRegBookmark />
+            {isBookmarkChecked ? <FaBookmark /> : <FaRegBookmark />}
             <div>{post.bookmarkNum}</div>
           </IconItem>
           <IconItem>

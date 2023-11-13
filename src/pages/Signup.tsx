@@ -8,13 +8,17 @@ import {
   setPersistence,
   inMemoryPersistence,
   createUserWithEmailAndPassword,
+  updateProfile,
 } from "@firebase/auth";
-import { auth } from "../firebase/firebase";
+import { auth, db } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 import { ISignupValue } from "../interfaces/IValue";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { useState } from "react";
 
 export default function Signup() {
   const navigate = useNavigate();
+  const [userId, setUserId] = useState("");
 
   const formSchema = yup.object({
     email: yup
@@ -33,6 +37,10 @@ export default function Signup() {
     passwordConfirm: yup
       .string()
       .oneOf([yup.ref("password")], "비밀번호가 다릅니다."),
+    nickname: yup
+      .string()
+      .required("닉네임을 입력해주세요")
+      .max(6, "최대 6자 까지만 가능합니다"),
   });
 
   const {
@@ -47,42 +55,69 @@ export default function Signup() {
   const onSubmitHandler: SubmitHandler<ISignupValue> = async (data) => {
     try {
       await setPersistence(auth, inMemoryPersistence);
-      await createUserWithEmailAndPassword(auth, data.email, data.password);
+      await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      ).then((res) => {
+        updateProfile(res.user, { displayName: data.nickname });
+        setDoc(doc(db, "users", res.user.uid), {
+          communityWriting: [],
+          communityBookmark: [],
+          communityComment: [],
+        });
+      });
+
       alert("회원가입에 성공하였습니다");
       navigate("/login");
     } catch (error) {
-      alert("회원가입에 실패하였습니다.");
+      alert("회원가입에 실패하였습니다." + error);
     }
   };
 
   return (
     <AuthLayout title="회원가입">
       <form onSubmit={handleSubmit(onSubmitHandler)}>
-        <AuthInput
-          name="email"
-          text="이메일을 입력하십시오"
-          inputType="email"
-          register={register}
-          errorMsg={errors.email && errors.email.message}
-        />
-        <AuthInput
-          name="password"
-          text="비밀번호를 입력하십시오"
-          inputType="password"
-          register={register}
-          errorMsg={errors.password && errors.password.message}
-        />
-        <AuthInput
-          name="passwordConfirm"
-          inputType="password"
-          register={register}
-          errorMsg={errors.passwordConfirm && errors.passwordConfirm.message}
-        />
+        <InputWrapper>
+          <AuthInput
+            name="email"
+            text="이메일을 입력하십시오"
+            inputType="email"
+            register={register}
+            errorMsg={errors.email && errors.email.message}
+          />
+          <AuthInput
+            name="nickname"
+            text="닉네임을 입력하십시오"
+            inputType="text"
+            register={register}
+            errorMsg={errors.nickname && errors.nickname.message}
+          />
+          <AuthInput
+            name="password"
+            text="비밀번호를 입력하십시오"
+            inputType="password"
+            register={register}
+            errorMsg={errors.password && errors.password.message}
+          />
+          <AuthInput
+            name="passwordConfirm"
+            inputType="password"
+            register={register}
+            errorMsg={errors.passwordConfirm && errors.passwordConfirm.message}
+          />
+        </InputWrapper>
         <SubmitBtn type="submit">회원가입</SubmitBtn>
       </form>
     </AuthLayout>
   );
 }
+
+const InputWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 40px;
+`;
 
 const SubmitBtn = styled.button`
   width: 400px;

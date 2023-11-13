@@ -1,11 +1,14 @@
 import styled from "styled-components";
 import { BiSolidTennisBall } from "react-icons/bi";
 import defaultProfile from "../assets/defaultProfile.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { checkIsLogin } from "../utils/checkIsLogin";
+import { userState } from "../recoil/atom";
+import { useRecoilValue } from "recoil";
 
 export default function Header() {
   const isLogin = checkIsLogin();
+  const userInfo = useRecoilValue(userState);
 
   return (
     <Wrapper>
@@ -17,20 +20,20 @@ export default function Header() {
       </Link>
       <Menu>
         <div>
-          <Link to="/community">커뮤니티</Link>
+          <NavLinkStyle to="/community">커뮤니티</NavLinkStyle>
         </div>
         <div>
-          <Link to="/recruit">사람모집</Link>
+          <NavLinkStyle to="/recruit">사람모집</NavLinkStyle>
         </div>
         <div>
-          <Link to="/market">플리마켓</Link>
+          <NavLinkStyle to="/market">플리마켓</NavLinkStyle>
         </div>
       </Menu>
       {isLogin ? (
         <Profile>
           <div>
-            <Link to="/myPage">
-              <img src={defaultProfile} />
+            <Link to="/my-page/activities?field=writing">
+              <img src={userInfo.photo} />
             </Link>
           </div>
         </Profile>
@@ -80,9 +83,6 @@ const Menu = styled.div`
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
   font-weight: 700;
-  a:hover {
-    color: ${(props) => props.theme.green[2]};
-  }
   div:nth-child(n + 2) {
     position: relative;
     margin-left: 25px;
@@ -134,5 +134,17 @@ const LoginBtn = styled.button`
   transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
   &:hover {
     box-shadow: 0 0 40px 40px ${(props) => props.theme.green[2]} inset;
+  }
+`;
+
+const NavLinkStyle = styled(NavLink)`
+  text-decoration: none;
+  color: black;
+  &:hover {
+    color: ${(props) => props.theme.green[2]};
+    cursor: pointer;
+  }
+  &.active {
+    color: ${(props) => props.theme.green[2]};
   }
 `;

@@ -9,14 +9,12 @@ import { RouteState } from "../interfaces/IFunction";
 import { WritingComment } from "../components/comment/WritingComment";
 import { PostBody } from "../components/post/PostBody";
 import { PostHead } from "../components/post/PostHead";
-import { getComments, getImage, getOnePost } from "../firebase/getData";
-import useDidMountEffect from "../hooks/useDidMountEffect";
+import { getComments, getOnePost } from "../firebase/getData";
 
 export default function PostDetail() {
   const state = (useLocation() as RouteState).state;
   const [postData, setPostData] = useState<IPost>();
   const [comments, setComments] = useState([]);
-  const [profileImage, setProfileImage] = useState("");
   const bringBackComments = () => {
     setComments([]);
     getComments({
@@ -27,9 +25,6 @@ export default function PostDetail() {
   };
 
   useEffect(() => {
-    if (postData) {
-      getImage({ imageURL: postData.creatorImage, setImage: setProfileImage });
-    }
     getOnePost({
       collectionName: state.field,
       docId: state.id,
@@ -47,7 +42,7 @@ export default function PostDetail() {
       {postData && (
         <Wrapper>
           <PostHead
-            writerImage={profileImage}
+            writerImage={postData.creatorImage}
             writerName={postData.creatorName}
             createdAt={postData.createdAt.seconds}
           />

@@ -26,7 +26,7 @@ const Wrapper = styled.div`
 `;
 
 const Body = styled.div`
-  padding-top: 90px;
+  padding-top: 95px;
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   & > div {
@@ -34,5 +34,6 @@ const Body = styled.div`
     max-width: 100%;
     width: 100%;
     box-sizing: border-box;
+    min-height: 100%;
   }
 `;

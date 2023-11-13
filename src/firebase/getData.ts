@@ -1,6 +1,10 @@
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import defaultProfile from "../assets/defaultProfile.png";
-import { IGetImage } from "../interfaces/IFunction";
+import {
+  IGetImage,
+  IGetOnePost,
+  IGetUserBookmark,
+} from "../interfaces/IFunction";
 import {
   collection,
   doc,
@@ -11,14 +15,18 @@ import {
   query,
   startAfter,
   where,
+  getDoc,
 } from "firebase/firestore";
 import { db } from "./firebase";
 import {
-  IGetPost,
   IGetPosts,
   IGetPostsByPage,
   IGetComments,
 } from "../interfaces/IFunction";
+import { getAuth } from "firebase/auth";
+import { IUserBookmarkState } from "../recoil/atom";
+import { IPost } from "../interfaces/IValue";
+import { deduplicateWriting } from "../utils/deduplicateWriting";
 
 export async function getComments({
   collectionName,
@@ -39,19 +47,18 @@ export async function getComments({
   });
 }
 
-export const getImage = ({ imageURL, setImage }: IGetImage) => {
+export const getImage = ({ imageURL }: IGetImage) => {
   const storage = getStorage();
-  if (imageURL) {
-    const imageRef = ref(storage, `${imageURL}`);
-    getDownloadURL(imageRef).then((url) => {
-      setImage(url);
-    });
-  } else {
-    setImage(defaultProfile);
-  }
+  return imageURL != ""
+    ? getDownloadURL(ref(storage, `${imageURL}`))
+    : defaultProfile;
 };
 
-export function getOnePost({ collectionName, docId, setPostData }: IGetPost) {
+export function getOnePost({
+  collectionName,
+  docId,
+  setPostData,
+}: IGetOnePost) {
   const docRef = doc(db, collectionName, docId);
   onSnapshot(docRef, (doc) => setPostData({ ...doc.data(), id: docId }));
 }
@@ -149,3 +156,76 @@ export const getPostsByPage = async ({
     });
   }
 };
+
+export const getUserBookmark = ({ userId, setUserState }: IGetUserBookmark) => {
+  const docRef = doc(db, "users", userId);
+  onSnapshot(docRef, (doc) => {
+    const data = doc.data();
+    setUserState({
+      community: data ? data.communityBookmark : [],
+      recruit: data ? data.recruitBookmark : [],
+      market: data ? data.marketBookmark : [],
+    });
+  });
+};
+
+interface IGetUserActivities {
+  userId: string;
+  field: string;
+  setFieldItems: React.Dispatch<React.SetStateAction<any>>;
+}
+
+export const getUserActivities = async ({
+  userId,
+  field,
+  setFieldItems,
+}: IGetUserActivities) => {
+  const docRef = doc(db, "users", userId);
+  const docSnap = await getDoc(docRef);
+  const data = docSnap.data();
+  if (data) {
+    if (field == "comment") {
+      const commentFieldData = {
+        community: data.communityComment
+          ? deduplicateWriting(data.communityComment.reverse())
+          : [],
+        recruit: data.communityRecruit
+          ? deduplicateWriting(data.recruitComment.reverse())
+          : [],
+        market: data.communityMarket
+          ? deduplicateWriting(data.marketComment.reverse())
+          : [],
+      };
+      setFieldItems(commentFieldData);
+    }
+    if (field == "writing") {
+      const writingFieldData = {
+        community: data.communityComment ? data.communityWriting.reverse() : [],
+        recruit: data.communityRecruit ? data.recruitWriting.reverse() : [],
+        market: data.communityMarket ? data.marketWriting.reverse() : [],
+      };
+      setFieldItems(writingFieldData);
+    }
+    if (field == "bookmark") {
+      const bookmarkFieldData = {
+        community: data.communityComment
+          ? data.communityBookmark.reverse()
+          : [],
+        recruit: data.communityRecruit ? data.recruitBookmark.reverse() : [],
+        market: data.communityMarket ? data.marketBookmark.reverse() : [],
+      };
+      setFieldItems(bookmarkFieldData);
+    }
+  }
+};
+
+interface IGetPost {
+  collectionName: string;
+  docId: string;
+}
+
+export async function getPost({ collectionName, docId }: IGetPost) {
+  const docRef = doc(db, collectionName, docId);
+  const docSnap = await getDoc(docRef);
+  return docSnap.data() ?? {};
+}

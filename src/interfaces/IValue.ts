@@ -8,6 +8,7 @@ export interface IPost {
   };
   creatorImage: string;
   creatorName: string;
+  creatorId: string;
   id: string;
   title: string;
   type?: string;
@@ -55,4 +56,5 @@ export interface ISignupValue {
   email: string;
   password: string;
   passwordConfirm?: string;
+  nickname: string;
 }

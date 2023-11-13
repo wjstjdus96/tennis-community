@@ -1,6 +1,7 @@
+import { IUserBookmarkState } from "../recoil/atom";
 import { IComment, IPost } from "./IValue";
 
-export interface IGetPost {
+export interface IGetOnePost {
   collectionName: string;
   docId: string;
   setPostData: React.Dispatch<any>;
@@ -30,7 +31,7 @@ export interface IGetComments {
 
 export interface IGetImage {
   imageURL: string;
-  setImage: React.Dispatch<React.SetStateAction<string>>;
+  setImage?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface RouteState {
@@ -39,4 +40,9 @@ export interface RouteState {
 
 export interface ISetComment {
   comment: string;
+}
+
+export interface IGetUserBookmark {
+  userId: string;
+  setUserState: React.Dispatch<React.SetStateAction<IUserBookmarkState>>;
 }

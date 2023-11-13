@@ -8,7 +8,6 @@ export default function BoardFilter({
   isExpanded,
   setIsExpanded,
 }: IBoardFilter) {
-  //   const filterTypeList = ["최신순", "북마크순", "댓글순"];
   const filterTypeList = [
     ["최신순", "createdAt"],
     ["북마크순", "bookmarkNum"],
@@ -19,7 +18,6 @@ export default function BoardFilter({
   };
 
   const handleBlurFilter = () => {
-    console.log("아아아");
     setTimeout(() => {
       setIsExpanded(false);
     }, 200);

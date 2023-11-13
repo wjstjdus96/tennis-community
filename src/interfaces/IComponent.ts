@@ -12,10 +12,10 @@ export interface IBoard {
 }
 
 export interface IAuthInput {
-  name: Path<ISignupValue>;
+  name: Path<any>;
   text?: string;
   inputType?: string;
-  register: UseFormRegister<ISignupValue>;
+  register: UseFormRegister<any>;
   errorMsg?: string;
 }
 

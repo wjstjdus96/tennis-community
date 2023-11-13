@@ -71,6 +71,15 @@ const Box = styled.div`
   border-radius: 30px;
   padding: 30px 70px;
   background-color: rgb(255, 255, 255, 0.5);
+  & > form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  hr {
+    width: 100%;
+  }
 `;
 
 const Title = styled.div`

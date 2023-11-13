@@ -1,4 +1,10 @@
-import { doc, increment, updateDoc } from "firebase/firestore";
+import {
+  arrayRemove,
+  arrayUnion,
+  doc,
+  increment,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "./firebase";
 
 interface IUpdateData {
@@ -14,6 +20,13 @@ interface IUpdateDocData {
   newData: any;
 }
 
+interface IUpdateUserArrayData {
+  userId: string;
+  docField: string;
+  changing: string;
+  arrayItem: string;
+}
+
 export async function updateOneData({
   collectionName,
   docId,
@@ -21,10 +34,7 @@ export async function updateOneData({
   incrementNum,
 }: IUpdateData) {
   const docRef = doc(db, collectionName, docId);
-  if (docField == "commentNum")
-    await updateDoc(docRef, { commentNum: increment(incrementNum) });
-  if (docField == "bookmarkNum")
-    await updateDoc(docRef, { bookmarkNum: increment(incrementNum) });
+  await updateDoc(docRef, { [docField]: increment(incrementNum) });
 }
 
 export async function updateDocData({
@@ -34,4 +44,20 @@ export async function updateDocData({
 }: IUpdateDocData) {
   const docRef = doc(db, collectionName, docId);
   await updateDoc(docRef, newData);
+}
+
+export function updateUserArrayData({
+  userId,
+  docField,
+  changing,
+  arrayItem,
+}: IUpdateUserArrayData) {
+  if (changing == "add")
+    updateDoc(doc(db, "users", userId), {
+      [docField]: arrayUnion(arrayItem),
+    });
+  if (changing == "remove")
+    updateDoc(doc(db, "users", userId), {
+      [docField]: arrayRemove(arrayItem),
+    });
 }

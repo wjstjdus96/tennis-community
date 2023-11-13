@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getElapsedTime } from "../../utils/getElapsedTime";
 import { ICommentCard } from "../../interfaces/IComponent";
 import { EditDeleteBtn } from "../post/EditDeleteBtns";
-import { getImage } from "../../firebase/getData";
 import { deleteComment } from "../../firebase/deleteData";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../recoil/atom";
+import { updateUserArrayData } from "../../firebase/updateData";
 
 export default function CommentCard({
   comment,
@@ -12,18 +13,20 @@ export default function CommentCard({
   docId,
   getComments,
 }: ICommentCard) {
-  const [profileImg, setProfileImg] = useState("");
-  const [isWriter, setIsWriter] = useState(true);
-
-  useEffect(() => {
-    getImage({ imageURL: comment.creatorPhotoURL, setImage: setProfileImg });
-  }, []);
+  const userInfo = useRecoilValue(userState);
 
   const clickDeleteComment = async () => {
     await deleteComment({
       collectionName: collectionName,
       docId: docId,
       commentId: comment.id,
+    }).then(() => {
+      updateUserArrayData({
+        userId: userInfo.id,
+        docField: "communityComment",
+        changing: "remove",
+        arrayItem: docId + "+" + comment.id,
+      });
     });
     await getComments();
   };
@@ -32,12 +35,14 @@ export default function CommentCard({
     <Wrapper>
       <InfoWrapper>
         <div>
-          <img src={profileImg} />
+          <img src={comment.creatorPhotoURL} />
           <div>{comment.creatorName}</div>
         </div>
         <div>
           <div>{getElapsedTime(comment.createdAt.seconds)}</div>
-          {isWriter && <EditDeleteBtn clickDelelteBtn={clickDeleteComment} />}
+          {userInfo.id == comment.creatorId && (
+            <EditDeleteBtn clickDelelteBtn={clickDeleteComment} />
+          )}
         </div>
       </InfoWrapper>
       <div>{comment.comment}</div>

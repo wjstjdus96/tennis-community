@@ -3,11 +3,13 @@ import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import WritingInput from "../components/post/WritingInput";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, doc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { ICommunityWritingValue } from "../interfaces/IValue";
-import { useEffect } from "react";
-import { updateDocData } from "../firebase/updateData";
+import { useEffect, useState } from "react";
+import { updateDocData, updateUserArrayData } from "../firebase/updateData";
+import { userState } from "../recoil/atom";
+import { useRecoilValue } from "recoil";
 
 export function Writing() {
   const { postId } = useParams();
@@ -19,6 +21,8 @@ export function Writing() {
     setValue,
   } = useForm<ICommunityWritingValue>();
   const navigate = useNavigate();
+  const userInfo = useRecoilValue(userState);
+
   const onClickWriting: SubmitHandler<ICommunityWritingValue> = async (
     data
   ) => {
@@ -28,13 +32,21 @@ export function Writing() {
         bookmarkNum: 0,
         commentNum: 0,
         createdAt: serverTimestamp(),
-        creatorImage: "",
-        creatorName: "임시 닉네임",
+        creatorImage: userInfo.photo,
+        creatorName: userInfo.displayName,
+        creatorId: userInfo.id,
         field: "community",
         title: data.title,
         titleKeyword: data.title.split(" "),
       };
-      await addDoc(collection(db, "community"), docData);
+      await addDoc(collection(db, "community"), docData).then((docRef) => {
+        updateUserArrayData({
+          userId: userInfo.id,
+          docField: "communityWriting",
+          changing: "add",
+          arrayItem: docRef.id,
+        });
+      });
       navigate("/community");
     } catch (error) {
       alert("글쓰기에 실패하였습니다" + error);
