@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr;
   width: 100%;
-  /* box-shadow: 0 0 10px; */
+  min-height: 630px;
   background-color: ${(props) => props.theme.myPageBgColor};
   border-radius: 20px;
   & > div:first-child {

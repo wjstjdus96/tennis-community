@@ -27,6 +27,7 @@ export function BoardSearch({
           setKeyword(e.target.value);
         }}
         onKeyDown={handleKeyPress}
+        placeholder="검색어를 정확하게 입력해주세요"
       />
     </Search>
   );
@@ -38,14 +39,18 @@ const Search = styled.div`
     width: 350px;
     border: 2px solid ${(props) => props.theme.green[1]};
     border-radius: 18px;
-    padding: 9px 20px 9px 28px;
+    text-indent: 4px;
+    padding: 10px 20px 9px 28px;
+    &::placeholder {
+      font-size: 12px;
+    }
   }
   input:focus {
     outline: 2px solid ${(props) => props.theme.green[2]};
   }
   .searchIcon {
     position: absolute;
-    top: 10px;
-    left: 8px;
+    top: 11px;
+    left: 10px;
   }
 `;
