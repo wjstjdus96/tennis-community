@@ -26,6 +26,7 @@ import {
 import { getAuth } from "firebase/auth";
 import { IUserBookmarkState } from "../recoil/atom";
 import { IPost } from "../interfaces/IValue";
+import { deduplicateWriting } from "../utils/deduplicateWriting";
 
 export async function getComments({
   collectionName,
@@ -183,21 +184,29 @@ export const getUserActivities = async ({
   const docSnap = await getDoc(docRef);
   const data = docSnap.data();
 
+  if (field == "comment") {
+    const commentFieldData = {
+      community: data ? deduplicateWriting(data.communityComment) : [],
+      recruit: data ? deduplicateWriting(data.recruitComment) : [],
+      market: data ? deduplicateWriting(data.marketComment) : [],
+    };
+    setFieldItems(commentFieldData);
+  }
   if (field == "writing") {
-    const fieldData = {
+    const writingFieldData = {
       community: data ? data.communityWriting : [],
       recruit: data ? data.recruitWriting : [],
       market: data ? data.marketWriting : [],
     };
-    setFieldItems(fieldData);
+    setFieldItems(writingFieldData);
   }
-  if (field == "comment") {
-    const fieldData = {
-      community: data ? data.communityComment : [],
-      recruit: data ? data.recruitComment : [],
-      market: data ? data.marketComment : [],
+  if (field == "bookmark") {
+    const bookmarkFieldData = {
+      community: data ? data.communityBookmark : [],
+      recruit: data ? data.recruitBookmark : [],
+      market: data ? data.marketBookmark : [],
     };
-    setFieldItems(fieldData);
+    setFieldItems(bookmarkFieldData);
   }
 };
 

@@ -24,7 +24,6 @@ export function ActivityFieldBtn({
       >
         {fieldName}
       </NavLink>
-      {/* <div>{count}</div> */}
     </Wrapper>
   );
 }
@@ -36,10 +35,9 @@ const Wrapper = styled.div`
   align-items: end;
   min-width: 40px;
   a {
-    font-size: 12px;
+    font-size: 13px;
     text-decoration: none;
     color: black;
-    margin-bottom: 5px;
     &:hover {
       font-weight: 700;
       cursor: pointer;

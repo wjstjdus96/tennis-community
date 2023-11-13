@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { ActivityFieldBtn } from "./ActivityFieldBtn";
-import { getUserActivities } from "../../firebase/getData";
+import { getPost, getUserActivities } from "../../firebase/getData";
 import { useRecoilValue } from "recoil";
 import { userBookmarkState, userState } from "../../recoil/atom";
 import { ActivityFieldItem } from "./ActivityFieldItem";
 
-interface IFieldItems {
+interface IFieldItemIds {
   community: string[];
   recruit: string[];
   market: string[];
@@ -17,19 +17,16 @@ export function MyActivities() {
   const { search } = useLocation();
   const curField = new URLSearchParams(search).get("field");
   const userInfo = useRecoilValue(userState);
-  const userBookmark = useRecoilValue(userBookmarkState);
-  const [fieldItems, setFieldItems] = useState<IFieldItems>();
+  const [fieldItemIds, setFieldItemIds] = useState<IFieldItemIds>();
 
   useEffect(() => {
-    if (curField == "writing" || curField == "comment") {
+    setFieldItemIds({ community: [], recruit: [], market: [] });
+    if (curField) {
       getUserActivities({
         userId: userInfo.id,
         field: curField,
-        setFieldItems: setFieldItems,
+        setFieldItems: setFieldItemIds,
       });
-    }
-    if (curField == "bookmark") {
-      setFieldItems(userBookmark);
     }
   }, [curField]);
 
@@ -57,9 +54,9 @@ export function MyActivities() {
           />
         </FieldBoxWrapper>
       )}
-      {fieldItems && (
+      {fieldItemIds != undefined && (
         <PostWrapper>
-          {fieldItems["community"].map((itemId: string) => (
+          {fieldItemIds["community"].map((itemId: string) => (
             <ActivityFieldItem itemId={itemId} collectionName="community" />
           ))}
         </PostWrapper>
@@ -74,11 +71,12 @@ const Wrapper = styled.div`
 
 const FieldBoxWrapper = styled.div`
   background-color: white;
-  border-radius: 20px;
-  padding: 20px 40px;
+  border-radius: 10px;
+  padding: 10px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 10px;
 `;
 
 const PostWrapper = styled.div``;
