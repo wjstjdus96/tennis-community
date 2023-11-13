@@ -183,30 +183,39 @@ export const getUserActivities = async ({
   const docRef = doc(db, "users", userId);
   const docSnap = await getDoc(docRef);
   const data = docSnap.data();
-
-  if (field == "comment") {
-    const commentFieldData = {
-      community: data ? deduplicateWriting(data.communityComment) : [],
-      recruit: data ? deduplicateWriting(data.recruitComment) : [],
-      market: data ? deduplicateWriting(data.marketComment) : [],
-    };
-    setFieldItems(commentFieldData);
-  }
-  if (field == "writing") {
-    const writingFieldData = {
-      community: data ? data.communityWriting : [],
-      recruit: data ? data.recruitWriting : [],
-      market: data ? data.marketWriting : [],
-    };
-    setFieldItems(writingFieldData);
-  }
-  if (field == "bookmark") {
-    const bookmarkFieldData = {
-      community: data ? data.communityBookmark : [],
-      recruit: data ? data.recruitBookmark : [],
-      market: data ? data.marketBookmark : [],
-    };
-    setFieldItems(bookmarkFieldData);
+  if (data) {
+    if (field == "comment") {
+      const commentFieldData = {
+        community: data.communityComment
+          ? deduplicateWriting(data.communityComment.reverse())
+          : [],
+        recruit: data.communityRecruit
+          ? deduplicateWriting(data.recruitComment.reverse())
+          : [],
+        market: data.communityMarket
+          ? deduplicateWriting(data.marketComment.reverse())
+          : [],
+      };
+      setFieldItems(commentFieldData);
+    }
+    if (field == "writing") {
+      const writingFieldData = {
+        community: data.communityComment ? data.communityWriting.reverse() : [],
+        recruit: data.communityRecruit ? data.recruitWriting.reverse() : [],
+        market: data.communityMarket ? data.marketWriting.reverse() : [],
+      };
+      setFieldItems(writingFieldData);
+    }
+    if (field == "bookmark") {
+      const bookmarkFieldData = {
+        community: data.communityComment
+          ? data.communityBookmark.reverse()
+          : [],
+        recruit: data.communityRecruit ? data.recruitBookmark.reverse() : [],
+        market: data.communityMarket ? data.marketBookmark.reverse() : [],
+      };
+      setFieldItems(bookmarkFieldData);
+    }
   }
 };
 
