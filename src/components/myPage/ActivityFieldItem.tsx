@@ -15,7 +15,7 @@ export function ActivityFieldItem({
 
   useEffect(() => {
     getPost({ collectionName: collectionName, docId: itemId }).then((res) => {
-      setPost(res);
+      setPost({ ...res, id: itemId });
     });
   }, []);
 
