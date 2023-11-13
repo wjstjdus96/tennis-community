@@ -1,8 +1,11 @@
 import styled from "styled-components";
-import { FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
+import { FaBookmark, FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
 import { getElapsedTime } from "../../utils/getElapsedTime";
 import { useNavigate } from "react-router-dom";
 import { IPost } from "../../interfaces/IValue";
+import { IUserBookmarkState, userBookmarkState } from "../../recoil/atom";
+import { useRecoilValue } from "recoil";
+import { useEffect, useState } from "react";
 
 export default function Post({
   post,
@@ -12,6 +15,20 @@ export default function Post({
   isHome: boolean;
 }) {
   const navigate = useNavigate();
+  const userBookmark = useRecoilValue(userBookmarkState);
+  const [isBookmarkChecked, setIsBookmarkChecked] = useState<boolean>();
+
+  useEffect(() => {
+    // 사람 모집 게시판 완성 후 수정
+    if (post.field == "recruit") {
+      setIsBookmarkChecked(false);
+    }
+    if (post.field == "community") {
+      setIsBookmarkChecked(
+        userBookmark[post.field as keyof IUserBookmarkState].includes(post.id)
+      );
+    }
+  }, [userBookmark]);
 
   const onClickTitle = () => {
     navigate(`/${post.field}/${post.id}`, {
@@ -31,7 +48,7 @@ export default function Post({
         </InfoGroup>
         <InfoGroup>
           <IconItem>
-            <FaRegBookmark />
+            {isBookmarkChecked ? <FaBookmark /> : <FaRegBookmark />}
             <div>{post.bookmarkNum}</div>
           </IconItem>
           <IconItem>
