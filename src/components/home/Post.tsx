@@ -89,12 +89,12 @@ const Infos = styled.div`
 `;
 
 const Title = styled.div<{ type?: string }>`
-  display: grid;
-  grid-template-columns: ${(props) => (props.type ? "1fr 7fr" : "1fr")};
+  display: flex;
   gap: 10px;
-  justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   & > p {
+    min-width: 50px;
+    max-width: 70px;
     color: grey;
     font-size: 12px;
     font-weight: 700;
@@ -107,7 +107,6 @@ const Title = styled.div<{ type?: string }>`
     padding: 3px;
   }
   & > div {
-    height: 20px;
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
