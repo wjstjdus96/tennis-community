@@ -1,14 +1,14 @@
-import { HomeLayout } from "../layouts/HomeLayout";
+import { HomeLayout } from "../../layouts/HomeLayout";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import Post from "../components/home/Post";
-import { Pagination } from "../components/board/Pagination";
-import BoardFilter from "../components/board/BoardFilter";
-import { IPost } from "../interfaces/IValue";
-import { BoardHead } from "../components/board/BoardHead";
-import { BoardWritingBtn } from "../components/board/BoardWritinBtn";
-import { BoardSearch } from "../components/board/BoardSearch";
-import { getPosts, getPostsByPage } from "../firebase/getData";
+import Post from "../../components/home/Post";
+import { Pagination } from "../../components/board/Pagination";
+import BoardFilter from "../../components/board/BoardFilter";
+import { IPost } from "../../interfaces/IValue";
+import { BoardHead } from "../../components/board/BoardHead";
+import { BoardWritingBtn } from "../../components/board/BoardWritinBtn";
+import { BoardSearch } from "../../components/board/BoardSearch";
+import { getPosts, getPostsByPage } from "../../firebase/getData";
 
 export default function Community() {
   const [totalPosts, setTotalPosts] = useState<IPost[]>([]);

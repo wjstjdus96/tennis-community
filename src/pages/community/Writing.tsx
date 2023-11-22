@@ -1,14 +1,14 @@
-import { HomeLayout } from "../layouts/HomeLayout";
+import { HomeLayout } from "../../layouts/HomeLayout";
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import WritingInput from "../components/post/WritingInput";
+import WritingInput from "../../components/WritingInput";
 import { addDoc, collection, doc, serverTimestamp } from "firebase/firestore";
-import { db } from "../firebase/firebase";
-import { ICommunityWritingValue } from "../interfaces/IValue";
+import { db } from "../../firebase/firebase";
+import { ICommunityWritingValue } from "../../interfaces/IValue";
 import { useEffect, useState } from "react";
-import { updateDocData, updateUserArrayData } from "../firebase/updateData";
-import { userState } from "../recoil/atom";
+import { updateDocData, updateUserArrayData } from "../../firebase/updateData";
+import { userState } from "../../recoil/atom";
 import { useRecoilValue } from "recoil";
 
 export function Writing() {

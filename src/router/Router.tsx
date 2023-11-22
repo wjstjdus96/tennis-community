@@ -2,15 +2,15 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
-import Community from "../pages/Community";
-import { Writing } from "../pages/Writing";
-import PostDetail from "../pages/PostDetail";
+import Community from "../pages/community/Community";
+import { Writing } from "../pages/community/Writing";
+import PostDetail from "../pages/community/PostDetail";
 import PrivateRoute from "./PrivateRoute";
 import MyPage from "../pages/MyPage";
 import { Setting } from "../components/myPage/Setting";
 import { MyActivities } from "../components/myPage/MyActivities";
-import Recruit from "../pages/Recruit";
-import Market from "../pages/Market";
+import Recruit from "../pages/recruit/Recruit";
+import Market from "../pages/market/Market";
 
 export default function Router() {
   return (

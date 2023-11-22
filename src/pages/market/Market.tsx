@@ -1,14 +1,11 @@
 import styled from "styled-components";
-import { BoardHead } from "../components/board/BoardHead";
-import { HomeLayout } from "../layouts/HomeLayout";
+import { BoardHead } from "../../components/board/BoardHead";
+import { HomeLayout } from "../../layouts/HomeLayout";
 
-export default function Recruit() {
+export default function Market() {
   return (
     <HomeLayout>
-      <BoardHead
-        title="사람모집"
-        summary="다양한 사람들과 함께 테니스를 즐겨보세요"
-      />
+      <BoardHead title="플리마켓" summary="여러가지 테니스 용품을 나눠보세요" />
       <TempDiv>준비 중인 서비스입니다😭</TempDiv>
     </HomeLayout>
   );
