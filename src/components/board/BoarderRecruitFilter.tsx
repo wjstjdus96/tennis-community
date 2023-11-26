@@ -2,8 +2,10 @@ import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
 interface IBoardRecruitFilter {
-  recruitFilterType: string[];
-  setRecruitFilterType: React.Dispatch<React.SetStateAction<string[]>>;
+  recruitFilterType: string[] | (string | null)[];
+  setRecruitFilterType: React.Dispatch<
+    React.SetStateAction<string[] | (string | null)[]>
+  >;
 }
 
 export default function BoardRecruitFilter({

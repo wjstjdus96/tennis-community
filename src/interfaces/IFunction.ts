@@ -28,7 +28,7 @@ export interface IGetRecruitPosts {
   collectionName: string;
   keyword: string;
   filterType: string[];
-  recruitType: string[];
+  recruitType: string[] | (string | null)[];
   setPosts: React.Dispatch<React.SetStateAction<IPost[]>>;
 }
 
@@ -37,7 +37,7 @@ export interface IGetRecruitPostsByPage {
   collectionName: string;
   keyword: string;
   filterType: string[];
-  recruitType: string[];
+  recruitType: string[] | (string | null)[];
   postsPerPage: number;
   setPosts: React.Dispatch<React.SetStateAction<IPost[]>>;
 }

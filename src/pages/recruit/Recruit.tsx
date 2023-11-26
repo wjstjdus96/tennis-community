@@ -24,7 +24,7 @@ export default function Recruit() {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [filterType, setFilterType] = useState(["최신순", "createdAt"]);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [recruitType, setRecruitType] = useState(["전체", "total"]);
+  const [recruitType, setRecruitType] = useState(["전체", null]);
   const postsPerPage = 5;
 
   useEffect(() => {
