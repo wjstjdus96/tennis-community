@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { IBoardSearch } from "../../interfaces/IComponent";
 
 export function BoardSearch({
+  boardField,
   keyword,
   setKeyword,
   setSearchKeyword,
@@ -13,8 +14,8 @@ export function BoardSearch({
     if (e.key == "Enter") {
       setSearchKeyword(keyword);
       keyword
-        ? navigate(`/community?search=${keyword}`)
-        : navigate(`/community`);
+        ? navigate(`/${boardField}?search=${keyword}`)
+        : navigate(`/${boardField}`);
     }
   };
 

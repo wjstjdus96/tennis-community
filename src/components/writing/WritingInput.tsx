@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Path, UseFormRegister } from "react-hook-form";
-import { IWritingInput } from "../interfaces/IComponent";
+import { IWritingInput } from "../../interfaces/IComponent";
 
 export default function WritingInput({
   name,

@@ -3,7 +3,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import Community from "../pages/community/Community";
-import { Writing } from "../pages/community/Writing";
+import CommunityWriting from "../pages/community/CommunityWriting";
 import PostDetail from "../pages/community/PostDetail";
 import PrivateRoute from "./PrivateRoute";
 import MyPage from "../pages/MyPage";
@@ -11,6 +11,7 @@ import { Setting } from "../components/myPage/Setting";
 import { MyActivities } from "../components/myPage/MyActivities";
 import Recruit from "../pages/recruit/Recruit";
 import Market from "../pages/market/Market";
+import RecruitWriting from "../pages/recruit/RecruitWriting";
 
 export default function Router() {
   return (
@@ -26,8 +27,12 @@ export default function Router() {
             <Route path="setting" element={<Setting />} />
             <Route path="activities" element={<MyActivities />} />
           </Route>
-          <Route path="/community/write" element={<Writing />} />
-          <Route path="/community/edit/:postId" element={<Writing />} />
+          <Route path="/community/write" element={<CommunityWriting />} />
+          <Route path="/recruit/write" element={<RecruitWriting />} />
+          <Route
+            path="/community/edit/:postId"
+            element={<CommunityWriting />}
+          />
         </Route>
         <Route path="/community" element={<Community />} />
         <Route path="/community/:id" element={<PostDetail />} />

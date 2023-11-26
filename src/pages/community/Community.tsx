@@ -51,6 +51,7 @@ export default function Community() {
       <Settings>
         <BoardWritingBtn boardField="community" />
         <BoardSearch
+          boardField="community"
           keyword={keyword}
           setKeyword={setKeyword}
           setSearchKeyword={setSearchKeyword}

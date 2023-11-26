@@ -60,6 +60,7 @@ export default function Recruit() {
       <Settings>
         <BoardWritingBtn boardField="recruit" />
         <BoardSearch
+          boardField="recruit"
           keyword={keyword}
           setKeyword={setKeyword}
           setSearchKeyword={setSearchKeyword}

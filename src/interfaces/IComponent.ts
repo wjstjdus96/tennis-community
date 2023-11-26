@@ -47,14 +47,15 @@ export interface IPagination {
 }
 
 export interface IWritingInput {
-  name: Path<ICommunityWritingValue>;
+  name: Path<any>;
   text?: string;
   inputType?: string;
-  register: UseFormRegister<ICommunityWritingValue>;
+  register: UseFormRegister<any>;
   errorMsg?: string;
 }
 
 export interface IBoardSearch {
+  boardField: string;
   keyword: string;
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
   setSearchKeyword: React.Dispatch<React.SetStateAction<string>>;

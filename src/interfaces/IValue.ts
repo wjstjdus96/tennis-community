@@ -47,6 +47,12 @@ export interface ICommunityWritingValue {
   body: string;
 }
 
+export interface IRecruitWritingValue {
+  title: string;
+  body: string;
+  type: string;
+}
+
 export interface ILoginValue {
   email: string;
   password: string;

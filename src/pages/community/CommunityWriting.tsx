@@ -2,7 +2,7 @@ import { HomeLayout } from "../../layouts/HomeLayout";
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import WritingInput from "../../components/WritingInput";
+import WritingInput from "../../components/writing/WritingInput";
 import { addDoc, collection, doc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { ICommunityWritingValue } from "../../interfaces/IValue";
@@ -10,8 +10,9 @@ import { useEffect, useState } from "react";
 import { updateDocData, updateUserArrayData } from "../../firebase/updateData";
 import { userState } from "../../recoil/atom";
 import { useRecoilValue } from "recoil";
+import { SubmitWritingButton } from "../../components/writing/SubmitWritingButto";
 
-export function Writing() {
+export default function CommunityWriting() {
   const { postId } = useParams();
   const { state } = useLocation();
   const {
@@ -98,7 +99,9 @@ export function Writing() {
             errorMsg={errors.body && "본문을 작성해주세요"}
           />
           <div>
-            <SubmitBtn>{postId ? "수정하기" : "글쓰기"}</SubmitBtn>
+            <SubmitWritingButton>
+              {postId ? "수정하기" : "글쓰기"}
+            </SubmitWritingButton>
           </div>
         </form>
       </Body>
@@ -119,22 +122,5 @@ const Body = styled.div`
     & > div:last-child {
       align-self: end;
     }
-  }
-`;
-
-const SubmitBtn = styled.button`
-  display: flex;
-  align-items: center;
-  margin: 20px 0;
-  padding: 8px 13px;
-  border-radius: 10px;
-  border: none;
-  background-color: ${(props) => props.theme.green[2]};
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 14px;
-  transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
-  &:hover {
-    box-shadow: 100px 0 0 0 rgba(0, 0, 0, 0.1) inset;
-    cursor: pointer;
   }
 `;
