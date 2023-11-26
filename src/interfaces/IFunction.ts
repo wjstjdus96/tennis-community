@@ -19,6 +19,25 @@ export interface IGetPostsByPage {
   collectionName: string;
   keyword: string;
   filterType: string[];
+  recruitType?: string[];
+  postsPerPage: number;
+  setPosts: React.Dispatch<React.SetStateAction<IPost[]>>;
+}
+
+export interface IGetRecruitPosts {
+  collectionName: string;
+  keyword: string;
+  filterType: string[];
+  recruitType: string[];
+  setPosts: React.Dispatch<React.SetStateAction<IPost[]>>;
+}
+
+export interface IGetRecruitPostsByPage {
+  offset: number;
+  collectionName: string;
+  keyword: string;
+  filterType: string[];
+  recruitType: string[];
   postsPerPage: number;
   setPosts: React.Dispatch<React.SetStateAction<IPost[]>>;
 }
@@ -45,4 +64,15 @@ export interface ISetComment {
 export interface IGetUserBookmark {
   userId: string;
   setUserState: React.Dispatch<React.SetStateAction<IUserBookmarkState>>;
+}
+
+export interface IGetUserActivities {
+  userId: string;
+  field: string;
+  setFieldItems: React.Dispatch<React.SetStateAction<any>>;
+}
+
+export interface IGetPost {
+  collectionName: string;
+  docId: string;
 }

@@ -8,7 +8,12 @@ import BoardFilter from "../../components/board/BoardFilter";
 import { IPost } from "../../interfaces/IValue";
 import { Pagination } from "../../components/board/Pagination";
 import Post from "../../components/home/Post";
-import { getPosts, getPostsByPage } from "../../firebase/getData";
+import {
+  getPosts,
+  getPostsByPage,
+  getRecruitPosts,
+  getRecruitPostsByPage,
+} from "../../firebase/getData";
 import BoardRecruitFilter from "../../components/board/BoarderRecruitFilter";
 
 export default function Recruit() {
@@ -24,25 +29,27 @@ export default function Recruit() {
 
   useEffect(() => {
     setTotalPosts([]);
-    getPosts({
+    getRecruitPosts({
       collectionName: "recruit",
       keyword: searchKeyword,
       filterType: filterType,
+      recruitType: recruitType,
       setPosts: setTotalPosts,
     });
-  }, [searchKeyword, filterType]);
+  }, [searchKeyword, filterType, recruitType]);
 
   useEffect(() => {
     setPosts([]);
-    getPostsByPage({
+    getRecruitPostsByPage({
       offset: (page - 1) * postsPerPage,
       collectionName: "recruit",
       keyword: searchKeyword,
       filterType: filterType,
+      recruitType: recruitType,
       postsPerPage: postsPerPage,
       setPosts: setPosts,
     });
-  }, [page, searchKeyword, filterType]);
+  }, [page, searchKeyword, filterType, recruitType]);
 
   return (
     <HomeLayout>
