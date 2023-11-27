@@ -8,6 +8,7 @@ import {
   IGetRecruitPostsByPage,
   IGetUserActivities,
   IGetUserBookmark,
+  IGetWriterInfo,
 } from "../interfaces/IFunction";
 import {
   collection,
@@ -29,7 +30,7 @@ import {
 } from "../interfaces/IFunction";
 import { getAuth } from "firebase/auth";
 import { IUserBookmarkState } from "../recoil/atom";
-import { IPost } from "../interfaces/IValue";
+import { IPost, IWriterInfo } from "../interfaces/IValue";
 import { deduplicateWriting } from "../utils/deduplicateWriting";
 
 export async function getComments({
@@ -299,6 +300,18 @@ export const getUserBookmark = ({ userId, setUserState }: IGetUserBookmark) => {
       community: data ? data.communityBookmark : [],
       recruit: data ? data.recruitBookmark : [],
       market: data ? data.marketBookmark : [],
+    });
+  });
+};
+
+export const getWriterInfo = ({ userId, setWriterInfo }: IGetWriterInfo) => {
+  const docRef = doc(db, "users", userId);
+  onSnapshot(docRef, (doc) => {
+    const data = doc.data();
+    setWriterInfo({
+      id: userId,
+      name: data ? data.displayName : "",
+      profileImg: data ? data.displayPhoto : defaultProfile,
     });
   });
 };

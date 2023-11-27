@@ -15,6 +15,7 @@ export default function PostDetail() {
   const state = (useLocation() as RouteState).state;
   const [postData, setPostData] = useState<IPost>();
   const [comments, setComments] = useState([]);
+
   const bringBackComments = () => {
     setComments([]);
     getComments({

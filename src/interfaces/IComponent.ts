@@ -82,3 +82,7 @@ export interface IPostHead {
   writerName: string;
   createdAt: number;
 }
+
+export interface IPostWriter {
+  writerId: string;
+}

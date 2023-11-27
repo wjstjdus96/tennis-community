@@ -6,6 +6,7 @@ import { IPost } from "../../interfaces/IValue";
 import { IUserBookmarkState, userBookmarkState } from "../../recoil/atom";
 import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
+import PostWriter from "./PostWriter";
 
 export default function Post({
   post,
@@ -19,14 +20,14 @@ export default function Post({
   const [isBookmarkChecked, setIsBookmarkChecked] = useState<boolean>();
 
   useEffect(() => {
-    // 사람 모집 게시판 완성 후 수정
-    if (post.field == "recruit") {
-      setIsBookmarkChecked(false);
-    }
     if (post.field == "community") {
       setIsBookmarkChecked(
         userBookmark[post.field as keyof IUserBookmarkState].includes(post.id)
       );
+    }
+    // 사람 모집 게시판 완성 후 수정
+    if (post.field == "recruit") {
+      setIsBookmarkChecked(false);
     }
   }, [userBookmark]);
 
@@ -40,10 +41,7 @@ export default function Post({
     <Wrapper isHome={isHome}>
       <Infos>
         <InfoGroup>
-          <IconItem>
-            <img src={post.creatorImage} />
-            <div>{post.creatorName}</div>
-          </IconItem>
+          <PostWriter writerId={post.creatorId} />
           <div>{getElapsedTime(post.createdAt.seconds)}</div>
         </InfoGroup>
         <InfoGroup>
@@ -121,12 +119,6 @@ const Title = styled.div<{ type?: string }>`
 const InfoGroup = styled.div`
   display: flex;
   align-items: center;
-  img {
-    width: 20px;
-    height: 20px;
-    background-color: white;
-    border-radius: 50%;
-  }
   &:first-child > div:nth-child(n + 2) {
     position: relative;
     margin-left: 10px;

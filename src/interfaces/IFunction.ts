@@ -1,5 +1,5 @@
 import { IUserBookmarkState } from "../recoil/atom";
-import { IComment, IPost } from "./IValue";
+import { IComment, IPost, IWriterInfo } from "./IValue";
 
 export interface IGetOnePost {
   collectionName: string;
@@ -75,4 +75,9 @@ export interface IGetUserActivities {
 export interface IGetPost {
   collectionName: string;
   docId: string;
+}
+
+export interface IGetWriterInfo {
+  userId: string;
+  setWriterInfo: React.Dispatch<React.SetStateAction<IWriterInfo>>;
 }

@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { ISignupValue } from "../interfaces/IValue";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { useState } from "react";
+import defaultProfile from "../assets/defaultProfile.png";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -62,6 +63,8 @@ export default function Signup() {
       ).then((res) => {
         updateProfile(res.user, { displayName: data.nickname });
         setDoc(doc(db, "users", res.user.uid), {
+          displayName: data.nickname,
+          displayPhoto: defaultProfile,
           communityWriting: [],
           communityBookmark: [],
           communityComment: [],

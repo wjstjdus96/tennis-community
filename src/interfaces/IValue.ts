@@ -64,3 +64,9 @@ export interface ISignupValue {
   passwordConfirm?: string;
   nickname: string;
 }
+
+export interface IWriterInfo {
+  id: string;
+  name: string;
+  profileImg: string;
+}
