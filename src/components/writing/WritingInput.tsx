@@ -26,6 +26,7 @@ export default function WritingInput({
           placeholder={`${text}을 입력하세요`}
         />
       )}
+      {errorMsg && <span>{errorMsg}</span>}
     </Wrapper>
   );
 }
@@ -52,5 +53,9 @@ const Wrapper = styled.div<{ isBody: boolean }>`
     resize: none;
     font-family: "Noto Sans KR", sans-serif;
     white-space: pre-wrap;
+  }
+  span {
+    margin-top: 3px;
+    color: red;
   }
 `;

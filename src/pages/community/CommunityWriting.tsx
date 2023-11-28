@@ -11,6 +11,8 @@ import { updateDocData, updateUserArrayData } from "../../firebase/updateData";
 import { userState } from "../../recoil/atom";
 import { useRecoilValue } from "recoil";
 import { SubmitWritingButton } from "../../components/writing/SubmitWritingButto";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { communityWritingSchema } from "../../utils/schema";
 
 export default function CommunityWriting() {
   const { postId } = useParams();
@@ -20,7 +22,10 @@ export default function CommunityWriting() {
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<ICommunityWritingValue>();
+  } = useForm<ICommunityWritingValue>({
+    mode: "onSubmit",
+    resolver: yupResolver(communityWritingSchema),
+  });
   const navigate = useNavigate();
   const userInfo = useRecoilValue(userState);
 
@@ -90,13 +95,13 @@ export default function CommunityWriting() {
             name="title"
             text="제목"
             register={register}
-            errorMsg={errors.title && "제목을 입력해주세요"}
+            errorMsg={errors.title && errors.title.message}
           />
           <WritingInput
             name="body"
             text="본문"
             register={register}
-            errorMsg={errors.body && "본문을 작성해주세요"}
+            errorMsg={errors.body && errors.body.message}
           />
           <div>
             <SubmitWritingButton>

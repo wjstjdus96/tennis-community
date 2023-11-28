@@ -12,6 +12,8 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { db } from "../../firebase/firebase";
 import { updateDocData, updateUserArrayData } from "../../firebase/updateData";
 import { useEffect } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { recruitWritingSchema } from "../../utils/schema";
 
 export default function RecruitWriting() {
   const { postId } = useParams();
@@ -22,7 +24,10 @@ export default function RecruitWriting() {
     formState: { errors },
     setValue,
     control,
-  } = useForm<IRecruitWritingValue>();
+  } = useForm<IRecruitWritingValue>({
+    mode: "onSubmit",
+    resolver: yupResolver(recruitWritingSchema),
+  });
   const userInfo = useRecoilValue(userState);
   const navigate = useNavigate();
 
@@ -90,18 +95,22 @@ export default function RecruitWriting() {
       <Head>{postId ? "게시글 수정" : "게시글 작성"}</Head>
       <Body>
         <form onSubmit={handleSubmit(postId ? onClickEdit : onClickWriting)}>
-          <SelectRecruitType name="type" control={control} />
+          <SelectRecruitType
+            name="type"
+            control={control}
+            errorMsg={errors.type && errors.type.message}
+          />
           <WritingInput
             name="title"
             text="제목"
             register={register}
-            errorMsg={errors.title && "제목을 입력해주세요"}
+            errorMsg={errors.title && errors.title.message}
           />
           <WritingInput
             name="body"
             text="본문"
             register={register}
-            errorMsg={errors.body && "본문을 작성해주세요"}
+            errorMsg={errors.body && errors.body.message}
           />
           <div>
             <SubmitWritingButton>
