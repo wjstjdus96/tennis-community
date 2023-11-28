@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { getElapsedTime } from "../../utils/getElapsedTime";
+import { getElapsedTime } from "../../utils/getTime";
 import { ICommentCard } from "../../interfaces/IComponent";
 import { EditDeleteBtn } from "../post/EditDeleteBtns";
 import { deleteComment } from "../../firebase/deleteData";
@@ -23,7 +23,7 @@ export default function CommentCard({
     }).then(() => {
       updateUserArrayData({
         userId: userInfo.id,
-        docField: "communityComment",
+        docField: collectionName + "Comment",
         changing: "remove",
         arrayItem: docId + "+" + comment.id,
       });

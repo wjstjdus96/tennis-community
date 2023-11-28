@@ -17,7 +17,7 @@ export function PostBody({ postData }: IPostBody) {
       deletePost({ collectionName: postData.field, docId: postData.id });
       updateUserArrayData({
         userId: userInfo.id,
-        docField: "communityWriting",
+        docField: postData.field + "Writing",
         changing: "remove",
         arrayItem: postData.id,
       });
@@ -33,7 +33,10 @@ export function PostBody({ postData }: IPostBody) {
 
   return (
     <Wrapper>
-      <div>{postData.title}</div>
+      <Title>
+        {postData.type && <p>{postData.type}</p>}
+        <div>{postData.title}</div>
+      </Title>
       <div>{postData.body}</div>
       <div>
         <BookmarkBtn
@@ -54,14 +57,32 @@ export function PostBody({ postData }: IPostBody) {
 
 const Wrapper = styled.div`
   white-space: pre-wrap;
-  & > div:first-child {
-    font-size: 30px;
-    margin-bottom: 20px;
-    font-weight: 700;
-  }
   & > div:nth-child(3) {
     margin: 30px 0;
     display: flex;
     justify-content: center;
+  }
+`;
+
+const Title = styled.div`
+  & > p {
+    width: 50px;
+    color: grey;
+    font-size: 12px;
+    font-weight: 700;
+    margin: 0;
+    border: 1px solid grey;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    padding: 3px;
+    margin-bottom: 10px;
+  }
+
+  & > div {
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: 700;
   }
 `;

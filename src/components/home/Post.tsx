@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import { FaBookmark, FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
-import { getElapsedTime } from "../../utils/getElapsedTime";
+import { getElapsedTime } from "../../utils/getTime";
 import { useNavigate } from "react-router-dom";
 import { IPost } from "../../interfaces/IValue";
 import { IUserBookmarkState, userBookmarkState } from "../../recoil/atom";
 import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
+import PostWriter from "./PostWriter";
 
 export default function Post({
   post,
@@ -19,15 +20,9 @@ export default function Post({
   const [isBookmarkChecked, setIsBookmarkChecked] = useState<boolean>();
 
   useEffect(() => {
-    // 사람 모집 게시판 완성 후 수정
-    if (post.field == "recruit") {
-      setIsBookmarkChecked(false);
-    }
-    if (post.field == "community") {
-      setIsBookmarkChecked(
-        userBookmark[post.field as keyof IUserBookmarkState].includes(post.id)
-      );
-    }
+    setIsBookmarkChecked(
+      userBookmark[post.field as keyof IUserBookmarkState].includes(post.id)
+    );
   }, [userBookmark]);
 
   const onClickTitle = () => {
@@ -40,10 +35,7 @@ export default function Post({
     <Wrapper isHome={isHome}>
       <Infos>
         <InfoGroup>
-          <IconItem>
-            <img src={post.creatorImage} />
-            <div>{post.creatorName}</div>
-          </IconItem>
+          <PostWriter writerId={post.creatorId} />
           <div>{getElapsedTime(post.createdAt.seconds)}</div>
         </InfoGroup>
         <InfoGroup>
@@ -89,12 +81,12 @@ const Infos = styled.div`
 `;
 
 const Title = styled.div<{ type?: string }>`
-  display: grid;
-  grid-template-columns: ${(props) => (props.type ? "1fr 7fr" : "1fr")};
+  display: flex;
   gap: 10px;
-  justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   & > p {
+    min-width: 50px;
+    max-width: 70px;
     color: grey;
     font-size: 12px;
     font-weight: 700;
@@ -107,7 +99,6 @@ const Title = styled.div<{ type?: string }>`
     padding: 3px;
   }
   & > div {
-    height: 20px;
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -122,12 +113,6 @@ const Title = styled.div<{ type?: string }>`
 const InfoGroup = styled.div`
   display: flex;
   align-items: center;
-  img {
-    width: 20px;
-    height: 20px;
-    background-color: white;
-    border-radius: 50%;
-  }
   &:first-child > div:nth-child(n + 2) {
     position: relative;
     margin-left: 10px;

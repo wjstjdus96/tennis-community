@@ -1,17 +1,21 @@
-import { HomeLayout } from "../layouts/HomeLayout";
 import styled from "styled-components";
+import { HomeLayout } from "../../layouts/HomeLayout";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
-import WritingInput from "../components/post/WritingInput";
-import { addDoc, collection, doc, serverTimestamp } from "firebase/firestore";
-import { db } from "../firebase/firebase";
-import { ICommunityWritingValue } from "../interfaces/IValue";
-import { useEffect, useState } from "react";
-import { updateDocData, updateUserArrayData } from "../firebase/updateData";
-import { userState } from "../recoil/atom";
+import { IRecruitWritingValue } from "../../interfaces/IValue";
+import WritingInput from "../../components/writing/WritingInput";
+import { SubmitWritingButton } from "../../components/writing/SubmitWritingButto";
+import { SelectRecruitType } from "../../components/writing/SelectRecruitType";
 import { useRecoilValue } from "recoil";
+import { userState } from "../../recoil/atom";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { db } from "../../firebase/firebase";
+import { updateDocData, updateUserArrayData } from "../../firebase/updateData";
+import { useEffect } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { recruitWritingSchema } from "../../utils/schema";
 
-export function Writing() {
+export default function RecruitWriting() {
   const { postId } = useParams();
   const { state } = useLocation();
   const {
@@ -19,13 +23,16 @@ export function Writing() {
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<ICommunityWritingValue>();
-  const navigate = useNavigate();
+    control,
+  } = useForm<IRecruitWritingValue>({
+    mode: "onSubmit",
+    resolver: yupResolver(recruitWritingSchema),
+  });
   const userInfo = useRecoilValue(userState);
+  const navigate = useNavigate();
 
-  const onClickWriting: SubmitHandler<ICommunityWritingValue> = async (
-    data
-  ) => {
+  const onClickWriting = async (data: any) => {
+    console.log(data);
     try {
       let docData = {
         body: data.body,
@@ -35,27 +42,29 @@ export function Writing() {
         creatorImage: userInfo.photo,
         creatorName: userInfo.displayName,
         creatorId: userInfo.id,
-        field: "community",
+        field: "recruit",
         title: data.title,
+        type: data.type,
         titleKeyword: data.title.split(" "),
       };
-      await addDoc(collection(db, "community"), docData).then((docRef) => {
+      await addDoc(collection(db, "recruit"), docData).then((docRef) => {
         updateUserArrayData({
           userId: userInfo.id,
-          docField: "communityWriting",
+          docField: "recruitWriting",
           changing: "add",
           arrayItem: docRef.id,
         });
       });
-      navigate("/community");
+      navigate("/recruit");
     } catch (error) {
       alert("글쓰기에 실패하였습니다" + error);
     }
   };
 
-  const onClickEdit: SubmitHandler<ICommunityWritingValue> = async (data) => {
+  const onClickEdit: SubmitHandler<IRecruitWritingValue> = async (data) => {
     try {
       let newData = {
+        type: data.type,
         body: data.body,
         title: data.title,
         titleKeyword: data.title.split(" "),
@@ -75,6 +84,7 @@ export function Writing() {
 
   useEffect(() => {
     if (postId) {
+      setValue("type", state.type);
       setValue("title", state.title);
       setValue("body", state.body);
     }
@@ -85,20 +95,27 @@ export function Writing() {
       <Head>{postId ? "게시글 수정" : "게시글 작성"}</Head>
       <Body>
         <form onSubmit={handleSubmit(postId ? onClickEdit : onClickWriting)}>
+          <SelectRecruitType
+            name="type"
+            control={control}
+            errorMsg={errors.type && errors.type.message}
+          />
           <WritingInput
             name="title"
             text="제목"
             register={register}
-            errorMsg={errors.title && "제목을 입력해주세요"}
+            errorMsg={errors.title && errors.title.message}
           />
           <WritingInput
             name="body"
             text="본문"
             register={register}
-            errorMsg={errors.body && "본문을 작성해주세요"}
+            errorMsg={errors.body && errors.body.message}
           />
           <div>
-            <SubmitBtn>{postId ? "수정하기" : "글쓰기"}</SubmitBtn>
+            <SubmitWritingButton>
+              {postId ? "수정하기" : "글쓰기"}
+            </SubmitWritingButton>
           </div>
         </form>
       </Body>
@@ -119,22 +136,5 @@ const Body = styled.div`
     & > div:last-child {
       align-self: end;
     }
-  }
-`;
-
-const SubmitBtn = styled.button`
-  display: flex;
-  align-items: center;
-  margin: 20px 0;
-  padding: 8px 13px;
-  border-radius: 10px;
-  border: none;
-  background-color: ${(props) => props.theme.green[2]};
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 14px;
-  transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
-  &:hover {
-    box-shadow: 100px 0 0 0 rgba(0, 0, 0, 0.1) inset;
-    cursor: pointer;
   }
 `;

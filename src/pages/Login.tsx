@@ -13,6 +13,8 @@ import { ILoginValue } from "../interfaces/IValue";
 import { userBookmarkState, userState } from "../recoil/atom";
 import { useSetRecoilState } from "recoil";
 import { getImage, getUserBookmark } from "../firebase/getData";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginSchema } from "../utils/schema";
 
 export default function Login() {
   const {
@@ -20,7 +22,10 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<ILoginValue>();
+  } = useForm<ILoginValue>({
+    mode: "onSubmit",
+    resolver: yupResolver(loginSchema),
+  });
   const navigate = useNavigate();
   const setUserState = useSetRecoilState(userState);
   const setUserBookmarkState = useSetRecoilState(userBookmarkState);
@@ -61,14 +66,14 @@ export default function Login() {
           text="이메일을 입력하십시오"
           inputType="email"
           register={register}
-          errorMsg={errors.email && "이메일을 입력해주세요"}
+          errorMsg={errors.email && errors.email.message}
         />
         <AuthInput
           name="password"
           text="비밀번호를 입력하십시오"
           inputType="password"
           register={register}
-          errorMsg={errors.password && "비밀번호를 입력해주세요"}
+          errorMsg={errors.password && errors.password.message}
         />
         <SubmitBtn type="submit">로그인</SubmitBtn>
       </form>

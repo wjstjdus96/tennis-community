@@ -3,7 +3,12 @@ import defaultProfile from "../assets/defaultProfile.png";
 import {
   IGetImage,
   IGetOnePost,
+  IGetPost,
+  IGetRecruitPosts,
+  IGetRecruitPostsByPage,
+  IGetUserActivities,
   IGetUserBookmark,
+  IGetWriterInfo,
 } from "../interfaces/IFunction";
 import {
   collection,
@@ -25,7 +30,7 @@ import {
 } from "../interfaces/IFunction";
 import { getAuth } from "firebase/auth";
 import { IUserBookmarkState } from "../recoil/atom";
-import { IPost } from "../interfaces/IValue";
+import { IPost, IWriterInfo } from "../interfaces/IValue";
 import { deduplicateWriting } from "../utils/deduplicateWriting";
 
 export async function getComments({
@@ -157,6 +162,136 @@ export const getPostsByPage = async ({
   }
 };
 
+export const getRecruitPosts = async ({
+  collectionName,
+  keyword,
+  filterType,
+  recruitType,
+  setPosts,
+}: IGetRecruitPosts) => {
+  if (recruitType[1] == null) {
+    getPosts({
+      collectionName: collectionName,
+      keyword: keyword,
+      filterType: filterType,
+      setPosts: setPosts,
+    });
+  } else {
+    const collectionRef = collection(db, collectionName);
+    const querySnapShot = await getDocs(
+      keyword
+        ? query(
+            collectionRef,
+            where("type", "==", recruitType![0]),
+            where("titleKeyword", "array-contains", keyword),
+            orderBy(filterType[1], "desc")
+          )
+        : query(
+            collectionRef,
+            filterType && where("type", "==", recruitType![0]),
+            orderBy(filterType[1], "desc")
+          )
+    );
+    querySnapShot.forEach((doc) => {
+      const postObject = {
+        ...doc.data(),
+        id: doc.id,
+      };
+      setPosts((prev: any) => [...prev, postObject]);
+    });
+  }
+};
+
+export const getRecruitPostsByPage = async ({
+  offset,
+  collectionName,
+  keyword,
+  filterType,
+  recruitType,
+  postsPerPage,
+  setPosts,
+}: IGetRecruitPostsByPage) => {
+  if (recruitType[1] == null) {
+    getPostsByPage({
+      offset: offset,
+      collectionName: collectionName,
+      keyword: keyword,
+      filterType: filterType,
+      postsPerPage: postsPerPage,
+      setPosts: setPosts,
+    });
+  } else {
+    const collectionRef = collection(db, collectionName);
+    if (offset == 0) {
+      const querySnapShot = await getDocs(
+        keyword
+          ? query(
+              collectionRef,
+              filterType && where("type", "==", recruitType![0]),
+              where("titleKeyword", "array-contains", keyword),
+              orderBy(filterType[1], "desc"),
+              limit(postsPerPage)
+            )
+          : query(
+              collectionRef,
+              where("type", "==", recruitType![0]),
+              orderBy(filterType[1], "desc"),
+              limit(postsPerPage)
+            )
+      );
+      querySnapShot.forEach((doc) => {
+        const postObject = {
+          ...doc.data(),
+          id: doc.id,
+        };
+        setPosts((prev: any) => [...prev, postObject]);
+      });
+    } else {
+      const prev = keyword
+        ? query(
+            collectionRef,
+            where("type", "==", recruitType![0]),
+            where("titleKeyword", "array-contains", keyword),
+            orderBy(filterType[1], "desc"),
+            limit(offset)
+          )
+        : query(
+            collectionRef,
+            where("type", "==", recruitType![0]),
+            orderBy(filterType[1], "desc"),
+            limit(offset)
+          );
+      const documentSnapshots = await getDocs(prev);
+      const lastVisible =
+        documentSnapshots.docs[documentSnapshots.docs.length - 1];
+      const next = keyword
+        ? query(
+            collectionRef,
+            where("type", "==", recruitType![0]),
+            where("titleKeyword", "array-contains", keyword),
+            orderBy(filterType[1], "desc"),
+            startAfter(lastVisible),
+            limit(postsPerPage)
+          )
+        : query(
+            collectionRef,
+            where("type", "==", recruitType![0]),
+            orderBy(filterType[1], "desc"),
+            startAfter(lastVisible),
+            limit(postsPerPage)
+          );
+
+      (await getDocs(next)).forEach((doc: any) => {
+        const postObject = {
+          ...doc.data(),
+          id: doc.id,
+        };
+        setPosts((prev: any) => [...prev, postObject]);
+      });
+    }
+  }
+};
+
 export const getUserBookmark = ({ userId, setUserState }: IGetUserBookmark) => {
   const docRef = doc(db, "users", userId);
   onSnapshot(docRef, (doc) => {
@@ -169,11 +304,17 @@ export const getUserBookmark = ({ userId, setUserState }: IGetUserBookmark) => {
   });
 };
 
-interface IGetUserActivities {
-  userId: string;
-  field: string;
-  setFieldItems: React.Dispatch<React.SetStateAction<any>>;
-}
+export const getWriterInfo = ({ userId, setWriterInfo }: IGetWriterInfo) => {
+  const docRef = doc(db, "users", userId);
+  onSnapshot(docRef, (doc) => {
+    const data = doc.data();
+    setWriterInfo({
+      id: userId,
+      name: data ? data.displayName : "",
+      profileImg: data ? data.displayPhoto : defaultProfile,
+    });
+  });
+};
 
 export const getUserActivities = async ({
   userId,
@@ -218,11 +359,6 @@ export const getUserActivities = async ({
     }
   }
 };
-
-interface IGetPost {
-  collectionName: string;
-  docId: string;
-}
 
 export async function getPost({ collectionName, docId }: IGetPost) {
   const docRef = doc(db, collectionName, docId);

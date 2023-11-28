@@ -1,16 +1,22 @@
-import { HomeLayout } from "../layouts/HomeLayout";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-import Post from "../components/home/Post";
-import { Pagination } from "../components/board/Pagination";
-import BoardFilter from "../components/board/BoardFilter";
-import { IPost } from "../interfaces/IValue";
-import { BoardHead } from "../components/board/BoardHead";
-import { BoardWritingBtn } from "../components/board/BoardWritinBtn";
-import { BoardSearch } from "../components/board/BoardSearch";
-import { getPosts, getPostsByPage } from "../firebase/getData";
+import { BoardHead } from "../../components/board/BoardHead";
+import { HomeLayout } from "../../layouts/HomeLayout";
+import { BoardWritingBtn } from "../../components/board/BoardWritinBtn";
+import { useEffect, useState } from "react";
+import { BoardSearch } from "../../components/board/BoardSearch";
+import BoardFilter from "../../components/board/BoardFilter";
+import { IPost } from "../../interfaces/IValue";
+import { Pagination } from "../../components/board/Pagination";
+import Post from "../../components/home/Post";
+import {
+  getPosts,
+  getPostsByPage,
+  getRecruitPosts,
+  getRecruitPostsByPage,
+} from "../../firebase/getData";
+import BoardRecruitFilter from "../../components/board/BoarderRecruitFilter";
 
-export default function Community() {
+export default function Recruit() {
   const [totalPosts, setTotalPosts] = useState<IPost[]>([]);
   const [posts, setPosts] = useState<IPost[]>([]);
   const [page, setPage] = useState<number>(1);
@@ -18,39 +24,43 @@ export default function Community() {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [filterType, setFilterType] = useState(["최신순", "createdAt"]);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [recruitType, setRecruitType] = useState(["전체", null]);
   const postsPerPage = 5;
 
   useEffect(() => {
     setTotalPosts([]);
-    getPosts({
-      collectionName: "community",
+    getRecruitPosts({
+      collectionName: "recruit",
       keyword: searchKeyword,
       filterType: filterType,
+      recruitType: recruitType,
       setPosts: setTotalPosts,
     });
-  }, [searchKeyword, filterType]);
+  }, [searchKeyword, filterType, recruitType]);
 
   useEffect(() => {
     setPosts([]);
-    getPostsByPage({
+    getRecruitPostsByPage({
       offset: (page - 1) * postsPerPage,
-      collectionName: "community",
+      collectionName: "recruit",
       keyword: searchKeyword,
       filterType: filterType,
+      recruitType: recruitType,
       postsPerPage: postsPerPage,
       setPosts: setPosts,
     });
-  }, [page, searchKeyword, filterType]);
+  }, [page, searchKeyword, filterType, recruitType]);
 
   return (
     <HomeLayout>
       <BoardHead
-        title="커뮤니티"
-        summary="테니스에 대한 다양한 생각을 공유해보세요"
+        title="사람모집"
+        summary="다양한 사람들과 함께 테니스를 즐겨보세요"
       />
       <Settings>
-        <BoardWritingBtn boardField="community" />
+        <BoardWritingBtn boardField="recruit" />
         <BoardSearch
+          boardField="recruit"
           keyword={keyword}
           setKeyword={setKeyword}
           setSearchKeyword={setSearchKeyword}
@@ -62,6 +72,10 @@ export default function Community() {
           setIsExpanded={setIsExpanded}
         />
       </Settings>
+      <BoardRecruitFilter
+        recruitFilterType={recruitType}
+        setRecruitFilterType={setRecruitType}
+      />
       <Board>
         {posts.map((post: any) => (
           <Post post={post} isHome={false} />
@@ -83,7 +97,6 @@ const Settings = styled.div`
   justify-content: space-between;
   margin-top: 20px;
 `;
-
 const Board = styled.div`
   margin-top: 20px;
 `;

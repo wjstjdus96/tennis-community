@@ -3,7 +3,7 @@ import AuthLayout from "../layouts/AuthLayout";
 import { useForm, SubmitHandler } from "react-hook-form";
 import styled from "styled-components";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+
 import {
   setPersistence,
   inMemoryPersistence,
@@ -15,33 +15,11 @@ import { useNavigate } from "react-router-dom";
 import { ISignupValue } from "../interfaces/IValue";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { useState } from "react";
+import defaultProfile from "../assets/defaultProfile.png";
+import { signupSchema } from "../utils/schema";
 
 export default function Signup() {
   const navigate = useNavigate();
-  const [userId, setUserId] = useState("");
-
-  const formSchema = yup.object({
-    email: yup
-      .string()
-      .required("이메일을 입력해주세요")
-      .email("이메일 형식이 아닙니다"),
-    password: yup
-      .string()
-      .required("영문, 숫자포함 8자리를 입력해주세요.")
-      .min(8, "최소 8자 이상 가능합니다")
-      .max(15, "최대 15자 까지만 가능합니다")
-      .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,15}$/,
-        "영문 숫자포함 8자리를 입력해주세요."
-      ),
-    passwordConfirm: yup
-      .string()
-      .oneOf([yup.ref("password")], "비밀번호가 다릅니다."),
-    nickname: yup
-      .string()
-      .required("닉네임을 입력해주세요")
-      .max(6, "최대 6자 까지만 가능합니다"),
-  });
 
   const {
     register,
@@ -49,7 +27,7 @@ export default function Signup() {
     formState: { errors },
   } = useForm<ISignupValue>({
     mode: "onChange",
-    resolver: yupResolver(formSchema),
+    resolver: yupResolver(signupSchema),
   });
 
   const onSubmitHandler: SubmitHandler<ISignupValue> = async (data) => {
@@ -62,9 +40,14 @@ export default function Signup() {
       ).then((res) => {
         updateProfile(res.user, { displayName: data.nickname });
         setDoc(doc(db, "users", res.user.uid), {
+          displayName: data.nickname,
+          displayPhoto: defaultProfile,
           communityWriting: [],
           communityBookmark: [],
           communityComment: [],
+          recruitWriting: [],
+          recruitBookmark: [],
+          recruitComment: [],
         });
       });
 
