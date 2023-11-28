@@ -32,15 +32,12 @@ export default function RecruitWriting() {
   const navigate = useNavigate();
 
   const onClickWriting = async (data: any) => {
-    console.log(data);
     try {
       let docData = {
         body: data.body,
         bookmarkNum: 0,
         commentNum: 0,
         createdAt: serverTimestamp(),
-        creatorImage: userInfo.photo,
-        creatorName: userInfo.displayName,
         creatorId: userInfo.id,
         field: "recruit",
         title: data.title,

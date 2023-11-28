@@ -39,8 +39,6 @@ export function WritingComment({
         comment: data.comment,
         createdAt: serverTimestamp(),
         creatorId: userInfo.id,
-        creatorName: userInfo.displayName,
-        creatorPhotoURL: userInfo.photo,
       };
       const commentRef = collection(db, collectionName, docId, "comments");
       await addDoc(commentRef, commentData).then((docRef) => {

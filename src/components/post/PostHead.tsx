@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { getDateTime, getElapsedTime } from "../../utils/getTime";
 import { IPostHead } from "../../interfaces/IComponent";
-import PostWriter from "../home/PostWriter";
+import PostWriter from "../WriterInfo";
 
 export function PostHead({ writerId, createdAt }: IPostHead) {
   return (

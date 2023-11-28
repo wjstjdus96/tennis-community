@@ -82,7 +82,7 @@ export interface IPostHead {
   createdAt: number;
 }
 
-export interface IPostWriter {
+export interface IWriterInfoC {
   writerId: string;
   isPostDetail?: boolean;
 }
