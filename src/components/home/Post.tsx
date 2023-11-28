@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { FaBookmark, FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
-import { getElapsedTime } from "../../utils/getElapsedTime";
+import { getElapsedTime } from "../../utils/getTime";
 import { useNavigate } from "react-router-dom";
 import { IPost } from "../../interfaces/IValue";
 import { IUserBookmarkState, userBookmarkState } from "../../recoil/atom";
