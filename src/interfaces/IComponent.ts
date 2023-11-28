@@ -78,11 +78,11 @@ export interface IPostBody {
 }
 
 export interface IPostHead {
-  writerImage: string;
-  writerName: string;
+  writerId: string;
   createdAt: number;
 }
 
 export interface IPostWriter {
   writerId: string;
+  isPostDetail?: boolean;
 }

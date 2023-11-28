@@ -1,14 +1,12 @@
 import styled from "styled-components";
 import { getElapsedTime } from "../../utils/getElapsedTime";
 import { IPostHead } from "../../interfaces/IComponent";
+import PostWriter from "../home/PostWriter";
 
-export function PostHead({ writerImage, writerName, createdAt }: IPostHead) {
+export function PostHead({ writerId, createdAt }: IPostHead) {
   return (
     <Wrapper>
-      <WriterInfos>
-        <img src={writerImage} />
-        <div>{writerName}</div>
-      </WriterInfos>
+      <PostWriter writerId={writerId} isPostDetail={true} />
       <div>{getElapsedTime(createdAt)}</div>
     </Wrapper>
   );

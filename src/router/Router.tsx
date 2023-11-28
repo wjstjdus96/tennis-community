@@ -35,9 +35,8 @@ export default function Router() {
           />
         </Route>
         <Route path="/community" element={<Community />} />
-        <Route path="/community/:id" element={<PostDetail />} />
+        <Route path="/:boardField/:id" element={<PostDetail />} />
         <Route path="/recruit" element={<Recruit />} />
-        <Route path="/recruit/:id" element={<PostDetail />} />
         <Route path="/market" element={<Market />}>
           <Route path=":id" element={<Market />} />
         </Route>

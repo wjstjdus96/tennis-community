@@ -68,6 +68,9 @@ export default function Signup() {
           communityWriting: [],
           communityBookmark: [],
           communityComment: [],
+          recruitWriting: [],
+          recruitBookmark: [],
+          recruitComment: [],
         });
       });
 

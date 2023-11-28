@@ -6,7 +6,7 @@ import { IWriterInfo } from "../../interfaces/IValue";
 import { getWriterInfo } from "../../firebase/getData";
 import defaultProfile from "../../assets/defaultProfile.png";
 
-export default function PostWriter({ writerId }: IPostWriter) {
+export default function PostWriter({ writerId, isPostDetail }: IPostWriter) {
   const [writerInfo, setWriterInfo] = useState<IWriterInfo>({
     id: "",
     name: "",
@@ -18,14 +18,23 @@ export default function PostWriter({ writerId }: IPostWriter) {
   }, []);
 
   return (
-    <Wrapper>
-      <img src={writerInfo.profileImg} />
-      <div>{writerInfo.name}</div>
-    </Wrapper>
+    <>
+      {isPostDetail ? (
+        <PostDetailWriterInfoWrapper>
+          <img src={writerInfo.profileImg} />
+          <div>{writerInfo.name}</div>
+        </PostDetailWriterInfoWrapper>
+      ) : (
+        <PostWriterInfoWrapper>
+          <img src={writerInfo.profileImg} />
+          <div>{writerInfo.name}</div>
+        </PostWriterInfoWrapper>
+      )}
+    </>
   );
 }
 
-const Wrapper = styled.div`
+const PostWriterInfoWrapper = styled.div`
   display: flex;
   align-items: center;
   & > :first-child {
@@ -34,6 +43,18 @@ const Wrapper = styled.div`
   img {
     width: 20px;
     height: 20px;
+    background-color: white;
+    border-radius: 50%;
+  }
+`;
+
+const PostDetailWriterInfoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  img {
+    width: 45px;
+    height: 45px;
     background-color: white;
     border-radius: 50%;
   }

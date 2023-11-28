@@ -43,8 +43,7 @@ export default function PostDetail() {
       {postData && (
         <Wrapper>
           <PostHead
-            writerImage={postData.creatorImage}
-            writerName={postData.creatorName}
+            writerId={postData.creatorId}
             createdAt={postData.createdAt.seconds}
           />
           <PostBody postData={postData} />
@@ -52,7 +51,7 @@ export default function PostDetail() {
             <div>{postData.commentNum}개의 댓글</div>
             <WritingComment
               writerImage={postData.creatorImage}
-              collectionName="community"
+              collectionName={state.field}
               docId={state.id}
               setComments={setComments}
             />
