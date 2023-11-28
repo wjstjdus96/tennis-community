@@ -330,10 +330,10 @@ export const getUserActivities = async ({
         community: data.communityComment
           ? deduplicateWriting(data.communityComment.reverse())
           : [],
-        recruit: data.communityRecruit
+        recruit: data.recruitComment
           ? deduplicateWriting(data.recruitComment.reverse())
           : [],
-        market: data.communityMarket
+        market: data.marketComment
           ? deduplicateWriting(data.marketComment.reverse())
           : [],
       };
@@ -341,19 +341,19 @@ export const getUserActivities = async ({
     }
     if (field == "writing") {
       const writingFieldData = {
-        community: data.communityComment ? data.communityWriting.reverse() : [],
-        recruit: data.communityRecruit ? data.recruitWriting.reverse() : [],
-        market: data.communityMarket ? data.marketWriting.reverse() : [],
+        community: data.communityWriting ? data.communityWriting.reverse() : [],
+        recruit: data.recruitWriting ? data.recruitWriting.reverse() : [],
+        market: data.marketWriting ? data.marketWriting.reverse() : [],
       };
       setFieldItems(writingFieldData);
     }
     if (field == "bookmark") {
       const bookmarkFieldData = {
-        community: data.communityComment
+        community: data.communityBookmark
           ? data.communityBookmark.reverse()
           : [],
-        recruit: data.communityRecruit ? data.recruitBookmark.reverse() : [],
-        market: data.communityMarket ? data.marketBookmark.reverse() : [],
+        recruit: data.recruitBookmark ? data.recruitBookmark.reverse() : [],
+        market: data.marketBookmark ? data.marketBookmark.reverse() : [],
       };
       setFieldItems(bookmarkFieldData);
     }

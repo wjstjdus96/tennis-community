@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getPost } from "../../firebase/getData";
-import Post from "../home/Post";
+import { getPost } from "../../../firebase/getData";
+import Post from "../../home/Post";
 
 interface IActivityFieldItem {
   collectionName: string;

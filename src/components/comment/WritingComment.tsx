@@ -46,7 +46,7 @@ export function WritingComment({
       await addDoc(commentRef, commentData).then((docRef) => {
         updateUserArrayData({
           userId: userInfo.id,
-          docField: "communityComment",
+          docField: collectionName + "Comment",
           changing: "add",
           arrayItem: docId + "+" + docRef.id,
         });

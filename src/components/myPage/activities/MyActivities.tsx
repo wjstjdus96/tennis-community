@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { ActivityFieldBtn } from "./ActivityFieldBtn";
-import { getPost, getUserActivities } from "../../firebase/getData";
+import { getPost, getUserActivities } from "../../../firebase/getData";
 import { useRecoilValue } from "recoil";
-import { userBookmarkState, userState } from "../../recoil/atom";
+import { userBookmarkState, userState } from "../../../recoil/atom";
 import { ActivityFieldItem } from "./ActivityFieldItem";
 
 interface IFieldItemIds {
@@ -58,6 +58,9 @@ export function MyActivities() {
         <PostWrapper>
           {fieldItemIds["community"].map((itemId: string) => (
             <ActivityFieldItem itemId={itemId} collectionName="community" />
+          ))}
+          {fieldItemIds["recruit"].map((itemId: string) => (
+            <ActivityFieldItem itemId={itemId} collectionName="recruit" />
           ))}
         </PostWrapper>
       )}
