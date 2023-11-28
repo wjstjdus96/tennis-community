@@ -33,6 +33,7 @@ export default function Router() {
             path="/community/edit/:postId"
             element={<CommunityWriting />}
           />
+          <Route path="/recruit/edit/:postId" element={<RecruitWriting />} />
         </Route>
         <Route path="/community" element={<Community />} />
         <Route path="/:boardField/:id" element={<PostDetail />} />

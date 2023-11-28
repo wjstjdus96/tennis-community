@@ -8,11 +8,14 @@ import { SelectRecruitType } from "../../components/writing/SelectRecruitType";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../recoil/atom";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { db } from "../../firebase/firebase";
-import { updateUserArrayData } from "../../firebase/updateData";
+import { updateDocData, updateUserArrayData } from "../../firebase/updateData";
+import { useEffect } from "react";
 
 export default function RecruitWriting() {
+  const { postId } = useParams();
+  const { state } = useLocation();
   const {
     register,
     handleSubmit,
@@ -49,16 +52,44 @@ export default function RecruitWriting() {
       });
       navigate("/recruit");
     } catch (error) {
-      console.log(data);
       alert("글쓰기에 실패하였습니다" + error);
     }
   };
 
+  const onClickEdit: SubmitHandler<IRecruitWritingValue> = async (data) => {
+    try {
+      let newData = {
+        type: data.type,
+        body: data.body,
+        title: data.title,
+        titleKeyword: data.title.split(" "),
+      };
+      updateDocData({
+        collectionName: state.field,
+        docId: state.id,
+        newData: newData,
+      });
+      navigate(`/${state.field}/${state.id}`, {
+        state: { field: state.field, id: state.id },
+      });
+    } catch (e) {
+      alert("게시글 수정에 실패하였습니다");
+    }
+  };
+
+  useEffect(() => {
+    if (postId) {
+      setValue("type", state.type);
+      setValue("title", state.title);
+      setValue("body", state.body);
+    }
+  }, [postId]);
+
   return (
     <HomeLayout>
-      <Head>게시글 작성</Head>
+      <Head>{postId ? "게시글 수정" : "게시글 작성"}</Head>
       <Body>
-        <form onSubmit={handleSubmit(onClickWriting)}>
+        <form onSubmit={handleSubmit(postId ? onClickEdit : onClickWriting)}>
           <SelectRecruitType name="type" control={control} />
           <WritingInput
             name="title"
@@ -73,7 +104,9 @@ export default function RecruitWriting() {
             errorMsg={errors.body && "본문을 작성해주세요"}
           />
           <div>
-            <SubmitWritingButton>글쓰기</SubmitWritingButton>
+            <SubmitWritingButton>
+              {postId ? "수정하기" : "글쓰기"}
+            </SubmitWritingButton>
           </div>
         </form>
       </Body>

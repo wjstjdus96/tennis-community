@@ -23,7 +23,7 @@ export default function CommentCard({
     }).then(() => {
       updateUserArrayData({
         userId: userInfo.id,
-        docField: "communityComment",
+        docField: collectionName + "Comment",
         changing: "remove",
         arrayItem: docId + "+" + comment.id,
       });
