@@ -20,15 +20,9 @@ export default function Post({
   const [isBookmarkChecked, setIsBookmarkChecked] = useState<boolean>();
 
   useEffect(() => {
-    if (post.field == "community") {
-      setIsBookmarkChecked(
-        userBookmark[post.field as keyof IUserBookmarkState].includes(post.id)
-      );
-    }
-    // 사람 모집 게시판 완성 후 수정
-    if (post.field == "recruit") {
-      setIsBookmarkChecked(false);
-    }
+    setIsBookmarkChecked(
+      userBookmark[post.field as keyof IUserBookmarkState].includes(post.id)
+    );
   }, [userBookmark]);
 
   const onClickTitle = () => {
