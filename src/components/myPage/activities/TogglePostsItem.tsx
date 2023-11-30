@@ -53,7 +53,6 @@ const ToggleHead = styled.div`
   align-items: center;
   gap: 8px;
   & > div:nth-child(2) {
-    font-weight: 700;
     font-size: 14px;
   }
   & > div:last-child {
@@ -66,5 +65,6 @@ const ToggleBody = styled.div`
   & > p {
     margin-left: 15px;
     font-size: 15px;
+    color: gray;
   }
 `;
