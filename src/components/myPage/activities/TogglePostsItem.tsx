@@ -31,7 +31,6 @@ export default function TogglePostsItem({
         <div>{fieldKor}</div>
         <div>( {postsIds.length} )</div>
       </ToggleHead>
-
       {isExpanded && (
         <>
           {postsIds.map((postId: string) => (
