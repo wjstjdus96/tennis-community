@@ -6,12 +6,8 @@ import { getPost, getUserActivities } from "../../../firebase/getData";
 import { useRecoilValue } from "recoil";
 import { userBookmarkState, userState } from "../../../recoil/atom";
 import { ActivityFieldItem } from "./ActivityFieldItem";
-
-interface IFieldItemIds {
-  community: string[];
-  recruit: string[];
-  market: string[];
-}
+import TogglePostsList from "./TogglePostsList";
+import { IFieldItemIds } from "../../../interfaces/IValue";
 
 export function MyActivities() {
   const { search } = useLocation();
@@ -55,14 +51,7 @@ export function MyActivities() {
         </FieldBoxWrapper>
       )}
       {fieldItemIds != undefined && (
-        <PostWrapper>
-          {fieldItemIds["community"].map((itemId: string) => (
-            <ActivityFieldItem itemId={itemId} collectionName="community" />
-          ))}
-          {fieldItemIds["recruit"].map((itemId: string) => (
-            <ActivityFieldItem itemId={itemId} collectionName="recruit" />
-          ))}
-        </PostWrapper>
+        <TogglePostsList fieldPostsIds={fieldItemIds} />
       )}
     </Wrapper>
   );
@@ -81,5 +70,3 @@ const FieldBoxWrapper = styled.div`
   justify-content: space-between;
   margin-bottom: 10px;
 `;
-
-const PostWrapper = styled.div``;

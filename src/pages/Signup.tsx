@@ -48,6 +48,9 @@ export default function Signup() {
           recruitWriting: [],
           recruitBookmark: [],
           recruitComment: [],
+          marketWriting: [],
+          marketBookmark: [],
+          marketComment: [],
         });
       });
 

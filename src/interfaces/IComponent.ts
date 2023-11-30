@@ -2,6 +2,7 @@ import { Path, UseFormRegister } from "react-hook-form";
 import {
   IComment,
   ICommunityWritingValue,
+  IFieldItemIds,
   IPost,
   ISignupValue,
 } from "./IValue";
@@ -85,4 +86,8 @@ export interface IPostHead {
 export interface IWriterInfoC {
   writerId: string;
   isPostDetail?: boolean;
+}
+
+export interface ITogglePostsList {
+  fieldPostsIds: IFieldItemIds;
 }
