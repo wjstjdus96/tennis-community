@@ -32,11 +32,15 @@ export default function TogglePostsItem({
         <div>( {postsIds.length} )</div>
       </ToggleHead>
       {isExpanded && (
-        <>
-          {postsIds.map((postId: string) => (
-            <ActivityFieldItem itemId={postId} collectionName={fieldEng} />
-          ))}
-        </>
+        <ToggleBody>
+          {postsIds.length == 0 ? (
+            <p>해당 분야의 게시글이 없습니다</p>
+          ) : (
+            postsIds.map((postId: string) => (
+              <ActivityFieldItem itemId={postId} collectionName={fieldEng} />
+            ))
+          )}
+        </ToggleBody>
       )}
     </Wrapper>
   );
@@ -48,7 +52,6 @@ const ToggleHead = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  color: ${(props) => props.theme.green[3]};
   & > div:nth-child(2) {
     font-weight: 700;
     font-size: 14px;
@@ -56,5 +59,12 @@ const ToggleHead = styled.div`
   & > div:last-child {
     font-size: 12px;
     margin-left: -5px;
+  }
+`;
+
+const ToggleBody = styled.div`
+  & > p {
+    margin-left: 15px;
+    font-size: 15px;
   }
 `;

@@ -19,7 +19,6 @@ const Wrapper = styled.div`
   gap: 15px;
   label {
     font-weight: 700;
-    color: ${(props) => props.theme.green[3]};
   }
 
   input {

@@ -41,7 +41,6 @@ const Wrapper = styled.div`
   & > div:first-child {
     align-self: flex-start;
     font-weight: 700;
-    color: ${(props) => props.theme.green[3]};
   }
 `;
 
@@ -58,7 +57,6 @@ const ImageButton = styled.button`
   border: 2px solid ${(props) => props.theme.green[1]};
   background-color: transparent;
   border-radius: 8px;
-  color: ${(props) => props.theme.green[3]};
   font-weight: 700;
   font-size: 10px;
   font-family: "Noto Sans KR", sans-serif;
