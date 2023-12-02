@@ -6,7 +6,7 @@ import { IPost } from "../../interfaces/IValue";
 import { IUserBookmarkState, userBookmarkState } from "../../recoil/atom";
 import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
-import PostWriter from "./PostWriter";
+import WriterInfo from "../WriterInfo";
 
 export default function Post({
   post,
@@ -35,7 +35,7 @@ export default function Post({
     <Wrapper isHome={isHome}>
       <Infos>
         <InfoGroup>
-          <PostWriter writerId={post.creatorId} />
+          <WriterInfo writerId={post.creatorId} />
           <div>{getElapsedTime(post.createdAt.seconds)}</div>
         </InfoGroup>
         <InfoGroup>

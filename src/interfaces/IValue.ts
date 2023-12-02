@@ -70,3 +70,14 @@ export interface IWriterInfo {
   name: string;
   profileImg: string;
 }
+
+export interface IFieldItemIds {
+  community: string[];
+  recruit: string[];
+  market: string[];
+}
+
+export interface IField {
+  kor: string;
+  eng: string;
+}

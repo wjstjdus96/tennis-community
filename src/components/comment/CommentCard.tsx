@@ -6,6 +6,7 @@ import { deleteComment } from "../../firebase/deleteData";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../recoil/atom";
 import { updateUserArrayData } from "../../firebase/updateData";
+import WriterInfo from "../WriterInfo";
 
 export default function CommentCard({
   comment,
@@ -34,10 +35,7 @@ export default function CommentCard({
   return (
     <Wrapper>
       <InfoWrapper>
-        <div>
-          <img src={comment.creatorPhotoURL} />
-          <div>{comment.creatorName}</div>
-        </div>
+        <WriterInfo writerId={comment.creatorId} />
         <div>
           <div>{getElapsedTime(comment.createdAt.seconds)}</div>
           {userInfo.id == comment.creatorId && (

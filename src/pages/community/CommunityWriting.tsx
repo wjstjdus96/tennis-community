@@ -38,8 +38,6 @@ export default function CommunityWriting() {
         bookmarkNum: 0,
         commentNum: 0,
         createdAt: serverTimestamp(),
-        creatorImage: userInfo.photo,
-        creatorName: userInfo.displayName,
         creatorId: userInfo.id,
         field: "community",
         title: data.title,

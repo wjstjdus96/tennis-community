@@ -6,6 +6,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "./firebase";
+import { IUserInfoEdit } from "../components/myPage/setting/Setting";
 
 interface IUpdateData {
   collectionName: string;
@@ -60,4 +61,16 @@ export function updateUserArrayData({
     updateDoc(doc(db, "users", userId), {
       [docField]: arrayRemove(arrayItem),
     });
+}
+
+interface IUpdateUserInfo {
+  userId: string;
+  data: IUserInfoEdit;
+}
+
+export function updateUserInfo({ userId, data }: IUpdateUserInfo) {
+  updateDoc(doc(db, "users", userId), {
+    displayName: data.displayName,
+    displayPhoto: data.profileImage,
+  });
 }
