@@ -1,27 +1,68 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import defaultProfile from "../../../assets/defaultProfile.png";
+import {
+  Path,
+  UseFormRegister,
+  UseFormWatch,
+  UseFormSetValue,
+} from "react-hook-form";
+import { IUserInfoEdit } from "./Setting";
 
-export default function SettingProfileImage() {
-  //   const inputRef = useRef<HTMLInputElement | null>(null);
+interface ISettingProfileImage {
+  name: Path<IUserInfoEdit>;
+  register: UseFormRegister<IUserInfoEdit>;
+  watch: UseFormWatch<IUserInfoEdit>;
+  setValue: UseFormSetValue<IUserInfoEdit>;
+  label: string;
+}
 
-  //   const uploadImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-  //     if (!e.target.files) {
-  //       return;
-  //     }
-  //     console.log(e.target.files);
-  //   }, []);
+export default function SettingProfileImage({
+  name,
+  register,
+  watch,
+  label,
+  setValue,
+}: ISettingProfileImage) {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const { ref, ...rest } = register(name);
+  const [imagePreview, setImagePreview] = useState("");
+  const currentImage = watch(name);
 
-  //   const onClickUploadImageBtn = () => {};
+  const onClickUploadImage = () => {
+    inputRef.current?.click();
+  };
+
+  const onClickDeleteImage = () => {
+    setValue(name, defaultProfile);
+  };
+
+  useEffect(() => {
+    if (currentImage && currentImage.length > 0) {
+      if (typeof currentImage == "string") setImagePreview(currentImage);
+      else {
+        setImagePreview(URL.createObjectURL(currentImage[0]));
+      }
+    }
+  }, [currentImage]);
 
   return (
     <Wrapper>
-      <div>프로필 이미지</div>
-      <img src={defaultProfile} />
+      <div>{label}</div>
+      <img src={imagePreview} />
       <ImageButtonBox>
-        <input type="file"></input>
-        <ImageButton>이미지 업로드</ImageButton>
-        <ImageButton>이미지 삭제</ImageButton>
+        <input
+          {...rest}
+          name={name}
+          ref={(e) => {
+            ref(e);
+            inputRef.current = e;
+          }}
+          type="file"
+          accept="image/jpg, image/jpeg, image/png"
+        ></input>
+        <ImageButton onClick={onClickUploadImage}>이미지 업로드</ImageButton>
+        <ImageButton onClick={onClickDeleteImage}>이미지 삭제</ImageButton>
       </ImageButtonBox>
     </Wrapper>
   );
@@ -37,6 +78,7 @@ const Wrapper = styled.div`
     width: 100px;
     height: 100px;
     border-radius: 50%;
+    object-fit: cover;
   }
   & > div:first-child {
     align-self: flex-start;
@@ -52,7 +94,7 @@ const ImageButtonBox = styled.div`
   }
 `;
 
-const ImageButton = styled.button`
+const ImageButton = styled.div`
   padding: 8px 10px;
   border: 2px solid ${(props) => props.theme.green[1]};
   background-color: transparent;
@@ -60,4 +102,5 @@ const ImageButton = styled.button`
   font-weight: 700;
   font-size: 10px;
   font-family: "Noto Sans KR", sans-serif;
+  cursor: pointer;
 `;

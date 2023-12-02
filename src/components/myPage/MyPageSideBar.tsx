@@ -24,6 +24,8 @@ export function MyPageSideBar() {
     }
   };
 
+  console.log(userInfo);
+
   return (
     <Wrapper>
       <img src={userInfo.photo} />
