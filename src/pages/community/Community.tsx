@@ -9,38 +9,21 @@ import { BoardHead } from "../../components/board/BoardHead";
 import { BoardWritingBtn } from "../../components/board/BoardWritinBtn";
 import { BoardSearch } from "../../components/board/BoardSearch";
 import { getPosts, getPostsByPage } from "../../firebase/getData";
+import { useGetPosts } from "../../hooks/useGetPosts";
 
 export default function Community() {
-  const [totalPosts, setTotalPosts] = useState<IPost[]>([]);
-  const [posts, setPosts] = useState<IPost[]>([]);
   const [page, setPage] = useState<number>(1);
   const [keyword, setKeyword] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [filterType, setFilterType] = useState(["최신순", "createdAt"]);
   const [isExpanded, setIsExpanded] = useState(false);
   const postsPerPage = 5;
-
-  useEffect(() => {
-    setTotalPosts([]);
-    getPosts({
-      collectionName: "community",
-      keyword: searchKeyword,
-      filterType: filterType,
-      setPosts: setTotalPosts,
-    });
-  }, [searchKeyword, filterType]);
-
-  useEffect(() => {
-    setPosts([]);
-    getPostsByPage({
-      offset: (page - 1) * postsPerPage,
-      collectionName: "community",
-      keyword: searchKeyword,
-      filterType: filterType,
-      postsPerPage: postsPerPage,
-      setPosts: setPosts,
-    });
-  }, [page, searchKeyword, filterType]);
+  const { posts, totalPosts } = useGetPosts({
+    collectionName: "community",
+    page,
+    searchKeyword,
+    filterType,
+  });
 
   return (
     <HomeLayout>

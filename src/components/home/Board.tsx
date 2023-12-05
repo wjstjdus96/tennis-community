@@ -10,6 +10,12 @@ import { IMarketPost, IPost } from "../../interfaces/IValue";
 
 export default function Board({ title, collectionName }: IBoard) {
   const [posts, setPosts] = useState<IPost[] | IMarketPost[]>([]);
+  const navigate = useNavigate();
+
+  const onClickTitle = () => {
+    navigate(`/${collectionName}`);
+  };
+
   const getPosts = async () => {
     const collectionRef = collection(db, collectionName);
     const limitNumber = collectionName == "market" ? 6 : 4;
@@ -23,10 +29,6 @@ export default function Board({ title, collectionName }: IBoard) {
       };
       setPosts((prev: any) => [...prev, postObject]);
     });
-  };
-  const navigate = useNavigate();
-  const onClickTitle = () => {
-    navigate(`/${collectionName}`);
   };
 
   useEffect(() => {

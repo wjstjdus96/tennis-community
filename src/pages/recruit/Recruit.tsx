@@ -15,10 +15,9 @@ import {
   getRecruitPostsByPage,
 } from "../../firebase/getData";
 import BoardRecruitFilter from "../../components/board/BoarderRecruitFilter";
+import { useGetPosts } from "../../hooks/useGetPosts";
 
 export default function Recruit() {
-  const [totalPosts, setTotalPosts] = useState<IPost[]>([]);
-  const [posts, setPosts] = useState<IPost[]>([]);
   const [page, setPage] = useState<number>(1);
   const [keyword, setKeyword] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -26,30 +25,13 @@ export default function Recruit() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [recruitType, setRecruitType] = useState(["전체", null]);
   const postsPerPage = 5;
-
-  useEffect(() => {
-    setTotalPosts([]);
-    getRecruitPosts({
-      collectionName: "recruit",
-      keyword: searchKeyword,
-      filterType: filterType,
-      recruitType: recruitType,
-      setPosts: setTotalPosts,
-    });
-  }, [searchKeyword, filterType, recruitType]);
-
-  useEffect(() => {
-    setPosts([]);
-    getRecruitPostsByPage({
-      offset: (page - 1) * postsPerPage,
-      collectionName: "recruit",
-      keyword: searchKeyword,
-      filterType: filterType,
-      recruitType: recruitType,
-      postsPerPage: postsPerPage,
-      setPosts: setPosts,
-    });
-  }, [page, searchKeyword, filterType, recruitType]);
+  const { posts, totalPosts } = useGetPosts({
+    collectionName: "recruit",
+    page,
+    searchKeyword,
+    filterType,
+    recruitType,
+  });
 
   return (
     <HomeLayout>
