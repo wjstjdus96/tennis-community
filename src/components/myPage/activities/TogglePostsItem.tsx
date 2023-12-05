@@ -1,7 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import { ActivityFieldItem } from "./ActivityFieldItem";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ITogglePostsItem {
   postsIds: string[];

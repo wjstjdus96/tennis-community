@@ -3,21 +3,38 @@ import { BiSolidTennisBall } from "react-icons/bi";
 import defaultProfile from "../assets/defaultProfile.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { checkIsLogin } from "../utils/checkIsLogin";
-import { userState } from "../recoil/atom";
-import { useRecoilValue } from "recoil";
+import { userBookmarkState, userState } from "../recoil/atom";
+import { useRecoilValue, useResetRecoilState } from "recoil";
+import { IoMenu, IoLogOutOutline } from "react-icons/io5";
 
 export default function Header() {
   const isLogin = checkIsLogin();
   const userInfo = useRecoilValue(userState);
 
+  const navigate = useNavigate();
+  const resetUserState = useResetRecoilState(userState);
+  const resetUserBookmarkState = useResetRecoilState(userBookmarkState);
+  const clickLogout = () => {
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      resetUserState();
+      resetUserBookmarkState();
+      sessionStorage.clear();
+
+      navigate("/");
+    }
+  };
+
+  const onClickMyPageButton = () => {
+    navigate("/my-page/activities?field=writing");
+  };
   return (
     <Wrapper>
-      <Link to="/">
-        <Logo>
+      <Logo>
+        <Link to="/">
           <BiSolidTennisBall />
           <div>TENNING</div>
-        </Logo>
-      </Link>
+        </Link>
+      </Logo>
       <Menu>
         <div>
           <NavLinkStyle to="/community">커뮤니티</NavLinkStyle>
@@ -31,11 +48,11 @@ export default function Header() {
       </Menu>
       {isLogin ? (
         <Profile>
-          <div>
-            <Link to="/my-page/activities?field=writing">
-              <img src={userInfo.photo} />
-            </Link>
-          </div>
+          <ProfileBox>
+            <img src={userInfo.photo} />
+            <IoMenu onClick={() => onClickMyPageButton()} size={28} />
+            <IoLogOutOutline onClick={() => clickLogout()} size={28} />
+          </ProfileBox>
         </Profile>
       ) : (
         <Link to="/login" className="links">
@@ -64,13 +81,14 @@ const Wrapper = styled.div`
 `;
 
 const Logo = styled.div`
-  display: flex;
-  margin-left: 100px;
-  padding-right: 10px;
-  align-items: center;
-  font-size: 23px;
-  font-family: "Allan", cursive;
-  letter-spacing: 8px;
+  justify-self: center;
+  & > a {
+    display: flex;
+    align-items: center;
+    font-size: 23px;
+    font-family: "Allan", cursive;
+    letter-spacing: 8px;
+  }
   svg {
     color: ${(props) => props.theme.green[2]};
     margin-right: 8px;
@@ -101,20 +119,27 @@ const Menu = styled.div`
 
 const Profile = styled.div`
   display: flex;
-  margin-right: 100px;
-  justify-content: end;
-  img {
-    width: 24px;
-    height: 24px;
-    background-color: white;
-    padding: 10px;
-    border-radius: 50%;
-  }
-  div {
+  justify-self: center;
+  & > a {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+`;
+
+const ProfileBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  img {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: white;
+    border-radius: 50%;
+  }
+  svg {
+    cursor: pointer;
   }
 `;
 

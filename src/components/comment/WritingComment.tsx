@@ -70,7 +70,7 @@ export function WritingComment({
   return (
     <Wrapper onSubmit={handleSubmit(onClickCommentWriting)}>
       <div>
-        <img src={writerImage} />
+        <img src={userInfo.photo} />
         {isLogin ? (
           <textarea
             id="comment"
