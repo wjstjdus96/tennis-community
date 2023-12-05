@@ -1,12 +1,12 @@
-import styled from "styled-components";
 import { BiSolidTennisBall } from "react-icons/bi";
-import defaultProfile from "../assets/defaultProfile.png";
+import { IoLogOutOutline, IoMenu } from "react-icons/io5";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { checkIsLogin } from "../utils/checkIsLogin";
-import { userBookmarkState, userState } from "../recoil/atom";
-import { useRecoilValue, useResetRecoilState } from "recoil";
-import { IoMenu, IoLogOutOutline } from "react-icons/io5";
+import { useRecoilValue } from "recoil";
+import styled from "styled-components";
+import { header_menu_list } from "../consts/const";
 import { useLogout } from "../hooks/useLogout";
+import { userState } from "../recoil/atom";
+import { checkIsLogin } from "../utils/checkIsLogin";
 
 export default function Header() {
   const isLogin = checkIsLogin();
@@ -27,15 +27,11 @@ export default function Header() {
         </Link>
       </Logo>
       <Menu>
-        <div>
-          <NavLinkStyle to="/community">커뮤니티</NavLinkStyle>
-        </div>
-        <div>
-          <NavLinkStyle to="/recruit">사람모집</NavLinkStyle>
-        </div>
-        <div>
-          <NavLinkStyle to="/market">플리마켓</NavLinkStyle>
-        </div>
+        {header_menu_list.map((menu, idx) => (
+          <div key={idx}>
+            <NavLinkStyle to={menu.src}>{menu.name}</NavLinkStyle>
+          </div>
+        ))}
       </Menu>
       {isLogin ? (
         <Profile>

@@ -7,6 +7,7 @@ import { useState } from "react";
 export function BoardSearch({ boardField, setSearchKeyword }: IBoardSearch) {
   const [keyword, setKeyword] = useState("");
   const navigate = useNavigate();
+
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key == "Enter") {
       setSearchKeyword(keyword);

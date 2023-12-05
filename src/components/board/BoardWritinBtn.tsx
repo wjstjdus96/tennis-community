@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export function BoardWritingBtn({ boardField }: { boardField: string }) {
   const navigate = useNavigate();
+
   const onClickWritingBtn = () => {
     navigate("write", { state: boardField });
   };
