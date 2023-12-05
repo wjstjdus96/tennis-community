@@ -1,11 +1,9 @@
-import styled from "styled-components";
 import { FaBookmark, FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
-import { getElapsedTime } from "../../utils/getTime";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { useSetBookmark } from "../../hooks/useSetBookmark";
 import { IPost } from "../../interfaces/IValue";
-import { IUserBookmarkState, userBookmarkState } from "../../recoil/atom";
-import { useRecoilValue } from "recoil";
-import { useEffect, useState } from "react";
+import { getElapsedTime } from "../../utils/getTime";
 import WriterInfo from "../WriterInfo";
 
 export default function Post({
@@ -16,14 +14,10 @@ export default function Post({
   isHome: boolean;
 }) {
   const navigate = useNavigate();
-  const userBookmark = useRecoilValue(userBookmarkState);
-  const [isBookmarkChecked, setIsBookmarkChecked] = useState<boolean>();
-
-  useEffect(() => {
-    setIsBookmarkChecked(
-      userBookmark[post.field as keyof IUserBookmarkState].includes(post.id)
-    );
-  }, [userBookmark]);
+  const { isBookmarkChecked } = useSetBookmark({
+    postField: post.field,
+    postId: post.id,
+  });
 
   const onClickTitle = () => {
     navigate(`/${post.field}/${post.id}`, {
