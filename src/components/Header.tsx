@@ -6,27 +6,18 @@ import { checkIsLogin } from "../utils/checkIsLogin";
 import { userBookmarkState, userState } from "../recoil/atom";
 import { useRecoilValue, useResetRecoilState } from "recoil";
 import { IoMenu, IoLogOutOutline } from "react-icons/io5";
+import { useLogout } from "../hooks/useLogout";
 
 export default function Header() {
   const isLogin = checkIsLogin();
   const userInfo = useRecoilValue(userState);
-
   const navigate = useNavigate();
-  const resetUserState = useResetRecoilState(userState);
-  const resetUserBookmarkState = useResetRecoilState(userBookmarkState);
-  const clickLogout = () => {
-    if (window.confirm("로그아웃 하시겠습니까?")) {
-      resetUserState();
-      resetUserBookmarkState();
-      sessionStorage.clear();
-
-      navigate("/");
-    }
-  };
+  const clickLogout = useLogout();
 
   const onClickMyPageButton = () => {
     navigate("/my-page/activities?field=writing");
   };
+
   return (
     <Wrapper>
       <Logo>
