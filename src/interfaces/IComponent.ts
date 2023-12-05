@@ -23,8 +23,6 @@ export interface IAuthInput {
 export interface IBoardFilter {
   filterType: string[];
   setFilterType: React.Dispatch<React.SetStateAction<string[]>>;
-  isExpanded: boolean;
-  setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface IBookmarkBtn {
@@ -57,8 +55,6 @@ export interface IWritingInput {
 
 export interface IBoardSearch {
   boardField: string;
-  keyword: string;
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
   setSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
 }
 

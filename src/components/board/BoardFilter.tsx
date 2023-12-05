@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { HiOutlineSortDescending, HiPencil } from "react-icons/hi";
 import { IBoardFilter } from "../../interfaces/IComponent";
+import { useState } from "react";
 
 export default function BoardFilter({
   filterType,
   setFilterType,
-  isExpanded,
-  setIsExpanded,
 }: IBoardFilter) {
+  const [isExpanded, setIsExpanded] = useState(false);
   const filterTypeList = [
     ["최신순", "createdAt"],
     ["북마크순", "bookmarkNum"],
