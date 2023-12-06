@@ -6,27 +6,12 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "./firebase";
-import { IUserInfoEdit } from "../components/myPage/setting/Setting";
-
-interface IUpdateData {
-  collectionName: string;
-  docId: string;
-  docField: string;
-  incrementNum: number;
-}
-
-interface IUpdateDocData {
-  collectionName: string;
-  docId: string;
-  newData: any;
-}
-
-interface IUpdateUserArrayData {
-  userId: string;
-  docField: string;
-  changing: string;
-  arrayItem: string;
-}
+import {
+  IUpdateData,
+  IUpdateDocData,
+  IUpdateUserArrayData,
+  IUpdateUserInfo,
+} from "../interfaces/IFunction";
 
 export async function updateOneData({
   collectionName,
@@ -61,11 +46,6 @@ export function updateUserArrayData({
     updateDoc(doc(db, "users", userId), {
       [docField]: arrayRemove(arrayItem),
     });
-}
-
-interface IUpdateUserInfo {
-  userId: string;
-  data: IUserInfoEdit;
 }
 
 export function updateUserInfo({ userId, data }: IUpdateUserInfo) {

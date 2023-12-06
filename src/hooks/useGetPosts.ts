@@ -6,14 +6,7 @@ import {
   getRecruitPosts,
   getRecruitPostsByPage,
 } from "../firebase/getData";
-
-interface IUseGetPosts {
-  collectionName: string;
-  page: number;
-  searchKeyword: string;
-  filterType: any;
-  recruitType?: any;
-}
+import { IUseGetPosts } from "../interfaces/IFunction";
 
 export const useGetPosts = ({
   collectionName,

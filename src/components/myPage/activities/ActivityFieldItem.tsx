@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { getPost } from "../../../firebase/getData";
 import Post from "../../home/Post";
-
-interface IActivityFieldItem {
-  collectionName: string;
-  itemId: string;
-}
+import { IActivityFieldItem } from "../../../interfaces/IComponent";
 
 export function ActivityFieldItem({
   itemId,

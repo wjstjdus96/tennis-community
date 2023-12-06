@@ -1,12 +1,6 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-
-interface IActivityFieldBtn {
-  curField: string;
-  field: string;
-  fieldName: string;
-  count: number;
-}
+import { IActivityFieldBtn } from "../../../interfaces/IComponent";
 
 export function ActivityFieldBtn({
   field,

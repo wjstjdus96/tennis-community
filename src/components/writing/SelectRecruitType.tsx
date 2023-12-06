@@ -1,11 +1,6 @@
 import styled from "styled-components";
 import { Controller } from "react-hook-form";
-
-interface ISelectRecruitType {
-  name: any;
-  control: any;
-  errorMsg?: string;
-}
+import { ISelectRecruitType } from "../../interfaces/IComponent";
 
 export function SelectRecruitType({
   name,

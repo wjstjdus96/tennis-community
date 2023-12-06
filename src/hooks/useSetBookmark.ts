@@ -8,11 +8,7 @@ import {
 import useDidMountEffect from "./useDidMountEffect";
 import { updateOneData, updateUserArrayData } from "../firebase/updateData";
 import { checkIsLogin } from "../utils/checkIsLogin";
-
-interface IuseSetBookmark {
-  postField: string;
-  postId: string;
-}
+import { IuseSetBookmark } from "../interfaces/IFunction";
 
 export const useSetBookmark = ({ postField, postId }: IuseSetBookmark) => {
   const isLogin = checkIsLogin();

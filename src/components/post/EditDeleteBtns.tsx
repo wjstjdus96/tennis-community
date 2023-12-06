@@ -1,9 +1,5 @@
 import styled from "styled-components";
-
-interface IEditDeleteBtn {
-  clickEditBtn?: () => void;
-  clickDelelteBtn: () => void;
-}
+import { IEditDeleteBtn } from "../../interfaces/IComponent";
 
 export function EditDeleteBtn({
   clickDelelteBtn,

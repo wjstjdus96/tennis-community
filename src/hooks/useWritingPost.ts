@@ -6,10 +6,7 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { updateUserArrayData } from "../firebase/updateData";
 import { ICommunityWritingValue } from "../interfaces/IValue";
-
-interface IUserWritingPost {
-  collectionName: string;
-}
+import { IUserWritingPost } from "../interfaces/IFunction";
 
 export const useWritingPost = ({ collectionName }: IUserWritingPost) => {
   const userInfo = useRecoilValue(userState);

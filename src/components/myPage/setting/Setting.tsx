@@ -8,11 +8,7 @@ import { userState } from "../../../recoil/atom";
 import { getAuth, updateProfile } from "firebase/auth";
 import { updateUserInfo } from "../../../firebase/updateData";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-
-export interface IUserInfoEdit {
-  profileImage: any;
-  displayName: string;
-}
+import { IUserInfoEdit } from "../../../interfaces/IComponent";
 
 export function Setting() {
   const [userInfo, setUserInfo] = useRecoilState(userState);

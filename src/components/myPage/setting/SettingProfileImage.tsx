@@ -1,21 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import defaultProfile from "../../../assets/defaultProfile.png";
-import {
-  Path,
-  UseFormRegister,
-  UseFormWatch,
-  UseFormSetValue,
-} from "react-hook-form";
-import { IUserInfoEdit } from "./Setting";
-
-interface ISettingProfileImage {
-  name: Path<IUserInfoEdit>;
-  register: UseFormRegister<IUserInfoEdit>;
-  watch: UseFormWatch<IUserInfoEdit>;
-  setValue: UseFormSetValue<IUserInfoEdit>;
-  label: string;
-}
+import { ISettingProfileImage } from "../../../interfaces/IComponent";
 
 export default function SettingProfileImage({
   name,

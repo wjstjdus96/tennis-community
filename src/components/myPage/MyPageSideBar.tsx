@@ -1,14 +1,9 @@
-import styled from "styled-components";
-import defaultProfile from "../../assets/defaultProfile.png";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { IoEllipsisHorizontalOutline } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
-import {
-  IoCaretDownOutline,
-  IoEllipsisHorizontalOutline,
-} from "react-icons/io5";
-import { useRecoilValue, useResetRecoilState } from "recoil";
-import { userBookmarkState, userState } from "../../recoil/atom";
+import { useRecoilValue } from "recoil";
+import styled from "styled-components";
 import { useLogout } from "../../hooks/useLogout";
+import { userState } from "../../recoil/atom";
 
 export function MyPageSideBar() {
   const userInfo = useRecoilValue(userState);

@@ -3,17 +3,12 @@ import TogglePostsItem from "./TogglePostsItem";
 import styled from "styled-components";
 import { IField, IFieldItemIds } from "../../../interfaces/IValue";
 import { ITogglePostsList } from "../../../interfaces/IComponent";
-
-const fields = [
-  { kor: "커뮤니티", eng: "community" },
-  { kor: "사람모집", eng: "recruit" },
-  { kor: "플리마켓", eng: "market" },
-];
+import { mypage_activities_field_list } from "../../../consts/const";
 
 export default function TogglePostsList({ fieldPostsIds }: ITogglePostsList) {
   return (
     <Wrapper>
-      {fields.map((field: IField) => (
+      {mypage_activities_field_list.map((field: IField) => (
         <TogglePostsItem
           postsIds={fieldPostsIds[field.eng as keyof IFieldItemIds]}
           fieldEng={field.eng}

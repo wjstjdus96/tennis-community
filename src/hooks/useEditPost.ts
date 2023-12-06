@@ -1,10 +1,7 @@
 import { SubmitHandler } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { updateDocData } from "../firebase/updateData";
-
-interface IUseEditPost {
-  state: any;
-}
+import { IUseEditPost } from "../interfaces/IFunction";
 
 export const useEditPost = ({ state }: IUseEditPost) => {
   const navigate = useNavigate();
