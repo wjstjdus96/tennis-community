@@ -17,9 +17,9 @@ import { getComments } from "../../firebase/getData";
 import { checkIsLogin } from "../../utils/checkIsLogin";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../recoil/atom";
+import defaultProfile from "../../assets/defaultProfile.png";
 
 export function WritingComment({
-  writerImage,
   collectionName,
   docId,
   setComments,
@@ -70,7 +70,7 @@ export function WritingComment({
   return (
     <Wrapper onSubmit={handleSubmit(onClickCommentWriting)}>
       <div>
-        <img src={writerImage} />
+        <img src={userInfo.photo || defaultProfile} />
         {isLogin ? (
           <textarea
             id="comment"

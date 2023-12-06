@@ -1,21 +1,20 @@
+import { yupResolver } from "@hookform/resolvers/yup";
+import { SubmitHandler, useForm } from "react-hook-form";
+import styled from "styled-components";
 import AuthInput from "../components/AuthInput";
 import AuthLayout from "../layouts/AuthLayout";
-import { useForm, SubmitHandler } from "react-hook-form";
-import styled from "styled-components";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 import {
-  setPersistence,
-  inMemoryPersistence,
   createUserWithEmailAndPassword,
+  inMemoryPersistence,
+  setPersistence,
   updateProfile,
 } from "@firebase/auth";
-import { auth, db } from "../firebase/firebase";
+import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { ISignupValue } from "../interfaces/IValue";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
-import { useState } from "react";
 import defaultProfile from "../assets/defaultProfile.png";
+import { auth, db } from "../firebase/firebase";
+import { ISignupValue } from "../interfaces/IValue";
 import { signupSchema } from "../utils/schema";
 
 export default function Signup() {

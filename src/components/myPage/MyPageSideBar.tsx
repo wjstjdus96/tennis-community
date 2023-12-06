@@ -1,30 +1,13 @@
-import styled from "styled-components";
-import defaultProfile from "../../assets/defaultProfile.png";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { IoEllipsisHorizontalOutline } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
-import {
-  IoCaretDownOutline,
-  IoEllipsisHorizontalOutline,
-} from "react-icons/io5";
-import { useRecoilValue, useResetRecoilState } from "recoil";
-import { userBookmarkState, userState } from "../../recoil/atom";
+import { useRecoilValue } from "recoil";
+import styled from "styled-components";
+import { useLogout } from "../../hooks/useLogout";
+import { userState } from "../../recoil/atom";
 
 export function MyPageSideBar() {
   const userInfo = useRecoilValue(userState);
-  const navigate = useNavigate();
-  const resetUserState = useResetRecoilState(userState);
-  const resetUserBookmarkState = useResetRecoilState(userBookmarkState);
-  const clickLogout = () => {
-    if (window.confirm("로그아웃 하시겠습니까?")) {
-      resetUserState();
-      resetUserBookmarkState();
-      sessionStorage.clear();
-
-      navigate("/");
-    }
-  };
-
-  console.log(userInfo);
+  const clickLogout = useLogout();
 
   return (
     <Wrapper>
@@ -39,7 +22,7 @@ export function MyPageSideBar() {
       <MyPageMenus>
         <NavLinkStyle to="activities?field=writing">나의 활동</NavLinkStyle>
         <NavLinkStyle to="setting">설정</NavLinkStyle>
-        <div onClick={clickLogout}>로그아웃</div>
+        <div onClick={() => clickLogout()}>로그아웃</div>
       </MyPageMenus>
     </Wrapper>
   );

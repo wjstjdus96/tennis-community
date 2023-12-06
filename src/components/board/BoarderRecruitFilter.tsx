@@ -1,24 +1,14 @@
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-
-interface IBoardRecruitFilter {
-  recruitFilterType: string[] | (string | null)[];
-  setRecruitFilterType: React.Dispatch<
-    React.SetStateAction<string[] | (string | null)[]>
-  >;
-}
+import { IBoardRecruitFilter } from "../../interfaces/IComponent";
+import { recruit_filter_type_list } from "../../consts/const";
 
 export default function BoardRecruitFilter({
   recruitFilterType,
   setRecruitFilterType,
 }: IBoardRecruitFilter) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const recruitFilterTypeList = [
-    ["전체", null],
-    ["게스트", "guest"],
-    ["회원", "member"],
-    ["기타", "others"],
-  ];
+
   const changeRecruitFilterType = (type: string[]) => {
     if (type[1] == null) {
       searchParams.delete("type");
@@ -30,7 +20,7 @@ export default function BoardRecruitFilter({
   };
   return (
     <Wrapper>
-      {recruitFilterTypeList.map((type: string[] | any) => (
+      {recruit_filter_type_list.map((type: string[] | any) => (
         <FilterItem
           onClick={() => changeRecruitFilterType(type)}
           className={`${searchParams.get("type") === type[1] ? "select" : ""}`}

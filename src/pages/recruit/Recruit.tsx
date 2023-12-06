@@ -1,55 +1,28 @@
+import { useState } from "react";
 import styled from "styled-components";
-import { BoardHead } from "../../components/board/BoardHead";
-import { HomeLayout } from "../../layouts/HomeLayout";
-import { BoardWritingBtn } from "../../components/board/BoardWritinBtn";
-import { useEffect, useState } from "react";
-import { BoardSearch } from "../../components/board/BoardSearch";
 import BoardFilter from "../../components/board/BoardFilter";
-import { IPost } from "../../interfaces/IValue";
+import { BoardHead } from "../../components/board/BoardHead";
+import { BoardSearch } from "../../components/board/BoardSearch";
+import { BoardWritingBtn } from "../../components/board/BoardWritinBtn";
+import BoardRecruitFilter from "../../components/board/BoarderRecruitFilter";
 import { Pagination } from "../../components/board/Pagination";
 import Post from "../../components/home/Post";
-import {
-  getPosts,
-  getPostsByPage,
-  getRecruitPosts,
-  getRecruitPostsByPage,
-} from "../../firebase/getData";
-import BoardRecruitFilter from "../../components/board/BoarderRecruitFilter";
+import { useGetPosts } from "../../hooks/useGetPosts";
+import { HomeLayout } from "../../layouts/HomeLayout";
 
 export default function Recruit() {
-  const [totalPosts, setTotalPosts] = useState<IPost[]>([]);
-  const [posts, setPosts] = useState<IPost[]>([]);
   const [page, setPage] = useState<number>(1);
-  const [keyword, setKeyword] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [filterType, setFilterType] = useState(["최신순", "createdAt"]);
-  const [isExpanded, setIsExpanded] = useState(false);
   const [recruitType, setRecruitType] = useState(["전체", null]);
   const postsPerPage = 5;
-
-  useEffect(() => {
-    setTotalPosts([]);
-    getRecruitPosts({
-      collectionName: "recruit",
-      keyword: searchKeyword,
-      filterType: filterType,
-      recruitType: recruitType,
-      setPosts: setTotalPosts,
-    });
-  }, [searchKeyword, filterType, recruitType]);
-
-  useEffect(() => {
-    setPosts([]);
-    getRecruitPostsByPage({
-      offset: (page - 1) * postsPerPage,
-      collectionName: "recruit",
-      keyword: searchKeyword,
-      filterType: filterType,
-      recruitType: recruitType,
-      postsPerPage: postsPerPage,
-      setPosts: setPosts,
-    });
-  }, [page, searchKeyword, filterType, recruitType]);
+  const { posts, totalPosts } = useGetPosts({
+    collectionName: "recruit",
+    page,
+    searchKeyword,
+    filterType,
+    recruitType,
+  });
 
   return (
     <HomeLayout>
@@ -59,18 +32,8 @@ export default function Recruit() {
       />
       <Settings>
         <BoardWritingBtn boardField="recruit" />
-        <BoardSearch
-          boardField="recruit"
-          keyword={keyword}
-          setKeyword={setKeyword}
-          setSearchKeyword={setSearchKeyword}
-        />
-        <BoardFilter
-          filterType={filterType}
-          setFilterType={setFilterType}
-          isExpanded={isExpanded}
-          setIsExpanded={setIsExpanded}
-        />
+        <BoardSearch boardField="recruit" setSearchKeyword={setSearchKeyword} />
+        <BoardFilter filterType={filterType} setFilterType={setFilterType} />
       </Settings>
       <BoardRecruitFilter
         recruitFilterType={recruitType}

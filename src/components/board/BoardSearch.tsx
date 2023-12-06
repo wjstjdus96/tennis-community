@@ -2,14 +2,12 @@ import styled from "styled-components";
 import { FiSearch } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { IBoardSearch } from "../../interfaces/IComponent";
+import { useState } from "react";
 
-export function BoardSearch({
-  boardField,
-  keyword,
-  setKeyword,
-  setSearchKeyword,
-}: IBoardSearch) {
+export function BoardSearch({ boardField, setSearchKeyword }: IBoardSearch) {
+  const [keyword, setKeyword] = useState("");
   const navigate = useNavigate();
+
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key == "Enter") {
       setSearchKeyword(keyword);

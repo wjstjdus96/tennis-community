@@ -1,46 +1,25 @@
-import { HomeLayout } from "../../layouts/HomeLayout";
+import { useState } from "react";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-import Post from "../../components/home/Post";
-import { Pagination } from "../../components/board/Pagination";
 import BoardFilter from "../../components/board/BoardFilter";
-import { IPost } from "../../interfaces/IValue";
 import { BoardHead } from "../../components/board/BoardHead";
-import { BoardWritingBtn } from "../../components/board/BoardWritinBtn";
 import { BoardSearch } from "../../components/board/BoardSearch";
-import { getPosts, getPostsByPage } from "../../firebase/getData";
+import { BoardWritingBtn } from "../../components/board/BoardWritinBtn";
+import { Pagination } from "../../components/board/Pagination";
+import Post from "../../components/home/Post";
+import { useGetPosts } from "../../hooks/useGetPosts";
+import { HomeLayout } from "../../layouts/HomeLayout";
 
 export default function Community() {
-  const [totalPosts, setTotalPosts] = useState<IPost[]>([]);
-  const [posts, setPosts] = useState<IPost[]>([]);
   const [page, setPage] = useState<number>(1);
-  const [keyword, setKeyword] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [filterType, setFilterType] = useState(["최신순", "createdAt"]);
-  const [isExpanded, setIsExpanded] = useState(false);
   const postsPerPage = 5;
-
-  useEffect(() => {
-    setTotalPosts([]);
-    getPosts({
-      collectionName: "community",
-      keyword: searchKeyword,
-      filterType: filterType,
-      setPosts: setTotalPosts,
-    });
-  }, [searchKeyword, filterType]);
-
-  useEffect(() => {
-    setPosts([]);
-    getPostsByPage({
-      offset: (page - 1) * postsPerPage,
-      collectionName: "community",
-      keyword: searchKeyword,
-      filterType: filterType,
-      postsPerPage: postsPerPage,
-      setPosts: setPosts,
-    });
-  }, [page, searchKeyword, filterType]);
+  const { posts, totalPosts } = useGetPosts({
+    collectionName: "community",
+    page,
+    searchKeyword,
+    filterType,
+  });
 
   return (
     <HomeLayout>
@@ -52,16 +31,9 @@ export default function Community() {
         <BoardWritingBtn boardField="community" />
         <BoardSearch
           boardField="community"
-          keyword={keyword}
-          setKeyword={setKeyword}
           setSearchKeyword={setSearchKeyword}
         />
-        <BoardFilter
-          filterType={filterType}
-          setFilterType={setFilterType}
-          isExpanded={isExpanded}
-          setIsExpanded={setIsExpanded}
-        />
+        <BoardFilter filterType={filterType} setFilterType={setFilterType} />
       </Settings>
       <Board>
         {posts.map((post: any) => (

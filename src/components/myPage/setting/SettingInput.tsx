@@ -1,13 +1,5 @@
 import styled from "styled-components";
-import { IUserInfoEdit } from "./Setting";
-import { Path, UseFormRegister } from "react-hook-form";
-
-interface ISettingInput {
-  label: string;
-  name: Path<IUserInfoEdit>;
-  register: UseFormRegister<IUserInfoEdit>;
-  disabled?: boolean;
-}
+import { ISettingInput } from "../../../interfaces/IComponent";
 
 export default function SettingInput({
   name,

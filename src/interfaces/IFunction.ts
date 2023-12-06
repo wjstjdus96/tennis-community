@@ -1,4 +1,5 @@
 import { IUserBookmarkState } from "../recoil/atom";
+import { IUserInfoEdit } from "./IComponent";
 import { IComment, IPost, IWriterInfo } from "./IValue";
 
 export interface IGetOnePost {
@@ -80,4 +81,50 @@ export interface IGetPost {
 export interface IGetWriterInfo {
   userId: string;
   setWriterInfo: React.Dispatch<React.SetStateAction<IWriterInfo>>;
+}
+
+export interface IUseEditPost {
+  state: any;
+}
+
+export interface IUseGetPosts {
+  collectionName: string;
+  page: number;
+  searchKeyword: string;
+  filterType: any;
+  recruitType?: any;
+}
+
+export interface IuseSetBookmark {
+  postField: string;
+  postId: string;
+}
+
+export interface IUpdateUserInfo {
+  userId: string;
+  data: IUserInfoEdit;
+}
+
+export interface IUpdateData {
+  collectionName: string;
+  docId: string;
+  docField: string;
+  incrementNum: number;
+}
+
+export interface IUpdateDocData {
+  collectionName: string;
+  docId: string;
+  newData: any;
+}
+
+export interface IUpdateUserArrayData {
+  userId: string;
+  docField: string;
+  changing: string;
+  arrayItem: string;
+}
+
+export interface IUserWritingPost {
+  collectionName: string;
 }

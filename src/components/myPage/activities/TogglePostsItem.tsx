@@ -1,13 +1,8 @@
 import styled, { keyframes } from "styled-components";
 import { ActivityFieldItem } from "./ActivityFieldItem";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
-import { useState } from "react";
-
-interface ITogglePostsItem {
-  postsIds: string[];
-  fieldKor: string;
-  fieldEng: string;
-}
+import { useEffect, useState } from "react";
+import { ITogglePostsItem } from "../../../interfaces/IComponent";
 
 export default function TogglePostsItem({
   postsIds,

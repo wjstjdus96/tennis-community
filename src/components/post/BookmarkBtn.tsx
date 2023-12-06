@@ -1,71 +1,21 @@
+import { FaBookmark, FaRegBookmark } from "react-icons/fa6";
 import styled from "styled-components";
-import { FaRegBookmark, FaBookmark } from "react-icons/fa6";
-import { useEffect, useState } from "react";
-import { updateOneData, updateUserArrayData } from "../../firebase/updateData";
-import useDidMountEffect from "../../hooks/useDidMountEffect";
+import { useSetBookmark } from "../../hooks/useSetBookmark";
 import { IBookmarkBtn } from "../../interfaces/IComponent";
-import { useRecoilValue } from "recoil";
-import {
-  IUserBookmarkState,
-  userBookmarkState,
-  userState,
-} from "../../recoil/atom";
-import { checkIsLogin } from "../../utils/checkIsLogin";
 
 export default function BookmarkBtn({
   bookmarkNum,
   collectionName,
   docId,
 }: IBookmarkBtn) {
-  const userBookmark = useRecoilValue(userBookmarkState);
-  const userInfo = useRecoilValue(userState);
-  const [isChecked, setIsChecked] = useState(
-    userBookmark[collectionName as keyof IUserBookmarkState].includes(docId)
-  );
-  const isLogin = checkIsLogin();
-
-  useDidMountEffect(() => {
-    if (isChecked) {
-      updateOneData({
-        collectionName: collectionName,
-        docId: docId,
-        docField: "bookmarkNum",
-        incrementNum: 1,
-      });
-      updateUserArrayData({
-        userId: userInfo.id,
-        docField: collectionName + "Bookmark",
-        changing: "add",
-        arrayItem: docId,
-      });
-    } else {
-      updateOneData({
-        collectionName: collectionName,
-        docId: docId,
-        docField: "bookmarkNum",
-        incrementNum: -1,
-      });
-      updateUserArrayData({
-        userId: userInfo.id,
-        docField: collectionName + "Bookmark",
-        changing: "remove",
-        arrayItem: docId,
-      });
-    }
-  }, [isChecked]);
-
-  const toggleBookmark = async () => {
-    if (!isLogin) {
-      alert("로그인 후 사용 가능합니다.");
-    }
-    if (isLogin) {
-      setIsChecked((prev) => !prev);
-    }
-  };
+  const { isBookmarkChecked, toggleBookmark } = useSetBookmark({
+    postField: collectionName,
+    postId: docId,
+  });
 
   return (
-    <Wrapper isChecked={isChecked} onClick={toggleBookmark}>
-      {isChecked ? <FaBookmark /> : <FaRegBookmark />}
+    <Wrapper isChecked={isBookmarkChecked} onClick={toggleBookmark}>
+      {isBookmarkChecked ? <FaBookmark /> : <FaRegBookmark />}
       <div>{bookmarkNum}</div>
     </Wrapper>
   );

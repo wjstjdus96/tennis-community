@@ -1,4 +1,9 @@
-import { Path, UseFormRegister } from "react-hook-form";
+import {
+  Path,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from "react-hook-form";
 import {
   IComment,
   ICommunityWritingValue,
@@ -23,8 +28,6 @@ export interface IAuthInput {
 export interface IBoardFilter {
   filterType: string[];
   setFilterType: React.Dispatch<React.SetStateAction<string[]>>;
-  isExpanded: boolean;
-  setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface IBookmarkBtn {
@@ -57,8 +60,6 @@ export interface IWritingInput {
 
 export interface IBoardSearch {
   boardField: string;
-  keyword: string;
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
   setSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -68,7 +69,6 @@ export interface IBoardHead {
 }
 
 export interface IWritingComment {
-  writerImage: string;
   collectionName: string;
   docId: string;
   setComments: React.Dispatch<React.SetStateAction<any>>;
@@ -90,4 +90,60 @@ export interface IWriterInfoC {
 
 export interface ITogglePostsList {
   fieldPostsIds: IFieldItemIds;
+}
+
+export interface IActivityFieldBtn {
+  curField: string;
+  field: string;
+  fieldName: string;
+  count: number;
+}
+
+export interface IActivityFieldItem {
+  collectionName: string;
+  itemId: string;
+}
+
+export interface ITogglePostsItem {
+  postsIds: string[];
+  fieldKor: string;
+  fieldEng: string;
+}
+
+export interface IBoardRecruitFilter {
+  recruitFilterType: string[] | (string | null)[];
+  setRecruitFilterType: React.Dispatch<
+    React.SetStateAction<string[] | (string | null)[]>
+  >;
+}
+
+export interface IUserInfoEdit {
+  profileImage: any;
+  displayName: string;
+}
+
+export interface ISettingInput {
+  label: string;
+  name: Path<IUserInfoEdit>;
+  register: UseFormRegister<IUserInfoEdit>;
+  disabled?: boolean;
+}
+
+export interface ISettingProfileImage {
+  name: Path<IUserInfoEdit>;
+  register: UseFormRegister<IUserInfoEdit>;
+  watch: UseFormWatch<IUserInfoEdit>;
+  setValue: UseFormSetValue<IUserInfoEdit>;
+  label: string;
+}
+
+export interface IEditDeleteBtn {
+  clickEditBtn?: () => void;
+  clickDelelteBtn: () => void;
+}
+
+export interface ISelectRecruitType {
+  name: any;
+  control: any;
+  errorMsg?: string;
 }

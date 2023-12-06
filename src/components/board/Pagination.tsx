@@ -11,6 +11,7 @@ import { IPagination } from "../../interfaces/IComponent";
 export function Pagination({ totalPage, limit, page, setPage }: IPagination) {
   const [currentPageArray, setCurrentPageArray] = useState<any>([]);
   const [totalPageArray, setTotalPageArray] = useState<any>([]);
+
   const sliceArrayByLimit = (totalPage: number, limit: number) => {
     const totalPageArray = Array(totalPage)
       .fill(0)

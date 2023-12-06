@@ -1,18 +1,15 @@
 import styled from "styled-components";
 import { HiOutlineSortDescending, HiPencil } from "react-icons/hi";
 import { IBoardFilter } from "../../interfaces/IComponent";
+import { useState } from "react";
+import { board_filter_type_list } from "../../consts/const";
 
 export default function BoardFilter({
   filterType,
   setFilterType,
-  isExpanded,
-  setIsExpanded,
 }: IBoardFilter) {
-  const filterTypeList = [
-    ["최신순", "createdAt"],
-    ["북마크순", "bookmarkNum"],
-    ["댓글순", "commentNum"],
-  ];
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const handleClickFilter = () => {
     setIsExpanded((prev) => !prev);
   };
@@ -36,7 +33,7 @@ export default function BoardFilter({
       </SelectedType>
       {isExpanded && (
         <Dropdown>
-          {filterTypeList.map((filterType: string[]) => (
+          {board_filter_type_list.map((filterType: string[]) => (
             <DropdownItem onClick={() => changeFilterType(filterType)}>
               {filterType[0]}
             </DropdownItem>

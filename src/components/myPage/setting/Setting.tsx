@@ -8,11 +8,7 @@ import { userState } from "../../../recoil/atom";
 import { getAuth, updateProfile } from "firebase/auth";
 import { updateUserInfo } from "../../../firebase/updateData";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-
-export interface IUserInfoEdit {
-  profileImage: any;
-  displayName: string;
-}
+import { IUserInfoEdit } from "../../../interfaces/IComponent";
 
 export function Setting() {
   const [userInfo, setUserInfo] = useRecoilState(userState);
@@ -81,13 +77,6 @@ export function Setting() {
           label="프로필이미지"
         />
         <SettingInput name="displayName" register={register} label="닉네임" />
-        {/* <SettingInput
-          name="email"
-          register={register}
-          label="이메일"
-          disabled={true}
-        />
-        <SettingInput name="password" register={register} label="비밀번호" /> */}
         <EditInfoButton>정보 수정</EditInfoButton>
       </form>
     </Wrapper>
