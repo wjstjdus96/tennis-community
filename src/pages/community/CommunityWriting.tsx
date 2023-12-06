@@ -13,6 +13,7 @@ import { useRecoilValue } from "recoil";
 import { SubmitWritingButton } from "../../components/writing/SubmitWritingButto";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { communityWritingSchema } from "../../utils/schema";
+import { useWritingPost } from "../../hooks/useWritingPost";
 
 export default function CommunityWriting() {
   const { postId } = useParams();
@@ -29,33 +30,37 @@ export default function CommunityWriting() {
   const navigate = useNavigate();
   const userInfo = useRecoilValue(userState);
 
-  const onClickWriting: SubmitHandler<ICommunityWritingValue> = async (
-    data
-  ) => {
-    try {
-      let docData = {
-        body: data.body,
-        bookmarkNum: 0,
-        commentNum: 0,
-        createdAt: serverTimestamp(),
-        creatorId: userInfo.id,
-        field: "community",
-        title: data.title,
-        titleKeyword: data.title.split(" "),
-      };
-      await addDoc(collection(db, "community"), docData).then((docRef) => {
-        updateUserArrayData({
-          userId: userInfo.id,
-          docField: "communityWriting",
-          changing: "add",
-          arrayItem: docRef.id,
-        });
-      });
-      navigate("/community");
-    } catch (error) {
-      alert("글쓰기에 실패하였습니다" + error);
-    }
-  };
+  const { onClickWriting } = useWritingPost({
+    collectionName: "community",
+  });
+
+  // const onClickWriting: SubmitHandler<ICommunityWritingValue> = async (
+  //   data
+  // ) => {
+  //   try {
+  //     let docData = {
+  //       body: data.body,
+  //       bookmarkNum: 0,
+  //       commentNum: 0,
+  //       createdAt: serverTimestamp(),
+  //       creatorId: userInfo.id,
+  //       field: "community",
+  //       title: data.title,
+  //       titleKeyword: data.title.split(" "),
+  //     };
+  //     await addDoc(collection(db, "community"), docData).then((docRef) => {
+  //       updateUserArrayData({
+  //         userId: userInfo.id,
+  //         docField: "communityWriting",
+  //         changing: "add",
+  //         arrayItem: docRef.id,
+  //       });
+  //     });
+  //     navigate("/community");
+  //   } catch (error) {
+  //     alert("글쓰기에 실패하였습니다" + error);
+  //   }
+  // };
 
   const onClickEdit: SubmitHandler<ICommunityWritingValue> = async (data) => {
     try {

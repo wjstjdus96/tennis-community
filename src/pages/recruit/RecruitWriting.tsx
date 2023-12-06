@@ -14,6 +14,7 @@ import { updateDocData, updateUserArrayData } from "../../firebase/updateData";
 import { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { recruitWritingSchema } from "../../utils/schema";
+import { useWritingPost } from "../../hooks/useWritingPost";
 
 export default function RecruitWriting() {
   const { postId } = useParams();
@@ -28,35 +29,9 @@ export default function RecruitWriting() {
     mode: "onSubmit",
     resolver: yupResolver(recruitWritingSchema),
   });
-  const userInfo = useRecoilValue(userState);
   const navigate = useNavigate();
 
-  const onClickWriting = async (data: any) => {
-    try {
-      let docData = {
-        body: data.body,
-        bookmarkNum: 0,
-        commentNum: 0,
-        createdAt: serverTimestamp(),
-        creatorId: userInfo.id,
-        field: "recruit",
-        title: data.title,
-        type: data.type,
-        titleKeyword: data.title.split(" "),
-      };
-      await addDoc(collection(db, "recruit"), docData).then((docRef) => {
-        updateUserArrayData({
-          userId: userInfo.id,
-          docField: "recruitWriting",
-          changing: "add",
-          arrayItem: docRef.id,
-        });
-      });
-      navigate("/recruit");
-    } catch (error) {
-      alert("글쓰기에 실패하였습니다" + error);
-    }
-  };
+  const { onClickWriting } = useWritingPost({ collectionName: "recruit" });
 
   const onClickEdit: SubmitHandler<IRecruitWritingValue> = async (data) => {
     try {
