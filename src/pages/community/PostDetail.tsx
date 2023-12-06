@@ -50,7 +50,6 @@ export default function PostDetail() {
           <div>
             <div>{postData.commentNum}개의 댓글</div>
             <WritingComment
-              writerImage={postData.creatorImage}
               collectionName={state.field}
               docId={state.id}
               setComments={setComments}

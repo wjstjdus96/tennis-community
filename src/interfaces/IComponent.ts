@@ -69,7 +69,6 @@ export interface IBoardHead {
 }
 
 export interface IWritingComment {
-  writerImage: string;
   collectionName: string;
   docId: string;
   setComments: React.Dispatch<React.SetStateAction<any>>;

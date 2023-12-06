@@ -26,7 +26,7 @@ export default function Post({
   };
 
   return (
-    <Wrapper isHome={isHome}>
+    <Wrapper isHome={isHome} field={post.field}>
       <Infos>
         <InfoGroup>
           <WriterInfo writerId={post.creatorId} />
@@ -56,8 +56,13 @@ export default function Post({
   );
 }
 
-const Wrapper = styled.div<{ isHome: boolean }>`
-  padding: ${(props) => (props.isHome ? "15px" : "15px 3px")};
+const Wrapper = styled.div<{ isHome: boolean; field: string }>`
+  padding: ${(props) =>
+    props.isHome
+      ? props.field == "community"
+        ? "1.03rem 1rem "
+        : "1rem"
+      : "15px 3px"};
   font-family: "Noto Sans KR", sans-serif;
   border-bottom: 1px solid ${(props) => props.theme.green[1]};
   max-width: 100%;
