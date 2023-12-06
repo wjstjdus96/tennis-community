@@ -350,14 +350,14 @@ export const getUserActivities = async ({
       setFieldItems(writingFieldData);
     }
     if (field == "bookmark") {
-      const bookmarkFieldData = {
-        community: data.communityBookmark
-          ? data.communityBookmark.reverse()
-          : [],
-        recruit: data.recruitBookmark ? data.recruitBookmark.reverse() : [],
-        market: data.marketBookmark ? data.marketBookmark.reverse() : [],
-      };
-      setFieldItems(bookmarkFieldData);
+      if (data) {
+        const bookmarkFieldData = {
+          community: data.communityBookmark.reverse(),
+          recruit: data.recruitBookmark.reverse(),
+          market: data.marketBookmark.reverse(),
+        };
+        setFieldItems(bookmarkFieldData);
+      }
     }
   }
 };

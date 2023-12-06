@@ -18,14 +18,6 @@ export const useSetBookmark = ({ postField, postId }: IuseSetBookmark) => {
     userBookmark[postField as keyof IUserBookmarkState].includes(postId)
   );
 
-  //   useEffect(() => {
-  //     console.log("변경");
-
-  //     setIsBookmarkChecked(
-  //       userBookmark[postField as keyof IUserBookmarkState].includes(postId)
-  //     );
-  //   }, [userBookmark]);
-
   const toggleBookmark = async () => {
     if (!isLogin) {
       alert("로그인 후 사용 가능합니다.");
@@ -36,7 +28,6 @@ export const useSetBookmark = ({ postField, postId }: IuseSetBookmark) => {
   };
 
   useDidMountEffect(() => {
-    console.log(isBookmarkChecked);
     if (isBookmarkChecked) {
       updateOneData({
         collectionName: postField,
