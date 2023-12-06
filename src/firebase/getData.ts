@@ -296,11 +296,13 @@ export const getUserBookmark = ({ userId, setUserState }: IGetUserBookmark) => {
   const docRef = doc(db, "users", userId);
   onSnapshot(docRef, (doc) => {
     const data = doc.data();
-    setUserState({
-      community: data ? data.communityBookmark : [],
-      recruit: data ? data.recruitBookmark : [],
-      market: data ? data.marketBookmark : [],
-    });
+    if (data) {
+      setUserState({
+        community: data.communityBookmark,
+        recruit: data.recruitBookmark,
+        market: data.marketBookmark,
+      });
+    }
   });
 };
 

@@ -36,7 +36,6 @@ export default function Login() {
       await signInWithEmailAndPassword(auth, data.email, data.password)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log(user);
           setUserState({
             email: user.email || "",
             displayName: user.displayName || "",
