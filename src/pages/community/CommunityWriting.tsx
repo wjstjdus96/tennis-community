@@ -1,19 +1,15 @@
-import { HomeLayout } from "../../layouts/HomeLayout";
-import styled from "styled-components";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
-import WritingInput from "../../components/writing/WritingInput";
-import { addDoc, collection, doc, serverTimestamp } from "firebase/firestore";
-import { db } from "../../firebase/firebase";
-import { ICommunityWritingValue } from "../../interfaces/IValue";
-import { useEffect, useState } from "react";
-import { updateDocData, updateUserArrayData } from "../../firebase/updateData";
-import { userState } from "../../recoil/atom";
-import { useRecoilValue } from "recoil";
-import { SubmitWritingButton } from "../../components/writing/SubmitWritingButto";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { communityWritingSchema } from "../../utils/schema";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useLocation, useParams } from "react-router-dom";
+import styled from "styled-components";
+import { SubmitWritingButton } from "../../components/writing/SubmitWritingButto";
+import WritingInput from "../../components/writing/WritingInput";
+import { useEditPost } from "../../hooks/useEditPost";
 import { useWritingPost } from "../../hooks/useWritingPost";
+import { ICommunityWritingValue } from "../../interfaces/IValue";
+import { HomeLayout } from "../../layouts/HomeLayout";
+import { communityWritingSchema } from "../../utils/schema";
 
 export default function CommunityWriting() {
   const { postId } = useParams();
@@ -27,60 +23,12 @@ export default function CommunityWriting() {
     mode: "onSubmit",
     resolver: yupResolver(communityWritingSchema),
   });
-  const navigate = useNavigate();
-  const userInfo = useRecoilValue(userState);
 
   const { onClickWriting } = useWritingPost({
     collectionName: "community",
   });
 
-  // const onClickWriting: SubmitHandler<ICommunityWritingValue> = async (
-  //   data
-  // ) => {
-  //   try {
-  //     let docData = {
-  //       body: data.body,
-  //       bookmarkNum: 0,
-  //       commentNum: 0,
-  //       createdAt: serverTimestamp(),
-  //       creatorId: userInfo.id,
-  //       field: "community",
-  //       title: data.title,
-  //       titleKeyword: data.title.split(" "),
-  //     };
-  //     await addDoc(collection(db, "community"), docData).then((docRef) => {
-  //       updateUserArrayData({
-  //         userId: userInfo.id,
-  //         docField: "communityWriting",
-  //         changing: "add",
-  //         arrayItem: docRef.id,
-  //       });
-  //     });
-  //     navigate("/community");
-  //   } catch (error) {
-  //     alert("글쓰기에 실패하였습니다" + error);
-  //   }
-  // };
-
-  const onClickEdit: SubmitHandler<ICommunityWritingValue> = async (data) => {
-    try {
-      let newData = {
-        body: data.body,
-        title: data.title,
-        titleKeyword: data.title.split(" "),
-      };
-      updateDocData({
-        collectionName: state.field,
-        docId: state.id,
-        newData: newData,
-      });
-      navigate(`/${state.field}/${state.id}`, {
-        state: { field: state.field, id: state.id },
-      });
-    } catch (e) {
-      alert("게시글 수정에 실패하였습니다");
-    }
-  };
+  const { onClickEdit } = useEditPost({ state });
 
   useEffect(() => {
     if (postId) {

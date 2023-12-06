@@ -1,20 +1,16 @@
-import styled from "styled-components";
-import { HomeLayout } from "../../layouts/HomeLayout";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { IRecruitWritingValue } from "../../interfaces/IValue";
-import WritingInput from "../../components/writing/WritingInput";
-import { SubmitWritingButton } from "../../components/writing/SubmitWritingButto";
-import { SelectRecruitType } from "../../components/writing/SelectRecruitType";
-import { useRecoilValue } from "recoil";
-import { userState } from "../../recoil/atom";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { db } from "../../firebase/firebase";
-import { updateDocData, updateUserArrayData } from "../../firebase/updateData";
-import { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { recruitWritingSchema } from "../../utils/schema";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useLocation, useParams } from "react-router-dom";
+import styled from "styled-components";
+import { SelectRecruitType } from "../../components/writing/SelectRecruitType";
+import { SubmitWritingButton } from "../../components/writing/SubmitWritingButto";
+import WritingInput from "../../components/writing/WritingInput";
+import { useEditPost } from "../../hooks/useEditPost";
 import { useWritingPost } from "../../hooks/useWritingPost";
+import { IRecruitWritingValue } from "../../interfaces/IValue";
+import { HomeLayout } from "../../layouts/HomeLayout";
+import { recruitWritingSchema } from "../../utils/schema";
 
 export default function RecruitWriting() {
   const { postId } = useParams();
@@ -29,30 +25,9 @@ export default function RecruitWriting() {
     mode: "onSubmit",
     resolver: yupResolver(recruitWritingSchema),
   });
-  const navigate = useNavigate();
 
   const { onClickWriting } = useWritingPost({ collectionName: "recruit" });
-
-  const onClickEdit: SubmitHandler<IRecruitWritingValue> = async (data) => {
-    try {
-      let newData = {
-        type: data.type,
-        body: data.body,
-        title: data.title,
-        titleKeyword: data.title.split(" "),
-      };
-      updateDocData({
-        collectionName: state.field,
-        docId: state.id,
-        newData: newData,
-      });
-      navigate(`/${state.field}/${state.id}`, {
-        state: { field: state.field, id: state.id },
-      });
-    } catch (e) {
-      alert("게시글 수정에 실패하였습니다");
-    }
-  };
+  const { onClickEdit } = useEditPost({ state });
 
   useEffect(() => {
     if (postId) {
