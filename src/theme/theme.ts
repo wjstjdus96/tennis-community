@@ -3,6 +3,7 @@ import { DefaultTheme } from "styled-components";
 export const theme: DefaultTheme = {
   bgColor: "#eff6e0",
   green: {
+    0: "#e6f1cf",
     1: "#cde4a0",
     2: "#9bc940",
     3: "#2a6c23",

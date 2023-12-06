@@ -38,6 +38,14 @@ export const useGetPosts = ({
         setPosts: setTotalPosts,
       });
     }
+    if (collectionName == "market") {
+      getPosts({
+        collectionName: collectionName,
+        keyword: searchKeyword,
+        filterType: filterType,
+        setPosts: setTotalPosts,
+      });
+    }
   }, [searchKeyword, filterType, recruitType]);
 
   useEffect(() => {
@@ -54,6 +62,16 @@ export const useGetPosts = ({
       });
     }
     if (collectionName == "community") {
+      getPostsByPage({
+        offset: (page - 1) * postsPerPage,
+        collectionName: collectionName,
+        keyword: searchKeyword,
+        filterType: filterType,
+        postsPerPage: postsPerPage,
+        setPosts: setPosts,
+      });
+    }
+    if (collectionName == "market") {
       getPostsByPage({
         offset: (page - 1) * postsPerPage,
         collectionName: collectionName,
