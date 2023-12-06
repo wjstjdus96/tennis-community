@@ -39,7 +39,7 @@ export default function Login() {
           setUserState({
             email: user.email || "",
             displayName: user.displayName || "",
-            photo: getImage({ imageURL: user.photoURL || "" }),
+            photo: user.photoURL || "",
             id: user.uid || "",
           });
           getUserBookmark({

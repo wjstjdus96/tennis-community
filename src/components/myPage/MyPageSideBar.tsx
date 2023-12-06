@@ -4,6 +4,7 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { useLogout } from "../../hooks/useLogout";
 import { userState } from "../../recoil/atom";
+import defaultProfile from "../../assets/defaultProfile.png";
 
 export function MyPageSideBar() {
   const userInfo = useRecoilValue(userState);
@@ -11,7 +12,7 @@ export function MyPageSideBar() {
 
   return (
     <Wrapper>
-      <img src={userInfo.photo} />
+      <img src={userInfo.photo || defaultProfile} />
       <UserInfo>
         <div>{userInfo.displayName} 님</div>
         <div>{userInfo.email}</div>

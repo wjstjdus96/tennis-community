@@ -7,6 +7,7 @@ import { header_menu_list } from "../consts/const";
 import { useLogout } from "../hooks/useLogout";
 import { userState } from "../recoil/atom";
 import { checkIsLogin } from "../utils/checkIsLogin";
+import defaultProfile from "../assets/defaultProfile.png";
 
 export default function Header() {
   const isLogin = checkIsLogin();
@@ -36,7 +37,7 @@ export default function Header() {
       {isLogin ? (
         <Profile>
           <ProfileBox>
-            <img src={userInfo.photo} />
+            <img src={userInfo.photo || defaultProfile} />
             <IoMenu onClick={() => onClickMyPageButton()} size={28} />
             <IoLogOutOutline onClick={() => clickLogout()} size={28} />
           </ProfileBox>

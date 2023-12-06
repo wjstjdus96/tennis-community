@@ -296,11 +296,13 @@ export const getUserBookmark = ({ userId, setUserState }: IGetUserBookmark) => {
   const docRef = doc(db, "users", userId);
   onSnapshot(docRef, (doc) => {
     const data = doc.data();
-    setUserState({
-      community: data ? data.communityBookmark : [],
-      recruit: data ? data.recruitBookmark : [],
-      market: data ? data.marketBookmark : [],
-    });
+    if (data) {
+      setUserState({
+        community: data.communityBookmark,
+        recruit: data.recruitBookmark,
+        market: data.marketBookmark,
+      });
+    }
   });
 };
 
@@ -348,14 +350,14 @@ export const getUserActivities = async ({
       setFieldItems(writingFieldData);
     }
     if (field == "bookmark") {
-      const bookmarkFieldData = {
-        community: data.communityBookmark
-          ? data.communityBookmark.reverse()
-          : [],
-        recruit: data.recruitBookmark ? data.recruitBookmark.reverse() : [],
-        market: data.marketBookmark ? data.marketBookmark.reverse() : [],
-      };
-      setFieldItems(bookmarkFieldData);
+      if (data) {
+        const bookmarkFieldData = {
+          community: data.communityBookmark.reverse(),
+          recruit: data.recruitBookmark.reverse(),
+          market: data.marketBookmark.reverse(),
+        };
+        setFieldItems(bookmarkFieldData);
+      }
     }
   }
 };

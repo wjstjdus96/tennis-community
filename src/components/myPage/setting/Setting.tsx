@@ -9,6 +9,7 @@ import { getAuth, updateProfile } from "firebase/auth";
 import { updateUserInfo } from "../../../firebase/updateData";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { IUserInfoEdit } from "../../../interfaces/IComponent";
+import defaultProfile from "../../../assets/defaultProfile.png";
 
 export function Setting() {
   const [userInfo, setUserInfo] = useRecoilState(userState);
@@ -24,45 +25,50 @@ export function Setting() {
 
   const onSubmitEditForm: SubmitHandler<IUserInfoEdit> = async (data) => {
     const auth = getAuth();
-    if (typeof data.profileImage == "string") {
-      updateProfile(auth.currentUser!, {
-        displayName: data.displayName,
-        photoURL: data.profileImage,
-      });
-      updateUserInfo({
-        userId: userInfo.id,
-        data: data,
-      });
-      setUserInfo({
-        ...userInfo,
-        displayName: data.displayName,
-        photo: data.profileImage,
-      });
-    } else {
-      const storage = getStorage();
-      const imageRef = ref(storage, `users/${data.profileImage[0].name}`);
-      await uploadBytes(imageRef, data.profileImage[0]).then((snapshot) =>
-        getDownloadURL(snapshot.ref).then((url) => {
-          updateProfile(auth.currentUser!, {
-            displayName: data.displayName,
-            photoURL: url,
-          });
-          updateUserInfo({
-            userId: userInfo.id,
-            data: { ...data, profileImage: url },
-          });
-          setUserInfo({
-            ...userInfo,
-            displayName: data.displayName,
-            photo: url,
-          });
-        })
-      );
+    try {
+      if (typeof data.profileImage == "string") {
+        updateProfile(auth.currentUser!, {
+          displayName: data.displayName,
+          photoURL: data.profileImage,
+        });
+        updateUserInfo({
+          userId: userInfo.id,
+          data: data,
+        });
+        setUserInfo({
+          ...userInfo,
+          displayName: data.displayName,
+          photo: data.profileImage,
+        });
+      } else {
+        const storage = getStorage();
+        const imageRef = ref(storage, `users/${data.profileImage[0].name}`);
+        await uploadBytes(imageRef, data.profileImage[0]).then((snapshot) =>
+          getDownloadURL(snapshot.ref).then((url) => {
+            updateProfile(auth.currentUser!, {
+              displayName: data.displayName,
+              photoURL: url,
+            });
+            updateUserInfo({
+              userId: userInfo.id,
+              data: { ...data, profileImage: url },
+            });
+            setUserInfo({
+              ...userInfo,
+              displayName: data.displayName,
+              photo: url,
+            });
+          })
+        );
+      }
+      alert("정보가 수정되었습니다");
+    } catch (error) {
+      alert("정보수정에 실패하였습니다." + error);
     }
   };
 
   useEffect(() => {
-    setValue("profileImage", userInfo.photo);
+    setValue("profileImage", userInfo.photo ? userInfo.photo : defaultProfile);
     setValue("displayName", userInfo.displayName);
   }, [userInfo]);
 

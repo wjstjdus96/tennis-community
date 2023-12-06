@@ -5,6 +5,7 @@ import { useSetBookmark } from "../../hooks/useSetBookmark";
 import { IPost } from "../../interfaces/IValue";
 import { getElapsedTime } from "../../utils/getTime";
 import WriterInfo from "../WriterInfo";
+import { useEffect } from "react";
 
 export default function Post({
   post,
