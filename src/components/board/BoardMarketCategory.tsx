@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { market_category_list } from "../../consts/const";
+import { useState } from "react";
 
 interface IBoardMarketCategory {
   category: string[] | (string | null)[];
@@ -12,15 +13,31 @@ export default function BoardMarketCategory({
   category,
   setCategory,
 }: IBoardMarketCategory) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleClickCategory = () => {
+    setIsExpanded((prev) => !prev);
+  };
+
+  const changeCategory = (category: string[]) => {
+    setCategory(category);
+    setIsExpanded(false);
+  };
+
   return (
     <Wrapper>
-      {market_category_list.map((item, idx) => (
-        <CategoryItemBox>
-          <div>
-            <img src={item.icon} />
-          </div>
-        </CategoryItemBox>
-      ))}
+      <SelectedCategoryBox onClick={handleClickCategory}>
+        {market_category_list[1].name}
+      </SelectedCategoryBox>
+      {isExpanded && (
+        <CategoryDropdown>
+          {market_category_list.map((item: any, idx: number) => (
+            <CategoryDropdownItem onClick={() => changeCategory(item)}>
+              {item.name}
+            </CategoryDropdownItem>
+          ))}
+        </CategoryDropdown>
+      )}
     </Wrapper>
   );
 }
@@ -31,6 +48,12 @@ const Wrapper = styled.div`
 
   gap: 1.2rem;
 `;
+
+const SelectedCategoryBox = styled.div``;
+
+const CategoryDropdown = styled.div``;
+
+const CategoryDropdownItem = styled.div``;
 
 const CategoryItemBox = styled.div`
   display: flex;
