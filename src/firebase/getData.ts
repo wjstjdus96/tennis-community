@@ -1,18 +1,7 @@
-import { getDownloadURL, getStorage, ref } from "firebase/storage";
-import defaultProfile from "../assets/defaultProfile.png";
-import {
-  IGetImage,
-  IGetOnePost,
-  IGetPost,
-  IGetRecruitPosts,
-  IGetRecruitPostsByPage,
-  IGetUserActivities,
-  IGetUserBookmark,
-  IGetWriterInfo,
-} from "../interfaces/IFunction";
 import {
   collection,
   doc,
+  getDoc,
   getDocs,
   limit,
   onSnapshot,
@@ -20,18 +9,22 @@ import {
   query,
   startAfter,
   where,
-  getDoc,
 } from "firebase/firestore";
-import { db } from "./firebase";
+import { getDownloadURL, getStorage, ref } from "firebase/storage";
+import defaultProfile from "../assets/defaultProfile.png";
 import {
-  IGetPosts,
-  IGetPostsByPage,
   IGetComments,
+  IGetImage,
+  IGetOnePost,
+  IGetPost,
+  IGetTotalPosts,
+  IGetUserActivities,
+  IGetUserBookmark,
+  IGetWriterInfo,
 } from "../interfaces/IFunction";
-import { getAuth } from "firebase/auth";
-import { IUserBookmarkState } from "../recoil/atom";
-import { IPost, IWriterInfo } from "../interfaces/IValue";
 import { deduplicateWriting } from "../utils/deduplicateWriting";
+import { IGetTotalPostsByPage, IMakingQuery } from "./../interfaces/IFunction";
+import { db } from "./firebase";
 
 export async function getComments({
   collectionName,
@@ -68,22 +61,49 @@ export function getOnePost({
   onSnapshot(docRef, (doc) => setPostData({ ...doc.data(), id: docId }));
 }
 
-export const getPosts = async ({
+const makingQuery = ({
+  collectionName,
+  recruitType,
+  marketCategory,
+  keyword,
+  filterType,
+}: IMakingQuery) => {
+  const collectionRef = collection(db, collectionName);
+  let queryRef = query(collectionRef);
+
+  if (recruitType && recruitType[1] != null) {
+    queryRef = query(queryRef, where("type", "==", recruitType[0]));
+  }
+  if (marketCategory && marketCategory[1] != null) {
+    queryRef = query(queryRef, where("category", "==", marketCategory[0]));
+  }
+  if (keyword) {
+    queryRef = query(
+      queryRef,
+      where("titleKeyword", "array-contains", keyword)
+    );
+  }
+  queryRef = query(queryRef, orderBy(filterType[1], "desc"));
+
+  return queryRef;
+};
+
+export const getTotalPosts = async ({
   collectionName,
   keyword,
   filterType,
+  recruitType,
+  marketCategory,
   setPosts,
-}: IGetPosts) => {
-  const collectionRef = collection(db, collectionName);
-  const querySnapShot = await getDocs(
-    keyword
-      ? query(
-          collectionRef,
-          where("titleKeyword", "array-contains", keyword),
-          orderBy(filterType[1], "desc")
-        )
-      : query(collectionRef, orderBy(filterType[1], "desc"))
-  );
+}: IGetTotalPosts) => {
+  const queryRef = makingQuery({
+    collectionName,
+    recruitType,
+    marketCategory,
+    keyword,
+    filterType,
+  });
+  const querySnapShot = await getDocs(queryRef);
 
   querySnapShot.forEach((doc) => {
     const postObject = {
@@ -94,202 +114,42 @@ export const getPosts = async ({
   });
 };
 
-export const getPostsByPage = async ({
+export const getTotalPostsByPage = async ({
   offset,
   collectionName,
   keyword,
   filterType,
+  recruitType,
+  marketCategory,
   postsPerPage,
   setPosts,
-}: IGetPostsByPage) => {
-  const collectionRef = collection(db, collectionName);
+}: IGetTotalPostsByPage) => {
+  const queryRef = makingQuery({
+    collectionName,
+    keyword,
+    filterType,
+    recruitType,
+    marketCategory,
+  });
+  let initial = queryRef;
+  let next = queryRef;
   if (offset == 0) {
-    const querySnapShot = await getDocs(
-      keyword
-        ? query(
-            collectionRef,
-            where("titleKeyword", "array-contains", keyword),
-            orderBy(filterType[1], "desc"),
-            limit(postsPerPage)
-          )
-        : query(
-            collectionRef,
-            orderBy(filterType[1], "desc"),
-            limit(postsPerPage)
-          )
-    );
-    querySnapShot.forEach((doc) => {
-      const postObject = {
-        ...doc.data(),
-        id: doc.id,
-      };
-      setPosts((prev: any) => [...prev, postObject]);
-    });
+    initial = query(queryRef, limit(postsPerPage));
   } else {
-    const prev = keyword
-      ? query(
-          collectionRef,
-          where("titleKeyword", "array-contains", keyword),
-          orderBy(filterType[1], "desc"),
-          limit(offset)
-        )
-      : query(collectionRef, orderBy(filterType[1], "desc"), limit(offset));
+    const prev = query(queryRef, limit(offset));
     const documentSnapshots = await getDocs(prev);
     const lastVisible =
       documentSnapshots.docs[documentSnapshots.docs.length - 1];
-    const next = keyword
-      ? query(
-          collectionRef,
-          where("titleKeyword", "array-contains", keyword),
-          orderBy(filterType[1], "desc"),
-          startAfter(lastVisible),
-          limit(postsPerPage)
-        )
-      : query(
-          collectionRef,
-          orderBy(filterType[1], "desc"),
-          startAfter(lastVisible),
-          limit(postsPerPage)
-        );
-
-    (await getDocs(next)).forEach((doc: any) => {
-      const postObject = {
-        ...doc.data(),
-        id: doc.id,
-      };
-      setPosts((prev: any) => [...prev, postObject]);
-    });
+    next = query(queryRef, startAfter(lastVisible), limit(postsPerPage));
   }
-};
-
-export const getRecruitPosts = async ({
-  collectionName,
-  keyword,
-  filterType,
-  recruitType,
-  setPosts,
-}: IGetRecruitPosts) => {
-  if (recruitType[1] == null) {
-    getPosts({
-      collectionName: collectionName,
-      keyword: keyword,
-      filterType: filterType,
-      setPosts: setPosts,
-    });
-  } else {
-    const collectionRef = collection(db, collectionName);
-    const querySnapShot = await getDocs(
-      keyword
-        ? query(
-            collectionRef,
-            where("type", "==", recruitType![0]),
-            where("titleKeyword", "array-contains", keyword),
-            orderBy(filterType[1], "desc")
-          )
-        : query(
-            collectionRef,
-            filterType && where("type", "==", recruitType![0]),
-            orderBy(filterType[1], "desc")
-          )
-    );
-    querySnapShot.forEach((doc) => {
-      const postObject = {
-        ...doc.data(),
-        id: doc.id,
-      };
-      setPosts((prev: any) => [...prev, postObject]);
-    });
-  }
-};
-
-export const getRecruitPostsByPage = async ({
-  offset,
-  collectionName,
-  keyword,
-  filterType,
-  recruitType,
-  postsPerPage,
-  setPosts,
-}: IGetRecruitPostsByPage) => {
-  if (recruitType[1] == null) {
-    getPostsByPage({
-      offset: offset,
-      collectionName: collectionName,
-      keyword: keyword,
-      filterType: filterType,
-      postsPerPage: postsPerPage,
-      setPosts: setPosts,
-    });
-  } else {
-    const collectionRef = collection(db, collectionName);
-    if (offset == 0) {
-      const querySnapShot = await getDocs(
-        keyword
-          ? query(
-              collectionRef,
-              filterType && where("type", "==", recruitType![0]),
-              where("titleKeyword", "array-contains", keyword),
-              orderBy(filterType[1], "desc"),
-              limit(postsPerPage)
-            )
-          : query(
-              collectionRef,
-              where("type", "==", recruitType![0]),
-              orderBy(filterType[1], "desc"),
-              limit(postsPerPage)
-            )
-      );
-      querySnapShot.forEach((doc) => {
-        const postObject = {
-          ...doc.data(),
-          id: doc.id,
-        };
-        setPosts((prev: any) => [...prev, postObject]);
-      });
-    } else {
-      const prev = keyword
-        ? query(
-            collectionRef,
-            where("type", "==", recruitType![0]),
-            where("titleKeyword", "array-contains", keyword),
-            orderBy(filterType[1], "desc"),
-            limit(offset)
-          )
-        : query(
-            collectionRef,
-            where("type", "==", recruitType![0]),
-            orderBy(filterType[1], "desc"),
-            limit(offset)
-          );
-      const documentSnapshots = await getDocs(prev);
-      const lastVisible =
-        documentSnapshots.docs[documentSnapshots.docs.length - 1];
-      const next = keyword
-        ? query(
-            collectionRef,
-            where("type", "==", recruitType![0]),
-            where("titleKeyword", "array-contains", keyword),
-            orderBy(filterType[1], "desc"),
-            startAfter(lastVisible),
-            limit(postsPerPage)
-          )
-        : query(
-            collectionRef,
-            where("type", "==", recruitType![0]),
-            orderBy(filterType[1], "desc"),
-            startAfter(lastVisible),
-            limit(postsPerPage)
-          );
-
-      (await getDocs(next)).forEach((doc: any) => {
-        const postObject = {
-          ...doc.data(),
-          id: doc.id,
-        };
-        setPosts((prev: any) => [...prev, postObject]);
-      });
-    }
-  }
+  const querySnapShot = await getDocs(offset == 0 ? initial : next);
+  querySnapShot.forEach((doc) => {
+    const postObject = {
+      ...doc.data(),
+      id: doc.id,
+    };
+    setPosts((prev: any) => [...prev, postObject]);
+  });
 };
 
 export const getUserBookmark = ({ userId, setUserState }: IGetUserBookmark) => {

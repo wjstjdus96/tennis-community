@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { market_category_list } from "../../consts/const";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface IBoardMarketCategory {
   category: string[] | (string | null)[];
@@ -9,34 +9,53 @@ interface IBoardMarketCategory {
   >;
 }
 
+interface ICategoryListItem {
+  icon: string;
+  name: string;
+  src: string;
+}
+
 export default function BoardMarketCategory({
   category,
   setCategory,
 }: IBoardMarketCategory) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [selectedIcon, setSelectedIcon] = useState("");
 
   const handleClickCategory = () => {
     setIsExpanded((prev) => !prev);
   };
 
-  const changeCategory = (category: string[]) => {
-    setCategory(category);
+  const changeCategory = (category: ICategoryListItem) => {
+    setCategory([category.name, category.src]);
     setIsExpanded(false);
   };
 
+  useEffect(() => {
+    const selected = market_category_list.find((e) => e.name === category[0]);
+    setSelectedIcon(selected!.icon);
+  }, [category]);
+
   return (
     <Wrapper>
-      <SelectedCategoryBox onClick={handleClickCategory}>
-        {market_category_list[1].name}
-      </SelectedCategoryBox>
-      {isExpanded && (
+      {isExpanded ? (
         <CategoryDropdown>
           {market_category_list.map((item: any, idx: number) => (
-            <CategoryDropdownItem onClick={() => changeCategory(item)}>
-              {item.name}
-            </CategoryDropdownItem>
+            <CategoryItem
+              isSelected={false}
+              key={idx}
+              onClick={() => changeCategory(item)}
+            >
+              <img src={item.icon} />
+              <div>{item.name}</div>
+            </CategoryItem>
           ))}
         </CategoryDropdown>
+      ) : (
+        <CategoryItem isSelected={true} onClick={handleClickCategory}>
+          <img src={selectedIcon} />
+          <div>{category[0]}</div>
+        </CategoryItem>
       )}
     </Wrapper>
   );
@@ -45,34 +64,29 @@ export default function BoardMarketCategory({
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-
+  justify-content: center;
   gap: 1.2rem;
+  position: relative;
+  font-size: 14px;
 `;
 
-const SelectedCategoryBox = styled.div``;
-
-const CategoryDropdown = styled.div``;
-
-const CategoryDropdownItem = styled.div``;
-
-const CategoryItemBox = styled.div`
+const CategoryDropdown = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  gap: 0.5rem;
+`;
 
-  & > div:first-child {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: ${(props) => props.theme.green[0]};
-    padding: 12px;
-    border-radius: 50%;
-  }
-  & > div:last-child {
-    font-size: 12px;
+const CategoryItem = styled.div<{ isSelected: boolean }>`
+  display: flex;
+  gap: 0.5rem;
+  background-color: ${(props) =>
+    props.isSelected ? props.theme.green[1] : props.theme.green[0]};
+  padding: 10px 30px;
+  border-radius: 30px;
+  cursor: pointer;
+  &:hover {
+    background-color: ${(props) => props.theme.green[1]};
   }
   img {
-    width: 1.8rem;
-    height: 1.8rem;
+    width: 20px;
   }
 `;
