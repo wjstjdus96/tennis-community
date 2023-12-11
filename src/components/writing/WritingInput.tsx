@@ -11,7 +11,7 @@ export default function WritingInput({
   return (
     <Wrapper isBody={name == "body"}>
       <label htmlFor={name}>{text}</label>
-      {name == "body" ? (
+      {name == "body" || name == "detail" ? (
         <textarea
           id={name}
           {...register(name)}

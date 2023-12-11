@@ -53,6 +53,15 @@ export interface IRecruitWritingValue {
   type: string;
 }
 
+export interface IMarketWritingValue {
+  name: string;
+  detail: string;
+  category: string;
+  images: any;
+  price: number;
+  transactionMethod: string;
+}
+
 export interface ILoginValue {
   email: string;
   password: string;

@@ -12,6 +12,7 @@ import { MyActivities } from "../components/myPage/activities/MyActivities";
 import Recruit from "../pages/recruit/Recruit";
 import Market from "../pages/market/Market";
 import RecruitWriting from "../pages/recruit/RecruitWriting";
+import MarketWriting from "../pages/market/MarketWriting";
 
 export default function Router() {
   return (
@@ -29,6 +30,7 @@ export default function Router() {
           </Route>
           <Route path="/community/write" element={<CommunityWriting />} />
           <Route path="/recruit/write" element={<RecruitWriting />} />
+          <Route path="/market/write" element={<MarketWriting />} />
           <Route
             path="/community/edit/:postId"
             element={<CommunityWriting />}
