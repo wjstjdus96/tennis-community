@@ -22,6 +22,7 @@ export default function Recruit() {
     searchKeyword,
     filterType,
     recruitType,
+    postsPerPage,
   });
 
   return (

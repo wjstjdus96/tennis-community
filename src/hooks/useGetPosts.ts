@@ -9,10 +9,10 @@ export const useGetPosts = ({
   filterType,
   recruitType,
   marketCategory,
+  postsPerPage,
 }: IUseGetPosts) => {
   const [totalPosts, setTotalPosts] = useState<any>([]);
   const [posts, setPosts] = useState<any>([]);
-  const postsPerPage = 5;
 
   useEffect(() => {
     setTotalPosts([]);
@@ -24,16 +24,18 @@ export const useGetPosts = ({
       marketCategory,
       setPosts: setTotalPosts,
     });
+    console.log(totalPosts);
   }, [searchKeyword, filterType, recruitType, marketCategory]);
 
   useEffect(() => {
     setPosts([]);
     getTotalPostsByPage({
-      offset: page - 1 + postsPerPage,
+      offset: page - 1,
       collectionName,
       keyword: searchKeyword,
       filterType,
       recruitType,
+      marketCategory,
       postsPerPage,
       setPosts,
     });

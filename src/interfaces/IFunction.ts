@@ -87,6 +87,7 @@ export interface IUseGetPosts {
   filterType: any;
   recruitType?: any;
   marketCategory?: any;
+  postsPerPage: number;
 }
 
 export interface IuseSetBookmark {

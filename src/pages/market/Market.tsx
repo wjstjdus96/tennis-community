@@ -9,18 +9,21 @@ import BoardFilter from "../../components/board/BoardFilter";
 import BoardMarketCategory from "../../components/board/BoardMarketCategory";
 import MarketPost from "../../components/home/MarketPost";
 import { IMarketPost } from "../../interfaces/IValue";
+import { Pagination } from "../../components/board/Pagination";
 
 export default function Market() {
   const [page, setPage] = useState<number>(1);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [filterType, setFilterType] = useState(["최신순", "createdAt"]);
   const [category, setCategory] = useState(["전체", null]);
+  const postsPerPage = 10;
   const { posts, totalPosts } = useGetPosts({
     collectionName: "market",
     page,
     searchKeyword,
     filterType,
-    recruitType: category,
+    marketCategory: category,
+    postsPerPage,
   });
 
   return (
@@ -37,6 +40,12 @@ export default function Market() {
           <MarketPost key={idx} post={post} />
         ))}
       </Board>
+      <Pagination
+        totalPage={Math.ceil(totalPosts.length / postsPerPage)}
+        limit={5}
+        page={page}
+        setPage={setPage}
+      />
     </HomeLayout>
   );
 }

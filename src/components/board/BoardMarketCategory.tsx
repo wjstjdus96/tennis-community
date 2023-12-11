@@ -27,7 +27,11 @@ export default function BoardMarketCategory({
   };
 
   const changeCategory = (category: ICategoryListItem) => {
-    setCategory([category.name, category.src]);
+    if (category.name == "전체") {
+      setCategory([category.name, null]);
+    } else {
+      setCategory([category.name, category.src]);
+    }
     setIsExpanded(false);
   };
 

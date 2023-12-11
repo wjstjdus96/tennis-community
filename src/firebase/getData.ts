@@ -68,6 +68,7 @@ const makingQuery = ({
   keyword,
   filterType,
 }: IMakingQuery) => {
+  console.log(marketCategory);
   const collectionRef = collection(db, collectionName);
   let queryRef = query(collectionRef);
 
