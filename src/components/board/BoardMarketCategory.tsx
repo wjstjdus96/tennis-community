@@ -81,16 +81,19 @@ const CategoryDropdown = styled.div`
 
 const CategoryItem = styled.div<{ isSelected: boolean }>`
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 0.5rem;
   background-color: ${(props) =>
     props.isSelected ? props.theme.green[1] : props.theme.green[0]};
-  padding: 10px 30px;
-  border-radius: 30px;
+  padding: 9px 30px;
+  border-radius: 40px;
   cursor: pointer;
   &:hover {
     background-color: ${(props) => props.theme.green[1]};
   }
   img {
-    width: 20px;
+    width: 15px;
+    height: 15px;
   }
 `;
