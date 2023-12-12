@@ -36,7 +36,12 @@ export const useWritingPost = ({ collectionName }: IUserWritingPost) => {
       if (collectionName == "market") {
         const storage = getStorage();
         const imageArray: string[] = [];
-        console.log(data.images);
+        for (const image of data.images) {
+          const imageRef = ref(storage, `market/${image.name}`);
+          const snapshot = await uploadBytes(imageRef, image);
+          const downloadURL = await getDownloadURL(snapshot.ref);
+          imageArray.push(downloadURL);
+        }
         Array.from(data.images).map(async (image: any) => {
           const imageRef = ref(storage, `market/${image.name}`);
           await uploadBytes(imageRef, image).then((snapshot) => {

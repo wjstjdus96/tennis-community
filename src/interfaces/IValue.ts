@@ -19,14 +19,13 @@ export interface IMarketPost {
   title: string;
   bookmarkNum: number;
   commentNum: number;
-  brand: string;
+  body: string;
   category: string;
   createdAt: {
     nanoseconds: number;
     seconds: number;
   };
-  itemImage: string;
-  itemName: string;
+  images: string[];
   price: number;
   transactionMethod: string;
   field: string;

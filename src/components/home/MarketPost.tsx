@@ -1,22 +1,10 @@
-import styled from "styled-components";
 import { FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
-import { getStorage, ref, getDownloadURL, listAll } from "firebase/storage";
-import { storage } from "../../firebase/firebase";
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { IMarketPost } from "../../interfaces/IValue";
 
 export default function MarketPost({ post }: { post: IMarketPost }) {
   const navigate = useNavigate();
-  const storage = getStorage();
-  const imageRef = ref(storage, `${post.itemImage}`);
-  const [image, setImage] = useState<string>("");
-
-  useEffect(() => {
-    getDownloadURL(imageRef).then((url) => {
-      setImage(url);
-    });
-  });
 
   const onClickTitle = () => {
     navigate(`/${post.field}/${post.id}`);
@@ -24,9 +12,9 @@ export default function MarketPost({ post }: { post: IMarketPost }) {
 
   return (
     <Wrapper>
-      <ItemImage url={image}></ItemImage>
+      <ItemImage url={post.images[0]}></ItemImage>
       <div>
-        <ItemTitle onClick={onClickTitle}>{post.itemName}</ItemTitle>
+        <ItemTitle onClick={onClickTitle}>{post.title}</ItemTitle>
         <ItemPrice>{post.price.toLocaleString()}원</ItemPrice>
         <PostInfo>
           <PostInfoItem>
