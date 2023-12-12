@@ -36,6 +36,7 @@ export default function Router() {
             element={<CommunityWriting />}
           />
           <Route path="/recruit/edit/:postId" element={<RecruitWriting />} />
+          <Route path="/market/edit/:postId" element={<MarketWriting />} />
         </Route>
         <Route path="/community" element={<Community />} />
         <Route path="/recruit" element={<Recruit />} />

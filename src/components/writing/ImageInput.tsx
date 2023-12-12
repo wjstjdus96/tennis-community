@@ -39,10 +39,12 @@ export default function ImageInput({
         window.alert("최대 가능 개수를 초과하였습니다");
         return;
       }
-
       setImageNum(currentImages.length);
       if (currentImages.length > 0) {
         if (typeof currentImages[0] == "string") {
+          currentImages.map((image: string) =>
+            setImageList((prev) => [...prev, image])
+          );
         } else {
           for (const image of currentImages) {
             const convertToUrl = URL.createObjectURL(image);

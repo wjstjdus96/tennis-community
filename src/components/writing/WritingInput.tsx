@@ -42,6 +42,7 @@ const Wrapper = styled.div<{ isBody: boolean }>`
   input,
   textarea {
     display: block;
+    font-family: "Noto Sans KR", sans-serif;
     border: none;
     padding: 15px 20px;
     border-radius: 5px;

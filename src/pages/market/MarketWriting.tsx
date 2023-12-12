@@ -1,16 +1,15 @@
-import { useLocation, useParams } from "react-router-dom";
-import { HomeLayout } from "../../layouts/HomeLayout";
-import styled from "styled-components";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { IMarketWritingValue } from "../../interfaces/IValue";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useWritingPost } from "../../hooks/useWritingPost";
-import { useEditPost } from "../../hooks/useEditPost";
-import { SelectRecruitType } from "../../components/writing/SelectRecruitType";
+import { useLocation, useParams } from "react-router-dom";
+import styled from "styled-components";
+import ImageInput from "../../components/writing/ImageInput";
+import SelectMarketCategory from "../../components/writing/SelectMarketCategory";
 import { SubmitWritingButton } from "../../components/writing/SubmitWritingButto";
 import WritingInput from "../../components/writing/WritingInput";
-import SelectMarketCategory from "../../components/writing/SelectMarketCategory";
-import ImageInput from "../../components/writing/ImageInput";
+import { useEditPost } from "../../hooks/useEditPost";
+import { useWritingPost } from "../../hooks/useWritingPost";
+import { IMarketWritingValue } from "../../interfaces/IValue";
+import { HomeLayout } from "../../layouts/HomeLayout";
 
 export default function MarketWriting() {
   const { postId } = useParams();
@@ -30,15 +29,27 @@ export default function MarketWriting() {
   const { onClickWriting } = useWritingPost({ collectionName: "market" });
   const { onClickEdit } = useEditPost({ state });
 
+  useEffect(() => {
+    if (postId) {
+      setValue("title", state.title);
+      setValue("category", state.category);
+      setValue("price", state.price);
+      setValue("transactionMethod", state.transactionMethod);
+      setValue("body", state.body);
+      setValue("images", state.images);
+    }
+  }, [postId]);
+
   return (
     <HomeLayout>
-      <Head>{postId ? "게시글 수정" : "플리마켓 게시글 작성"}</Head>
+      <Head>{postId ? "게시글 수정" : "게시글 작성"}</Head>
       <Body>
         <form onSubmit={handleSubmit(postId ? onClickEdit : onClickWriting)}>
           <InputRow isFirst={true}>
             <SelectMarketCategory
               name="category"
               text="카테고리"
+              existing={state.category}
               control={control}
             />
             <WritingInput name="title" text="제품명" register={register} />

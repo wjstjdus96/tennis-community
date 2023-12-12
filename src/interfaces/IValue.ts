@@ -73,8 +73,8 @@ export interface IRecruitWritingValue {
 }
 
 export interface IMarketWritingValue {
-  name: string;
-  detail: string;
+  title: string;
+  body: string;
   category: string;
   images: any;
   price: number;

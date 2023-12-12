@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BoardMarketCategory, {
   ICategoryListItem,
 } from "../board/BoardMarketCategory";
@@ -12,6 +12,7 @@ export default function SelectMarketCategory({
   name,
   text,
   control,
+  existing,
   errorMsg,
 }: ISelectMarketCategory) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -20,6 +21,7 @@ export default function SelectMarketCategory({
     name: "선택",
     src: "",
   });
+
   const {
     field: { value, onChange },
   } = useController({
@@ -32,6 +34,13 @@ export default function SelectMarketCategory({
     onChange(category.name);
     setIsExpanded(false);
   };
+
+  useEffect(() => {
+    if (existing) {
+      const selected = market_category_list.find((e) => e.name === existing);
+      setSelectedCategory(selected!);
+    }
+  }, []);
 
   return (
     <Wrapper>

@@ -59,6 +59,7 @@ export interface ISelectMarketCategory {
   name: Path<IMarketWritingValue>;
   text: string;
   control: Control<any, any>;
+  existing?: string;
   errorMsg?: string;
 }
 
