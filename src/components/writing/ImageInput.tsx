@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { FaCamera } from "react-icons/fa";
 import styled from "styled-components";
 import { IImageInput } from "../../interfaces/IComponent";
-import DragSlider from "../DragSlider";
 
 export default function ImageInput({
   name,

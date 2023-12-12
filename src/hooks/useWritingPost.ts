@@ -1,13 +1,12 @@
-import { SubmitHandler } from "react-hook-form";
-import { useRecoilValue } from "recoil";
-import { userState } from "../recoil/atom";
-import { useNavigate } from "react-router-dom";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { SubmitHandler } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import { db } from "../firebase/firebase";
 import { updateUserArrayData } from "../firebase/updateData";
-import { ICommunityWritingValue } from "../interfaces/IValue";
 import { IUserWritingPost } from "../interfaces/IFunction";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { userState } from "../recoil/atom";
 
 export const useWritingPost = ({ collectionName }: IUserWritingPost) => {
   const userInfo = useRecoilValue(userState);
@@ -42,14 +41,6 @@ export const useWritingPost = ({ collectionName }: IUserWritingPost) => {
           const downloadURL = await getDownloadURL(snapshot.ref);
           imageArray.push(downloadURL);
         }
-        Array.from(data.images).map(async (image: any) => {
-          const imageRef = ref(storage, `market/${image.name}`);
-          await uploadBytes(imageRef, image).then((snapshot) => {
-            getDownloadURL(snapshot.ref).then((url) => {
-              imageArray.push(url);
-            });
-          });
-        });
         let addDocData = {
           category: data.category,
           price: Number(data.price),
