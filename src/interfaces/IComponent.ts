@@ -58,6 +58,13 @@ export interface IWritingInput {
   errorMsg?: string;
 }
 
+export interface IImageInput {
+  name: Path<any>;
+  text?: string;
+  register: UseFormRegister<any>;
+  errorMsg?: string;
+}
+
 export interface IBoardSearch {
   boardField: string;
   setSearchKeyword: React.Dispatch<React.SetStateAction<string>>;

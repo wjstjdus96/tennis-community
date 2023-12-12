@@ -10,6 +10,7 @@ import { SelectRecruitType } from "../../components/writing/SelectRecruitType";
 import { SubmitWritingButton } from "../../components/writing/SubmitWritingButto";
 import WritingInput from "../../components/writing/WritingInput";
 import SelectMarketCategory from "../../components/writing/SelectMarketCategory";
+import ImageInput from "../../components/writing/ImageInput";
 
 export default function MarketWriting() {
   const { postId } = useParams();
@@ -42,8 +43,8 @@ export default function MarketWriting() {
               register={register}
             />
           </InputRow>
-
           <WritingInput name="detail" text="제품설명" register={register} />
+          <ImageInput name="images" text="제품사진" register={register} />
           <div>
             <SubmitWritingButton>
               {postId ? "수정하기" : "글쓰기"}
