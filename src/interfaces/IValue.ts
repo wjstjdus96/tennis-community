@@ -25,11 +25,33 @@ export interface IMarketPost {
     nanoseconds: number;
     seconds: number;
   };
+  creatorId: string;
   images: string[];
   price: number;
   transactionMethod: string;
   field: string;
   id: string;
+}
+
+export interface IPostDetail {
+  body: string;
+  bookmarkNum: number;
+  commentNum: number;
+  createdAt: {
+    nanoseconds: number;
+    seconds: number;
+  };
+  creatorImage: string;
+  creatorName: string;
+  creatorId: string;
+  id: string;
+  title: string;
+  field: string;
+  type?: string;
+  category?: string;
+  images?: string[];
+  price?: number;
+  transactionMethod?: string;
 }
 
 export interface IComment {

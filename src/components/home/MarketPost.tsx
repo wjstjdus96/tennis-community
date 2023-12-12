@@ -1,7 +1,8 @@
-import { FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
+import { FaRegBookmark, FaRegCommentDots, FaBookmark } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IMarketPost } from "../../interfaces/IValue";
+import { useSetBookmark } from "../../hooks/useSetBookmark";
 
 export default function MarketPost({
   post,
@@ -12,8 +13,15 @@ export default function MarketPost({
 }) {
   const navigate = useNavigate();
 
+  const { isBookmarkChecked } = useSetBookmark({
+    postField: post.field,
+    postId: post.id,
+  });
+
   const onClickTitle = () => {
-    navigate(`/${post.field}/${post.id}`);
+    navigate(`/${post.field}/${post.id}`, {
+      state: { field: post.field, id: post.id },
+    });
   };
 
   return (
@@ -24,7 +32,7 @@ export default function MarketPost({
         <ItemPrice>{post.price.toLocaleString()}원</ItemPrice>
         <PostInfo>
           <PostInfoItem>
-            <FaRegBookmark />
+            {isBookmarkChecked ? <FaBookmark /> : <FaRegBookmark />}
             <div>{post.bookmarkNum}</div>
           </PostInfoItem>
           <PostInfoItem>

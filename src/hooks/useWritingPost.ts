@@ -52,7 +52,7 @@ export const useWritingPost = ({ collectionName }: IUserWritingPost) => {
         });
         let addDocData = {
           category: data.category,
-          price: data.price,
+          price: Number(data.price),
           transactionMethod: data.transactionMethod,
           images: imageArray,
         };

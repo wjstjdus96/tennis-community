@@ -10,8 +10,10 @@ import {
   IComment,
   ICommunityWritingValue,
   IFieldItemIds,
+  IMarketPost,
   IMarketWritingValue,
   IPost,
+  IPostDetail,
   ISignupValue,
 } from "./IValue";
 
@@ -95,7 +97,7 @@ export interface IWritingComment {
 }
 
 export interface IPostBody {
-  postData: IPost;
+  postData: IPostDetail;
 }
 
 export interface IPostHead {
