@@ -3,7 +3,13 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IMarketPost } from "../../interfaces/IValue";
 
-export default function MarketPost({ post }: { post: IMarketPost }) {
+export default function MarketPost({
+  post,
+  isHome,
+}: {
+  post: IMarketPost;
+  isHome?: boolean;
+}) {
   const navigate = useNavigate();
 
   const onClickTitle = () => {
@@ -11,7 +17,7 @@ export default function MarketPost({ post }: { post: IMarketPost }) {
   };
 
   return (
-    <Wrapper>
+    <Wrapper isHome={isHome}>
       <ItemImage url={post.images[0]}></ItemImage>
       <div>
         <ItemTitle onClick={onClickTitle}>{post.title}</ItemTitle>
@@ -31,9 +37,9 @@ export default function MarketPost({ post }: { post: IMarketPost }) {
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ isHome?: boolean }>`
   border-bottom: 1px solid ${(props) => props.theme.green[1]};
-  padding: 15px;
+  padding: ${(props) => (props.isHome ? "15px" : "15px 0")};
   display: grid;
   grid-template-columns: 1fr 8fr;
   gap: 15px;
