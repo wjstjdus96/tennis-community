@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react";
-import { IPost } from "../interfaces/IValue";
-import {
-  getPosts,
-  getPostsByPage,
-  getRecruitPosts,
-  getRecruitPostsByPage,
-} from "../firebase/getData";
+import { getTotalPosts, getTotalPostsByPage } from "../firebase/getData";
 import { IUseGetPosts } from "../interfaces/IFunction";
 
 export const useGetPosts = ({
@@ -14,56 +8,37 @@ export const useGetPosts = ({
   searchKeyword,
   filterType,
   recruitType,
+  marketCategory,
+  postsPerPage,
 }: IUseGetPosts) => {
-  const [totalPosts, setTotalPosts] = useState<IPost[]>([]);
-  const [posts, setPosts] = useState<IPost[]>([]);
-  const postsPerPage = 5;
+  const [totalPosts, setTotalPosts] = useState<any>([]);
+  const [posts, setPosts] = useState<any>([]);
 
   useEffect(() => {
     setTotalPosts([]);
-    if (collectionName == "recruit") {
-      getRecruitPosts({
-        collectionName: collectionName,
-        keyword: searchKeyword,
-        filterType: filterType,
-        recruitType: recruitType,
-        setPosts: setTotalPosts,
-      });
-    }
-    if (collectionName == "community") {
-      getPosts({
-        collectionName: collectionName,
-        keyword: searchKeyword,
-        filterType: filterType,
-        setPosts: setTotalPosts,
-      });
-    }
-  }, [searchKeyword, filterType, recruitType]);
+    getTotalPosts({
+      collectionName,
+      keyword: searchKeyword,
+      filterType,
+      recruitType,
+      marketCategory,
+      setPosts: setTotalPosts,
+    });
+  }, [searchKeyword, filterType, recruitType, marketCategory]);
 
   useEffect(() => {
     setPosts([]);
-    if (collectionName == "recruit") {
-      getRecruitPostsByPage({
-        offset: (page - 1) * postsPerPage,
-        collectionName: collectionName,
-        keyword: searchKeyword,
-        filterType: filterType,
-        recruitType: recruitType,
-        postsPerPage: postsPerPage,
-        setPosts: setPosts,
-      });
-    }
-    if (collectionName == "community") {
-      getPostsByPage({
-        offset: (page - 1) * postsPerPage,
-        collectionName: collectionName,
-        keyword: searchKeyword,
-        filterType: filterType,
-        postsPerPage: postsPerPage,
-        setPosts: setPosts,
-      });
-    }
-  }, [page, searchKeyword, filterType, recruitType]);
+    getTotalPostsByPage({
+      offset: page - 1,
+      collectionName,
+      keyword: searchKeyword,
+      filterType,
+      recruitType,
+      marketCategory,
+      postsPerPage,
+      setPosts,
+    });
+  }, [page, searchKeyword, filterType, recruitType, marketCategory]);
 
   return { posts, totalPosts };
 };

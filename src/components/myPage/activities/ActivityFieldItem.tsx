@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getPost } from "../../../firebase/getData";
 import Post from "../../home/Post";
 import { IActivityFieldItem } from "../../../interfaces/IComponent";
+import MarketPost from "../../home/MarketPost";
 
 export function ActivityFieldItem({
   itemId,
@@ -15,5 +16,17 @@ export function ActivityFieldItem({
     });
   }, []);
 
-  return <div>{post && <Post post={post} isHome={true} />}</div>;
+  return (
+    <>
+      {post && (
+        <div>
+          {collectionName == "market" ? (
+            <MarketPost post={post} isHome={true} />
+          ) : (
+            <Post post={post} isHome={true} />
+          )}
+        </div>
+      )}
+    </>
+  );
 }

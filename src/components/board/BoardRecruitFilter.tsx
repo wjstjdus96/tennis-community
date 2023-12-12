@@ -44,7 +44,8 @@ const FilterItem = styled.div`
   width: 50px;
   font-size: 12px;
   margin: 0;
-  border: 1px solid ${(props) => props.theme.green[2]};
+  border: 2px solid ${(props) => props.theme.green[1]};
+  color: ${(props) => props.theme.green[2]};
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -52,7 +53,7 @@ const FilterItem = styled.div`
   padding: 3px;
   cursor: pointer;
   &.select {
-    background-color: ${(props) => props.theme.green[2]};
+    background-color: ${(props) => props.theme.green[1]};
     color: white;
   }
 `;

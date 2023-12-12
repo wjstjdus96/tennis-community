@@ -11,7 +11,7 @@ export default function WritingInput({
   return (
     <Wrapper isBody={name == "body"}>
       <label htmlFor={name}>{text}</label>
-      {name == "body" ? (
+      {name == "body" || name == "detail" ? (
         <textarea
           id={name}
           {...register(name)}
@@ -42,6 +42,7 @@ const Wrapper = styled.div<{ isBody: boolean }>`
   input,
   textarea {
     display: block;
+    font-family: "Noto Sans KR", sans-serif;
     border: none;
     padding: 15px 20px;
     border-radius: 5px;

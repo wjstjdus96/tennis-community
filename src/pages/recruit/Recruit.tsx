@@ -4,7 +4,7 @@ import BoardFilter from "../../components/board/BoardFilter";
 import { BoardHead } from "../../components/board/BoardHead";
 import { BoardSearch } from "../../components/board/BoardSearch";
 import { BoardWritingBtn } from "../../components/board/BoardWritinBtn";
-import BoardRecruitFilter from "../../components/board/BoarderRecruitFilter";
+import BoardRecruitFilter from "../../components/board/BoardRecruitFilter";
 import { Pagination } from "../../components/board/Pagination";
 import Post from "../../components/home/Post";
 import { useGetPosts } from "../../hooks/useGetPosts";
@@ -22,6 +22,7 @@ export default function Recruit() {
     searchKeyword,
     filterType,
     recruitType,
+    postsPerPage,
   });
 
   return (

@@ -3,12 +3,17 @@ import {
   UseFormRegister,
   UseFormSetValue,
   UseFormWatch,
+  UseFormGetValues,
+  Control,
 } from "react-hook-form";
 import {
   IComment,
   ICommunityWritingValue,
   IFieldItemIds,
+  IMarketPost,
+  IMarketWritingValue,
   IPost,
+  IPostDetail,
   ISignupValue,
 } from "./IValue";
 
@@ -50,11 +55,29 @@ export interface IPagination {
   setPage: any;
 }
 
+export interface ISelectMarketCategory {
+  name: Path<IMarketWritingValue>;
+  text: string;
+  control: Control<any, any>;
+  existing?: string;
+  errorMsg?: string;
+}
+
 export interface IWritingInput {
   name: Path<any>;
   text?: string;
   inputType?: string;
   register: UseFormRegister<any>;
+  errorMsg?: string;
+}
+
+export interface IImageInput {
+  name: Path<IMarketWritingValue>;
+  text?: string;
+  register: UseFormRegister<IMarketWritingValue>;
+  watch: UseFormWatch<IMarketWritingValue>;
+  setValue: UseFormSetValue<IMarketWritingValue>;
+  getValues: UseFormGetValues<IMarketWritingValue>;
   errorMsg?: string;
 }
 
@@ -75,7 +98,7 @@ export interface IWritingComment {
 }
 
 export interface IPostBody {
-  postData: IPost;
+  postData: IPostDetail;
 }
 
 export interface IPostHead {

@@ -41,7 +41,7 @@ export default function Board({ title, collectionName }: IBoard) {
       {collectionName == "market" ? (
         <MarketBoardBody>
           {posts.map((post: any) => (
-            <MarketPost post={post} />
+            <MarketPost post={post} isHome={true} />
           ))}
         </MarketBoardBody>
       ) : (

@@ -1,36 +1,38 @@
-import styled from "styled-components";
-import { FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
-import { getStorage, ref, getDownloadURL, listAll } from "firebase/storage";
-import { storage } from "../../firebase/firebase";
-import { useState, useEffect } from "react";
+import { FaRegBookmark, FaRegCommentDots, FaBookmark } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { IMarketPost } from "../../interfaces/IValue";
+import { useSetBookmark } from "../../hooks/useSetBookmark";
 
-export default function MarketPost({ post }: { post: IMarketPost }) {
+export default function MarketPost({
+  post,
+  isHome,
+}: {
+  post: IMarketPost;
+  isHome?: boolean;
+}) {
   const navigate = useNavigate();
-  const storage = getStorage();
-  const imageRef = ref(storage, `${post.itemImage}`);
-  const [image, setImage] = useState<string>("");
 
-  useEffect(() => {
-    getDownloadURL(imageRef).then((url) => {
-      setImage(url);
-    });
+  const { isBookmarkChecked } = useSetBookmark({
+    postField: post.field,
+    postId: post.id,
   });
 
   const onClickTitle = () => {
-    navigate(`/${post.field}/${post.id}`);
+    navigate(`/${post.field}/${post.id}`, {
+      state: { field: post.field, id: post.id },
+    });
   };
 
   return (
-    <Wrapper>
-      <ItemImage url={image}></ItemImage>
+    <Wrapper isHome={isHome}>
+      <ItemImage url={post.images[0]}></ItemImage>
       <div>
-        <ItemTitle onClick={onClickTitle}>{post.itemName}</ItemTitle>
+        <ItemTitle onClick={onClickTitle}>{post.title}</ItemTitle>
         <ItemPrice>{post.price.toLocaleString()}원</ItemPrice>
         <PostInfo>
           <PostInfoItem>
-            <FaRegBookmark />
+            {isBookmarkChecked ? <FaBookmark /> : <FaRegBookmark />}
             <div>{post.bookmarkNum}</div>
           </PostInfoItem>
           <PostInfoItem>
@@ -43,9 +45,9 @@ export default function MarketPost({ post }: { post: IMarketPost }) {
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ isHome?: boolean }>`
   border-bottom: 1px solid ${(props) => props.theme.green[1]};
-  padding: 15px;
+  padding: ${(props) => (props.isHome ? "15px" : "15px 0")};
   display: grid;
   grid-template-columns: 1fr 8fr;
   gap: 15px;

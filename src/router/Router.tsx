@@ -1,17 +1,18 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { MyActivities } from "../components/myPage/activities/MyActivities";
+import { Setting } from "../components/myPage/setting/Setting";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import MyPage from "../pages/MyPage";
+import PostDetail from "../pages/PostDetail";
 import Signup from "../pages/Signup";
 import Community from "../pages/community/Community";
 import CommunityWriting from "../pages/community/CommunityWriting";
-import PostDetail from "../pages/community/PostDetail";
-import PrivateRoute from "./PrivateRoute";
-import MyPage from "../pages/MyPage";
-import { Setting } from "../components/myPage/setting/Setting";
-import { MyActivities } from "../components/myPage/activities/MyActivities";
-import Recruit from "../pages/recruit/Recruit";
 import Market from "../pages/market/Market";
+import MarketWriting from "../pages/market/MarketWriting";
+import Recruit from "../pages/recruit/Recruit";
 import RecruitWriting from "../pages/recruit/RecruitWriting";
+import PrivateRoute from "./PrivateRoute";
 
 export default function Router() {
   return (
@@ -29,18 +30,18 @@ export default function Router() {
           </Route>
           <Route path="/community/write" element={<CommunityWriting />} />
           <Route path="/recruit/write" element={<RecruitWriting />} />
+          <Route path="/market/write" element={<MarketWriting />} />
           <Route
             path="/community/edit/:postId"
             element={<CommunityWriting />}
           />
           <Route path="/recruit/edit/:postId" element={<RecruitWriting />} />
+          <Route path="/market/edit/:postId" element={<MarketWriting />} />
         </Route>
         <Route path="/community" element={<Community />} />
-        <Route path="/:boardField/:id" element={<PostDetail />} />
         <Route path="/recruit" element={<Recruit />} />
-        <Route path="/market" element={<Market />}>
-          <Route path=":id" element={<Market />} />
-        </Route>
+        <Route path="/market" element={<Market />} />
+        <Route path="/:boardField/:id" element={<PostDetail />} />
       </Routes>
     </BrowserRouter>
   );

@@ -19,18 +19,37 @@ export interface IMarketPost {
   title: string;
   bookmarkNum: number;
   commentNum: number;
-  brand: string;
+  body: string;
   category: string;
   createdAt: {
     nanoseconds: number;
     seconds: number;
   };
-  itemImage: string;
-  itemName: string;
+  creatorId: string;
+  images: string[];
   price: number;
   transactionMethod: string;
   field: string;
   id: string;
+}
+
+export interface IPostDetail {
+  body: string;
+  bookmarkNum: number;
+  commentNum: number;
+  createdAt: {
+    nanoseconds: number;
+    seconds: number;
+  };
+  creatorId: string;
+  id: string;
+  title: string;
+  field: string;
+  type?: string;
+  category?: string;
+  images?: string[];
+  price?: number;
+  transactionMethod?: string;
 }
 
 export interface IComment {
@@ -51,6 +70,15 @@ export interface IRecruitWritingValue {
   title: string;
   body: string;
   type: string;
+}
+
+export interface IMarketWritingValue {
+  title: string;
+  body: string;
+  category: string;
+  images: any;
+  price: number;
+  transactionMethod: string;
 }
 
 export interface ILoginValue {

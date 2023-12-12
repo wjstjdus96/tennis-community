@@ -8,39 +8,32 @@ export interface IGetOnePost {
   setPostData: React.Dispatch<any>;
 }
 
-export interface IGetPosts {
+export interface IGetTotalPosts {
   collectionName: string;
-  keyword: string;
+  keyword?: string;
   filterType: string[];
+  recruitType?: string[] | (string | null)[];
+  marketCategory?: string[] | (string | null)[];
   setPosts: React.Dispatch<React.SetStateAction<IPost[]>>;
 }
 
-export interface IGetPostsByPage {
+export interface IGetTotalPostsByPage {
   offset: number;
   collectionName: string;
-  keyword: string;
+  keyword?: string;
   filterType: string[];
-  recruitType?: string[];
+  recruitType?: string[] | (string | null)[];
+  marketCategory?: string[] | (string | null)[];
   postsPerPage: number;
   setPosts: React.Dispatch<React.SetStateAction<IPost[]>>;
 }
 
-export interface IGetRecruitPosts {
+export interface IMakingQuery {
   collectionName: string;
-  keyword: string;
+  keyword?: string;
   filterType: string[];
-  recruitType: string[] | (string | null)[];
-  setPosts: React.Dispatch<React.SetStateAction<IPost[]>>;
-}
-
-export interface IGetRecruitPostsByPage {
-  offset: number;
-  collectionName: string;
-  keyword: string;
-  filterType: string[];
-  recruitType: string[] | (string | null)[];
-  postsPerPage: number;
-  setPosts: React.Dispatch<React.SetStateAction<IPost[]>>;
+  recruitType?: string[] | (string | null)[];
+  marketCategory?: string[] | (string | null)[];
 }
 
 export interface IGetComments {
@@ -93,6 +86,8 @@ export interface IUseGetPosts {
   searchKeyword: string;
   filterType: any;
   recruitType?: any;
+  marketCategory?: any;
+  postsPerPage: number;
 }
 
 export interface IuseSetBookmark {

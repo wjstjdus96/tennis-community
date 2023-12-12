@@ -15,6 +15,7 @@ export default function Post({
   isHome: boolean;
 }) {
   const navigate = useNavigate();
+
   const { isBookmarkChecked } = useSetBookmark({
     postField: post.field,
     postId: post.id,
