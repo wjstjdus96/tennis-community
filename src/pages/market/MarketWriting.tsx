@@ -20,7 +20,9 @@ export default function MarketWriting() {
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
     control,
+    getValues,
   } = useForm<IMarketWritingValue>({
     mode: "onSubmit",
   });
@@ -50,7 +52,14 @@ export default function MarketWriting() {
             />
           </InputRow>
           <WritingInput name="body" text="제품설명" register={register} />
-          <ImageInput name="images" text="제품사진" register={register} />
+          <ImageInput
+            name="images"
+            text="제품사진"
+            register={register}
+            watch={watch}
+            setValue={setValue}
+            getValues={getValues}
+          />
           <div>
             <SubmitWritingButton>
               {postId ? "수정하기" : "글쓰기"}
