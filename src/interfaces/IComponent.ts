@@ -3,6 +3,7 @@ import {
   UseFormRegister,
   UseFormSetValue,
   UseFormWatch,
+  Control,
 } from "react-hook-form";
 import {
   IComment,
@@ -48,6 +49,13 @@ export interface IPagination {
   limit: number;
   page: number;
   setPage: any;
+}
+
+export interface ISelectMarketCategory {
+  name: Path<any>;
+  text: string;
+  control: Control<any, any>;
+  errorMsg?: string;
 }
 
 export interface IWritingInput {

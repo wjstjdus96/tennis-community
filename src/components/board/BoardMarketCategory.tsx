@@ -9,7 +9,7 @@ interface IBoardMarketCategory {
   >;
 }
 
-interface ICategoryListItem {
+export interface ICategoryListItem {
   icon: string;
   name: string;
   src: string;

@@ -33,8 +33,14 @@ export default function MarketWriting() {
       <Head>{postId ? "게시글 수정" : "플리마켓 게시글 작성"}</Head>
       <Body>
         <form onSubmit={handleSubmit(postId ? onClickEdit : onClickWriting)}>
-          <SelectMarketCategory />
-          <WritingInput name="name" text="제품명" register={register} />
+          <InputRow isFirst={true}>
+            <SelectMarketCategory
+              name="category"
+              text="카테고리"
+              control={control}
+            />
+            <WritingInput name="name" text="제품명" register={register} />
+          </InputRow>
           <InputRow>
             <WritingInput name="price" text="가격" register={register} />
             <WritingInput
@@ -43,7 +49,7 @@ export default function MarketWriting() {
               register={register}
             />
           </InputRow>
-          <WritingInput name="detail" text="제품설명" register={register} />
+          <WritingInput name="body" text="제품설명" register={register} />
           <ImageInput name="images" text="제품사진" register={register} />
           <div>
             <SubmitWritingButton>
@@ -72,8 +78,9 @@ const Body = styled.div`
   }
 `;
 
-const InputRow = styled.div`
+const InputRow = styled.div<{ isFirst?: boolean }>`
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: ${(props) =>
+    props.isFirst ? "110px auto" : "1fr 2fr"};
   gap: 3rem;
 `;
