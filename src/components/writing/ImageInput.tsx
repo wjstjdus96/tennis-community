@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaCamera } from "react-icons/fa";
 import styled from "styled-components";
 import { IImageInput } from "../../interfaces/IComponent";
+import DragSlider from "../DragSlider";
 
 export default function ImageInput({
   name,
@@ -31,19 +32,22 @@ export default function ImageInput({
   };
 
   useEffect(() => {
-    setImageList([]);
-    if (currentImages && currentImages.length > max_count) {
-      setValue(name, []);
-      window.alert("최대 개수를 초과하였습니다");
-      return;
-    }
-    setImageNum(currentImages.length);
-    if (currentImages && currentImages.length > 0) {
-      if (typeof currentImages[0] == "string") {
-      } else {
-        for (const image of currentImages) {
-          const convertToUrl = URL.createObjectURL(image);
-          setImageList((prev) => [...prev, convertToUrl]);
+    if (currentImages) {
+      setImageList([]);
+      if (currentImages.length > max_count) {
+        setValue(name, []);
+        window.alert("최대 가능 개수를 초과하였습니다");
+        return;
+      }
+
+      setImageNum(currentImages.length);
+      if (currentImages.length > 0) {
+        if (typeof currentImages[0] == "string") {
+        } else {
+          for (const image of currentImages) {
+            const convertToUrl = URL.createObjectURL(image);
+            setImageList((prev) => [...prev, convertToUrl]);
+          }
         }
       }
     }
@@ -52,6 +56,7 @@ export default function ImageInput({
   return (
     <Wrapper>
       <label>{text}</label>
+
       <ImageList>
         <UploadImageBox onClick={onClickUploadImages}>
           <FaCamera size={40} />

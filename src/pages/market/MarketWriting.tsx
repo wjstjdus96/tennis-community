@@ -41,7 +41,7 @@ export default function MarketWriting() {
               text="카테고리"
               control={control}
             />
-            <WritingInput name="name" text="제품명" register={register} />
+            <WritingInput name="title" text="제품명" register={register} />
           </InputRow>
           <InputRow>
             <WritingInput name="price" text="가격" register={register} />

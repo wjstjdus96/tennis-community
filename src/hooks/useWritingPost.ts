@@ -7,6 +7,7 @@ import { db } from "../firebase/firebase";
 import { updateUserArrayData } from "../firebase/updateData";
 import { ICommunityWritingValue } from "../interfaces/IValue";
 import { IUserWritingPost } from "../interfaces/IFunction";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 export const useWritingPost = ({ collectionName }: IUserWritingPost) => {
   const userInfo = useRecoilValue(userState);
@@ -28,6 +29,27 @@ export const useWritingPost = ({ collectionName }: IUserWritingPost) => {
       if (collectionName == "recruit") {
         let addDocData = {
           type: data.type,
+        };
+        docData = { ...docData, ...addDocData };
+      }
+
+      if (collectionName == "market") {
+        const storage = getStorage();
+        const imageArray: string[] = [];
+        console.log(data.images);
+        Array.from(data.images).map(async (image: any) => {
+          const imageRef = ref(storage, `market/${image.name}`);
+          await uploadBytes(imageRef, image).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then((url) => {
+              imageArray.push(url);
+            });
+          });
+        });
+        let addDocData = {
+          category: data.category,
+          price: data.price,
+          transactionMethod: data.transactionMethod,
+          images: imageArray,
         };
         docData = { ...docData, ...addDocData };
       }
