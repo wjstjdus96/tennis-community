@@ -16,6 +16,7 @@ export default function ImageInput({
   const { ref, ...rest } = register(name);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const currentImages = watch(name);
+  const max_count = 5;
 
   const onClickUploadImages = () => {
     inputRef.current?.click();
@@ -23,7 +24,6 @@ export default function ImageInput({
 
   const removeImage = (removeIdx: number) => {
     const images = Array.from(getValues(name));
-    console.log(images);
     setValue(
       name,
       images.filter((image: any, idx: number) => idx != removeIdx)
@@ -32,6 +32,11 @@ export default function ImageInput({
 
   useEffect(() => {
     setImageList([]);
+    if (currentImages && currentImages.length > max_count) {
+      setValue(name, []);
+      window.alert("최대 개수를 초과하였습니다");
+      return;
+    }
     setImageNum(currentImages.length);
     if (currentImages && currentImages.length > 0) {
       if (typeof currentImages[0] == "string") {
@@ -83,12 +88,15 @@ const Wrapper = styled.div`
     font-size: 15px;
     margin-bottom: 15px;
   }
-  overflow-x: scroll;
 `;
 
 const ImageList = styled.div`
   display: flex;
-  gap: 10px;
+  overflow-x: auto;
+  white-space: nowrap;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const UploadImageBox = styled.div`
@@ -99,9 +107,8 @@ const UploadImageBox = styled.div`
   align-items: center;
   justify-content: center;
   gap: 5px;
-  border: 3px solid gray;
+  box-shadow: 0 0 0 3px gray inset;
   cursor: pointer;
-  /* background-color: ${(props) => props.theme.green[0]}; */
   font-size: 13px;
   color: gray;
   input {
@@ -111,6 +118,7 @@ const UploadImageBox = styled.div`
 
 const ImageBox = styled.div`
   position: relative;
+  display: inline-block;
   img {
     width: 8rem;
     height: 8rem;
