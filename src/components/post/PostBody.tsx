@@ -2,15 +2,17 @@ import styled from "styled-components";
 import BookmarkBtn from "./BookmarkBtn";
 import { IPostBody } from "../../interfaces/IComponent";
 import { deletePost } from "../../firebase/deleteData";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { EditDeleteBtn } from "./EditDeleteBtns";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../recoil/atom";
 import { updateUserArrayData } from "../../firebase/updateData";
+import MarketPostBodyDetail from "./MarketPostBodyDetail";
 
 export function PostBody({ postData }: IPostBody) {
   const navigate = useNavigate();
   const userInfo = useRecoilValue(userState);
+  const { boardField } = useParams();
 
   const clickDeletePost = () => {
     if (window.confirm("게시물을 삭제하시겠습니까?")) {
@@ -34,10 +36,14 @@ export function PostBody({ postData }: IPostBody) {
   return (
     <Wrapper>
       <Title>
-        {postData.type && <p>{postData.type}</p>}
+        {boardField == "recruit" && <p>{postData.type}</p>}
         <div>{postData.title}</div>
       </Title>
-      <div>{postData.body}</div>
+      {boardField == "market" ? (
+        <MarketPostBodyDetail postData={postData} />
+      ) : (
+        <div>{postData.body}</div>
+      )}
       <div>
         <BookmarkBtn
           bookmarkNum={postData.bookmarkNum}

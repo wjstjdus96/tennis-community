@@ -24,7 +24,6 @@ export const useGetPosts = ({
       marketCategory,
       setPosts: setTotalPosts,
     });
-    console.log(totalPosts);
   }, [searchKeyword, filterType, recruitType, marketCategory]);
 
   useEffect(() => {

@@ -41,8 +41,6 @@ export interface IPostDetail {
     nanoseconds: number;
     seconds: number;
   };
-  creatorImage: string;
-  creatorName: string;
   creatorId: string;
   id: string;
   title: string;
