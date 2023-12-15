@@ -29,7 +29,9 @@ export default function MarketWriting() {
     resolver: yupResolver(marketWritingSchema),
   });
 
-  const { onClickWriting } = useWritingPost({ collectionName: "market" });
+  const { onClickWriting, isWritingLoading } = useWritingPost({
+    collectionName: "market",
+  });
   const { onClickEdit } = useEditPost({ state });
 
   useEffect(() => {
@@ -92,13 +94,13 @@ export default function MarketWriting() {
             watch={watch}
             setValue={setValue}
             getValues={getValues}
-            errorMsg={errors.images && errors.images.message}
           />
           <div>
             <SubmitWritingButton>
               {postId ? "수정하기" : "글쓰기"}
             </SubmitWritingButton>
           </div>
+          {isWritingLoading && <div>로딩중</div>}
         </form>
       </Body>
     </HomeLayout>

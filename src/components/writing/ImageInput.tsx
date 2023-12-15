@@ -25,6 +25,7 @@ export default function ImageInput({
   };
 
   const removeImage = (removeIdx: number) => {
+    console.log(typeof getValues(name));
     const images = Array.from(getValues(name));
     setValue(
       name,

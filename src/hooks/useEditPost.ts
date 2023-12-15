@@ -7,6 +7,11 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 export const useEditPost = ({ state }: IUseEditPost) => {
   const navigate = useNavigate();
 
+  if (typeof state == "string") {
+    const onClickEdit = () => console.log("state");
+    return { onClickEdit };
+  }
+
   const onClickEdit: SubmitHandler<any> = async (data) => {
     try {
       let newData = {
