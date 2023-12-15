@@ -7,6 +7,7 @@ import { market_category_list } from "../../consts/const";
 import { ISelectMarketCategory } from "../../interfaces/IComponent";
 import { useController } from "react-hook-form";
 import clicking from "../../assets/icon-clicking.png";
+import ErrorMsg from "./ErrorMsg";
 
 export default function SelectMarketCategory({
   name,
@@ -68,7 +69,7 @@ export default function SelectMarketCategory({
             ))}
         </CategoryList>
       )}
-      {errorMsg && <span>{errorMsg}</span>}
+      {errorMsg && <ErrorMsg errorMsg={errorMsg} />}
     </Wrapper>
   );
 }
@@ -83,10 +84,6 @@ const Wrapper = styled.div`
     color: grey;
     font-size: 15px;
     margin-bottom: 15px;
-  }
-  span {
-    margin-top: 3px;
-    color: red;
   }
 `;
 

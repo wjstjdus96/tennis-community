@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaCamera } from "react-icons/fa";
 import styled from "styled-components";
 import { IImageInput } from "../../interfaces/IComponent";
+import ErrorMsg from "./ErrorMsg";
 
 export default function ImageInput({
   name,
@@ -82,7 +83,7 @@ export default function ImageInput({
           </ImageBox>
         ))}
       </ImageList>
-      {errorMsg && <span>{errorMsg}</span>}
+      {errorMsg && <ErrorMsg errorMsg={errorMsg} />}
     </Wrapper>
   );
 }
@@ -95,10 +96,6 @@ const Wrapper = styled.div`
     color: grey;
     font-size: 15px;
     margin-bottom: 15px;
-  }
-  span {
-    margin-top: 3px;
-    color: red;
   }
 `;
 
