@@ -10,6 +10,8 @@ import { useEditPost } from "../../hooks/useEditPost";
 import { useWritingPost } from "../../hooks/useWritingPost";
 import { IMarketWritingValue } from "../../interfaces/IValue";
 import { HomeLayout } from "../../layouts/HomeLayout";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { marketWritingSchema } from "../../utils/schema";
 
 export default function MarketWriting() {
   const { postId } = useParams();
@@ -24,6 +26,7 @@ export default function MarketWriting() {
     getValues,
   } = useForm<IMarketWritingValue>({
     mode: "onSubmit",
+    resolver: yupResolver(marketWritingSchema),
   });
 
   const { onClickWriting } = useWritingPost({ collectionName: "market" });
@@ -51,18 +54,37 @@ export default function MarketWriting() {
               text="카테고리"
               existing={state.category}
               control={control}
+              errorMsg={errors.category && errors.category.message}
             />
-            <WritingInput name="title" text="제품명" register={register} />
+            <WritingInput
+              name="title"
+              text="제품명"
+              register={register}
+              errorMsg={errors.title && errors.title.message}
+            />
           </InputRow>
           <InputRow>
-            <WritingInput name="price" text="가격" register={register} />
+            <WritingInput
+              name="price"
+              text="가격"
+              register={register}
+              errorMsg={errors.price && errors.price.message}
+            />
             <WritingInput
               name="transactionMethod"
               text="거래방식"
               register={register}
+              errorMsg={
+                errors.transactionMethod && errors.transactionMethod.message
+              }
             />
           </InputRow>
-          <WritingInput name="body" text="제품설명" register={register} />
+          <WritingInput
+            name="body"
+            text="제품설명"
+            register={register}
+            errorMsg={errors.body && errors.body.message}
+          />
           <ImageInput
             name="images"
             text="제품사진"
@@ -70,6 +92,7 @@ export default function MarketWriting() {
             watch={watch}
             setValue={setValue}
             getValues={getValues}
+            errorMsg={errors.images && errors.images.message}
           />
           <div>
             <SubmitWritingButton>

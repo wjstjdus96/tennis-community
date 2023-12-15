@@ -38,6 +38,8 @@ export const market_category_list = [
   },
 ];
 
+export const market_category_name_list = ["가방", "라켓", "신발", "옷", "기타"];
+
 export const board_filter_type_list = [
   ["최신순", "createdAt"],
   ["북마크순", "bookmarkNum"],

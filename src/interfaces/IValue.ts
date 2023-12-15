@@ -76,7 +76,7 @@ export interface IMarketWritingValue {
   title: string;
   body: string;
   category: string;
-  images: any;
+  images: any[];
   price: number;
   transactionMethod: string;
 }

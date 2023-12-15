@@ -68,6 +68,7 @@ export default function SelectMarketCategory({
             ))}
         </CategoryList>
       )}
+      {errorMsg && <span>{errorMsg}</span>}
     </Wrapper>
   );
 }
@@ -82,6 +83,10 @@ const Wrapper = styled.div`
     color: grey;
     font-size: 15px;
     margin-bottom: 15px;
+  }
+  span {
+    margin-top: 3px;
+    color: red;
   }
 `;
 
@@ -104,7 +109,7 @@ const CategoryItem = styled.div<{ isSelected: boolean }>`
   gap: 0.5rem;
   background-color: ${(props) =>
     props.isSelected ? props.theme.green[1] : props.theme.green[0]};
-  padding: 9px 30px;
+  padding: 13px 30px;
   border-radius: 40px;
   cursor: pointer;
   &:hover {

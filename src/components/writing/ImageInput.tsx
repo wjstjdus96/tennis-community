@@ -10,6 +10,7 @@ export default function ImageInput({
   setValue,
   watch,
   getValues,
+  errorMsg,
 }: IImageInput) {
   const [imageNum, setImageNum] = useState(0);
   const [imageList, setImageList] = useState<string[]>([]);
@@ -81,6 +82,7 @@ export default function ImageInput({
           </ImageBox>
         ))}
       </ImageList>
+      {errorMsg && <span>{errorMsg}</span>}
     </Wrapper>
   );
 }
@@ -93,6 +95,10 @@ const Wrapper = styled.div`
     color: grey;
     font-size: 15px;
     margin-bottom: 15px;
+  }
+  span {
+    margin-top: 3px;
+    color: red;
   }
 `;
 

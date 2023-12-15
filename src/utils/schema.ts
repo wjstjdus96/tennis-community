@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { market_category_name_list } from "../consts/const";
 
 export const signupSchema = yup.object({
   email: yup
@@ -43,4 +44,22 @@ export const recruitWritingSchema = yup.object({
     .oneOf(["회원", "게스트", "기타"]),
   title: yup.string().required("제목을 입력해주세요"),
   body: yup.string().required("내용을 입력해주세요"),
+});
+
+export const marketWritingSchema = yup.object({
+  title: yup.string().required("제품명을 입력해주세요"),
+  body: yup.string().required("제품설명을 입력해주세요"),
+  category: yup
+    .string()
+    .required("카테고리를 선택해주세요")
+    .oneOf(market_category_name_list, "카테고리를 선택해주세요"),
+  images: yup
+    .array()
+    .typeError("제품사진을 선택해주세요")
+    .required("제품사진을 선택해주세요"),
+  price: yup
+    .number()
+    .typeError("숫자만 입력해주세요")
+    .required("가격을 입력해주세요"),
+  transactionMethod: yup.string().required("거래방식을 입력해주세요"),
 });
