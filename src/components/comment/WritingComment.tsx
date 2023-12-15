@@ -103,6 +103,7 @@ const Wrapper = styled.form`
     height: 30px;
     background-color: white;
     border-radius: 50%;
+    object-fit: cover;
   }
   textarea {
     width: 100%;

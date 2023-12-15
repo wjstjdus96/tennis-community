@@ -25,7 +25,9 @@ const Wrapper = styled.div`
 
   input {
     border: none;
+    outline: none;
     background-color: transparent;
+    padding-bottom: 7px;
     border-bottom: 2px solid ${(props) => props.theme.green[1]};
   }
 `;

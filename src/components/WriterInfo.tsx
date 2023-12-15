@@ -45,6 +45,7 @@ const PostWriterInfoWrapper = styled.div`
     height: 20px;
     background-color: white;
     border-radius: 50%;
+    object-fit: cover;
   }
 `;
 
@@ -57,5 +58,6 @@ const PostDetailWriterInfoWrapper = styled.div`
     height: 45px;
     background-color: white;
     border-radius: 50%;
+    object-fit: cover;
   }
 `;
