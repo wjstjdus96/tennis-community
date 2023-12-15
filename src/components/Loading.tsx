@@ -1,7 +1,12 @@
 import styled from "styled-components";
+import loading from "../assets/loading-spinner.gif";
 
 export default function Loading() {
-  return <LoadingWrapper></LoadingWrapper>;
+  return (
+    <LoadingWrapper>
+      <img src={loading} alt="로딩중" width="5%" />
+    </LoadingWrapper>
+  );
 }
 
 const LoadingWrapper = styled.div`
