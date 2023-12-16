@@ -10,6 +10,7 @@ import { useWritingPost } from "../../hooks/useWritingPost";
 import { ICommunityWritingValue } from "../../interfaces/IValue";
 import { HomeLayout } from "../../layouts/HomeLayout";
 import { communityWritingSchema } from "../../utils/schema";
+import Loading from "../../components/Loading";
 
 export default function CommunityWriting() {
   const { postId } = useParams();
@@ -24,11 +25,12 @@ export default function CommunityWriting() {
     resolver: yupResolver(communityWritingSchema),
   });
 
-  const { onClickWriting } = useWritingPost({
+  const { onClickWriting, isWritingLoading } = useWritingPost({
     collectionName: "community",
   });
 
-  const { onClickEdit } = useEditPost({ state });
+  const { onClickEdit, isEditLoading } = useEditPost({ state });
+  const isLoading = isWritingLoading || isEditLoading;
 
   useEffect(() => {
     if (postId) {
@@ -39,28 +41,36 @@ export default function CommunityWriting() {
 
   return (
     <HomeLayout>
-      <Head>{postId ? "게시글 수정" : "게시글 작성"}</Head>
-      <Body>
-        <form onSubmit={handleSubmit(postId ? onClickEdit : onClickWriting)}>
-          <WritingInput
-            name="title"
-            text="제목"
-            register={register}
-            errorMsg={errors.title && errors.title.message}
-          />
-          <WritingInput
-            name="body"
-            text="본문"
-            register={register}
-            errorMsg={errors.body && errors.body.message}
-          />
-          <div>
-            <SubmitWritingButton>
-              {postId ? "수정하기" : "글쓰기"}
-            </SubmitWritingButton>
-          </div>
-        </form>
-      </Body>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <Head>{postId ? "게시글 수정" : "게시글 작성"}</Head>
+          <Body>
+            <form
+              onSubmit={handleSubmit(postId ? onClickEdit : onClickWriting)}
+            >
+              <WritingInput
+                name="title"
+                text="제목"
+                register={register}
+                errorMsg={errors.title && errors.title.message}
+              />
+              <WritingInput
+                name="body"
+                text="본문"
+                register={register}
+                errorMsg={errors.body && errors.body.message}
+              />
+              <div>
+                <SubmitWritingButton>
+                  {postId ? "수정하기" : "글쓰기"}
+                </SubmitWritingButton>
+              </div>
+            </form>
+          </Body>
+        </>
+      )}
     </HomeLayout>
   );
 }

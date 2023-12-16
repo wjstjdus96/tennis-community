@@ -125,6 +125,7 @@ const ProfileBox = styled.div`
     height: 2.5rem;
     background-color: white;
     border-radius: 50%;
+    object-fit: cover;
   }
   svg {
     cursor: pointer;

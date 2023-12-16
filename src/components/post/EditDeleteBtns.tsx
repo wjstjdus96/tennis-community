@@ -32,6 +32,7 @@ const Button = styled.button<{ usage: string }>`
   background-color: ${(props) => (props.usage == "edit" ? "lightgrey" : "red")};
   color: ${(props) => (props.usage == "edit" ? "black" : "white")};
   font-family: "Noto Sans KR", sans-serif;
+  font-size: 11px;
   &:hover {
     cursor: pointer;
     box-shadow: 100px 0 0 0 rgba(0, 0, 0, 0.1) inset;

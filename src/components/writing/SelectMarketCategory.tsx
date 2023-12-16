@@ -7,6 +7,7 @@ import { market_category_list } from "../../consts/const";
 import { ISelectMarketCategory } from "../../interfaces/IComponent";
 import { useController } from "react-hook-form";
 import clicking from "../../assets/icon-clicking.png";
+import ErrorMsg from "./ErrorMsg";
 
 export default function SelectMarketCategory({
   name,
@@ -68,6 +69,7 @@ export default function SelectMarketCategory({
             ))}
         </CategoryList>
       )}
+      {errorMsg && <ErrorMsg errorMsg={errorMsg} />}
     </Wrapper>
   );
 }
@@ -104,7 +106,7 @@ const CategoryItem = styled.div<{ isSelected: boolean }>`
   gap: 0.5rem;
   background-color: ${(props) =>
     props.isSelected ? props.theme.green[1] : props.theme.green[0]};
-  padding: 9px 30px;
+  padding: 13px 30px;
   border-radius: 40px;
   cursor: pointer;
   &:hover {

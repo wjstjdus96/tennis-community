@@ -7,13 +7,16 @@ import { db } from "../firebase/firebase";
 import { updateUserArrayData } from "../firebase/updateData";
 import { IUserWritingPost } from "../interfaces/IFunction";
 import { userState } from "../recoil/atom";
+import { useState } from "react";
 
 export const useWritingPost = ({ collectionName }: IUserWritingPost) => {
   const userInfo = useRecoilValue(userState);
   const navigate = useNavigate();
+  const [isWritingLoading, setIsWritingLoading] = useState(false);
 
   const onClickWriting: SubmitHandler<any> = async (data: any) => {
     try {
+      setIsWritingLoading(true);
       let docData = {
         body: data.body,
         bookmarkNum: 0,
@@ -58,11 +61,12 @@ export const useWritingPost = ({ collectionName }: IUserWritingPost) => {
           arrayItem: docRef.id,
         });
       });
+      setIsWritingLoading(false);
       navigate(`/${collectionName}`);
     } catch (error) {
       alert("글쓰기에 실패하였습니다" + error);
     }
   };
 
-  return { onClickWriting };
+  return { onClickWriting, isWritingLoading };
 };

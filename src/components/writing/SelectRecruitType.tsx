@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Controller } from "react-hook-form";
 import { ISelectRecruitType } from "../../interfaces/IComponent";
+import ErrorMsg from "./ErrorMsg";
 
 export function SelectRecruitType({
   name,
@@ -23,7 +24,7 @@ export function SelectRecruitType({
               <option value="게스트">게스트</option>
               <option value="기타">기타</option>
             </select>
-            {errorMsg && <span>{errorMsg}</span>}
+            {errorMsg && <ErrorMsg errorMsg={errorMsg} />}
           </>
         )}
       ></Controller>
@@ -50,9 +51,5 @@ const Wrapper = styled.div`
     border: none;
     border-radius: 5px;
     background: rgba(255, 255, 255, 1);
-  }
-  span {
-    margin-top: 3px;
-    color: red;
   }
 `;

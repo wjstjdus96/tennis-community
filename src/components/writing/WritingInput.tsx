@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { IWritingInput } from "../../interfaces/IComponent";
+import ErrorMsg from "./ErrorMsg";
 
 export default function WritingInput({
   name,
@@ -25,7 +26,7 @@ export default function WritingInput({
           placeholder={`${text}을 입력하세요`}
         />
       )}
-      {errorMsg && <span>{errorMsg}</span>}
+      {errorMsg && <ErrorMsg errorMsg={errorMsg} />}
     </Wrapper>
   );
 }
@@ -53,9 +54,5 @@ const Wrapper = styled.div<{ isBody: boolean }>`
     resize: none;
     font-family: "Noto Sans KR", sans-serif;
     white-space: pre-wrap;
-  }
-  span {
-    margin-top: 3px;
-    color: red;
   }
 `;

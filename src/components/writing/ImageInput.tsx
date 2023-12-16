@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaCamera } from "react-icons/fa";
 import styled from "styled-components";
 import { IImageInput } from "../../interfaces/IComponent";
+import ErrorMsg from "./ErrorMsg";
 
 export default function ImageInput({
   name,
@@ -10,6 +11,7 @@ export default function ImageInput({
   setValue,
   watch,
   getValues,
+  errorMsg,
 }: IImageInput) {
   const [imageNum, setImageNum] = useState(0);
   const [imageList, setImageList] = useState<string[]>([]);
@@ -23,6 +25,7 @@ export default function ImageInput({
   };
 
   const removeImage = (removeIdx: number) => {
+    console.log(typeof getValues(name));
     const images = Array.from(getValues(name));
     setValue(
       name,
@@ -81,6 +84,7 @@ export default function ImageInput({
           </ImageBox>
         ))}
       </ImageList>
+      {errorMsg && <ErrorMsg errorMsg={errorMsg} />}
     </Wrapper>
   );
 }

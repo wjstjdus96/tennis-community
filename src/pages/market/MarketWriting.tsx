@@ -10,6 +10,9 @@ import { useEditPost } from "../../hooks/useEditPost";
 import { useWritingPost } from "../../hooks/useWritingPost";
 import { IMarketWritingValue } from "../../interfaces/IValue";
 import { HomeLayout } from "../../layouts/HomeLayout";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { marketWritingSchema } from "../../utils/schema";
+import Loading from "../../components/Loading";
 
 export default function MarketWriting() {
   const { postId } = useParams();
@@ -24,10 +27,14 @@ export default function MarketWriting() {
     getValues,
   } = useForm<IMarketWritingValue>({
     mode: "onSubmit",
+    resolver: yupResolver(marketWritingSchema),
   });
 
-  const { onClickWriting } = useWritingPost({ collectionName: "market" });
-  const { onClickEdit } = useEditPost({ state });
+  const { onClickWriting, isWritingLoading } = useWritingPost({
+    collectionName: "market",
+  });
+  const { onClickEdit, isEditLoading } = useEditPost({ state });
+  const isLoading = isEditLoading || isWritingLoading;
 
   useEffect(() => {
     if (postId) {
@@ -42,42 +49,69 @@ export default function MarketWriting() {
 
   return (
     <HomeLayout>
-      <Head>{postId ? "게시글 수정" : "게시글 작성"}</Head>
-      <Body>
-        <form onSubmit={handleSubmit(postId ? onClickEdit : onClickWriting)}>
-          <InputRow isFirst={true}>
-            <SelectMarketCategory
-              name="category"
-              text="카테고리"
-              existing={state.category}
-              control={control}
-            />
-            <WritingInput name="title" text="제품명" register={register} />
-          </InputRow>
-          <InputRow>
-            <WritingInput name="price" text="가격" register={register} />
-            <WritingInput
-              name="transactionMethod"
-              text="거래방식"
-              register={register}
-            />
-          </InputRow>
-          <WritingInput name="body" text="제품설명" register={register} />
-          <ImageInput
-            name="images"
-            text="제품사진"
-            register={register}
-            watch={watch}
-            setValue={setValue}
-            getValues={getValues}
-          />
-          <div>
-            <SubmitWritingButton>
-              {postId ? "수정하기" : "글쓰기"}
-            </SubmitWritingButton>
-          </div>
-        </form>
-      </Body>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <Head>{postId ? "게시글 수정" : "게시글 작성"}</Head>
+          <Body>
+            <form
+              onSubmit={handleSubmit(postId ? onClickEdit : onClickWriting)}
+            >
+              <InputRow isFirst={true}>
+                <SelectMarketCategory
+                  name="category"
+                  text="카테고리"
+                  existing={state.category}
+                  control={control}
+                  errorMsg={errors.category && errors.category.message}
+                />
+                <WritingInput
+                  name="title"
+                  text="제품명"
+                  register={register}
+                  errorMsg={errors.title && errors.title.message}
+                />
+              </InputRow>
+              <InputRow>
+                <WritingInput
+                  name="price"
+                  text="가격"
+                  register={register}
+                  errorMsg={errors.price && errors.price.message}
+                />
+                <WritingInput
+                  name="transactionMethod"
+                  text="거래방식"
+                  register={register}
+                  errorMsg={
+                    errors.transactionMethod && errors.transactionMethod.message
+                  }
+                />
+              </InputRow>
+              <WritingInput
+                name="body"
+                text="제품설명"
+                register={register}
+                errorMsg={errors.body && errors.body.message}
+              />
+              <ImageInput
+                name="images"
+                text="제품사진"
+                register={register}
+                watch={watch}
+                setValue={setValue}
+                getValues={getValues}
+              />
+              <div>
+                <SubmitWritingButton>
+                  {postId ? "수정하기" : "글쓰기"}
+                </SubmitWritingButton>
+              </div>
+            </form>
+          </Body>
+        </>
+      )}
     </HomeLayout>
   );
 }
