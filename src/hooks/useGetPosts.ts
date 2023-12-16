@@ -29,7 +29,7 @@ export const useGetPosts = ({
   useEffect(() => {
     setPosts([]);
     getTotalPostsByPage({
-      offset: page - 1,
+      offset: (page - 1) * postsPerPage,
       collectionName,
       keyword: searchKeyword,
       filterType,
