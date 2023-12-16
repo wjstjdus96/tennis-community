@@ -15,7 +15,6 @@ export const useEditPost = ({ state }: IUseEditPost) => {
   }
 
   const onClickEdit: SubmitHandler<any> = async (data) => {
-    console.log(data);
     try {
       setIsEditLoading(true);
       let newData = {

@@ -154,7 +154,7 @@ export const getTotalPostsByPage = async ({
 
 export const getUserBookmark = ({ userId, setUserState }: IGetUserBookmark) => {
   const docRef = doc(db, "users", userId);
-  onSnapshot(docRef, (doc) => {
+  onSnapshot(docRef, { includeMetadataChanges: true }, (doc) => {
     const data = doc.data();
     if (data) {
       setUserState({
