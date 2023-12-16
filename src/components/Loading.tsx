@@ -15,8 +15,8 @@ const LoadingWrapper = styled.div`
   height: 100vh;
   top: 0;
   left: 0;
-  background: #ffffffb7;
-  z-index: 999;
+  background: #ffffff75;
+  z-index: 100;
   display: flex;
   flex-direction: column;
   align-items: center;

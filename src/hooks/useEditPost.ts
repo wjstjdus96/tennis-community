@@ -15,6 +15,7 @@ export const useEditPost = ({ state }: IUseEditPost) => {
   }
 
   const onClickEdit: SubmitHandler<any> = async (data) => {
+    console.log(data);
     try {
       setIsEditLoading(true);
       let newData = {
@@ -32,13 +33,18 @@ export const useEditPost = ({ state }: IUseEditPost) => {
 
       if (state.field == "market") {
         const storage = getStorage();
-        const imageArray: string[] = [];
-        for (const image of data.images) {
-          const imageRef = ref(storage, `market/${image.name}`);
-          const snapshot = await uploadBytes(imageRef, image);
-          const downloadURL = await getDownloadURL(snapshot.ref);
-          imageArray.push(downloadURL);
+        let imageArray: string[] = [];
+        if (typeof data.images[0] == "string") {
+          imageArray = [...data.images];
+        } else {
+          for (const image of data.images) {
+            const imageRef = ref(storage, `market/${image.name}`);
+            const snapshot = await uploadBytes(imageRef, image);
+            const downloadURL = await getDownloadURL(snapshot.ref);
+            imageArray.push(downloadURL);
+          }
         }
+
         let addDocData = {
           category: data.category,
           price: Number(data.price),
