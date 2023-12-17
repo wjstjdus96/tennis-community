@@ -13,6 +13,7 @@ export default function ImageInput({
   getValues,
   errorMsg,
 }: IImageInput) {
+  console.log(getValues(name));
   const [imageNum, setImageNum] = useState(0);
   const [imageList, setImageList] = useState<string[]>([]);
   const { ref, ...rest } = register(name);
@@ -25,12 +26,9 @@ export default function ImageInput({
   };
 
   const removeImage = (removeIdx: number) => {
-    console.log(typeof getValues(name));
     const images = Array.from(getValues(name));
-    setValue(
-      name,
-      images.filter((image: any, idx: number) => idx != removeIdx)
-    );
+    const value = images.filter((image: any, idx: number) => idx != removeIdx);
+    setValue(name, value);
   };
 
   useEffect(() => {

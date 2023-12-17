@@ -27,6 +27,9 @@ export default function MarketWriting() {
     getValues,
   } = useForm<IMarketWritingValue>({
     mode: "onSubmit",
+    defaultValues: {
+      images: null,
+    },
     resolver: yupResolver(marketWritingSchema),
   });
 
@@ -104,6 +107,7 @@ export default function MarketWriting() {
                 watch={watch}
                 setValue={setValue}
                 getValues={getValues}
+                errorMsg={errors.images && errors.images.message?.toString()}
               />
               <div>
                 <SubmitWritingButton>
