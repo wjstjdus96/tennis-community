@@ -52,4 +52,10 @@ const Wrapper = styled.div`
     border-radius: 5px;
     background: rgba(255, 255, 255, 1);
   }
+  select:focus {
+    border: 2px solid ${(props) => props.theme.green[1]};
+  }
+  option {
+    background: ${(props) => props.theme.green[1]};
+  }
 `;
