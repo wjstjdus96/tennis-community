@@ -8,6 +8,7 @@ export default function WritingInput({
   inputType = "text",
   register,
   errorMsg,
+  placeholder,
 }: IWritingInput) {
   return (
     <Wrapper isBody={name == "body"}>
@@ -16,14 +17,14 @@ export default function WritingInput({
         <textarea
           id={name}
           {...register(name)}
-          placeholder={`${text}을 입력하세요`}
+          placeholder={placeholder ? placeholder : `${text}을 입력하세요`}
         />
       ) : (
         <input
           id={name}
           type={inputType}
           {...register(name)}
-          placeholder={`${text}을 입력하세요`}
+          placeholder={placeholder ? placeholder : `${text}을 입력하세요`}
         />
       )}
       {errorMsg && <ErrorMsg errorMsg={errorMsg} />}

@@ -73,11 +73,12 @@ const Wrapper = styled.div`
 const Title = styled.div`
   & > p {
     width: 50px;
-    color: grey;
+    color: ${(props) => props.theme.green[3]};
     font-size: 12px;
-    font-weight: 700;
+
     margin: 0;
-    border: 1px solid grey;
+    border: 2px solid ${(props) => props.theme.green[1]};
+    background-color: ${(props) => props.theme.green[0]};
     border-radius: 10px;
     display: flex;
     justify-content: center;

@@ -10,11 +10,13 @@ export const useGetPosts = ({
   recruitType,
   marketCategory,
   postsPerPage,
+  setPage,
 }: IUseGetPosts) => {
   const [totalPosts, setTotalPosts] = useState<any>([]);
   const [posts, setPosts] = useState<any>([]);
 
   useEffect(() => {
+    setPage(1);
     setTotalPosts([]);
     getTotalPosts({
       collectionName,
@@ -29,7 +31,7 @@ export const useGetPosts = ({
   useEffect(() => {
     setPosts([]);
     getTotalPostsByPage({
-      offset: page - 1,
+      offset: (page - 1) * postsPerPage,
       collectionName,
       keyword: searchKeyword,
       filterType,

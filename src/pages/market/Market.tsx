@@ -24,6 +24,7 @@ export default function Market() {
     filterType,
     marketCategory: category,
     postsPerPage,
+    setPage,
   });
 
   return (

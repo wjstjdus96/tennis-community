@@ -69,6 +69,7 @@ export interface IWritingInput {
   inputType?: string;
   register: UseFormRegister<any>;
   errorMsg?: string;
+  placeholder?: string;
 }
 
 export interface IImageInput {

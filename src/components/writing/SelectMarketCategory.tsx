@@ -8,6 +8,7 @@ import { ISelectMarketCategory } from "../../interfaces/IComponent";
 import { useController } from "react-hook-form";
 import clicking from "../../assets/icon-clicking.png";
 import ErrorMsg from "./ErrorMsg";
+import { useDropDown } from "../../hooks/useDropdown";
 
 export default function SelectMarketCategory({
   name,
@@ -16,7 +17,8 @@ export default function SelectMarketCategory({
   existing,
   errorMsg,
 }: ISelectMarketCategory) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const { isExpanded, setIsExpanded, toggleDropdown, clickOutside } =
+    useDropDown();
   const [selectedCategory, setSelectedCategory] = useState({
     icon: clicking,
     name: "선택",
@@ -48,7 +50,9 @@ export default function SelectMarketCategory({
       <label htmlFor={name}>{text}</label>
       <CategoryItem
         isSelected={true}
-        onClick={() => setIsExpanded((prev) => !prev)}
+        onClick={toggleDropdown}
+        onBlur={clickOutside}
+        tabIndex={0}
       >
         <img src={selectedCategory.icon} />
         <div>{selectedCategory.name}</div>
@@ -61,7 +65,7 @@ export default function SelectMarketCategory({
               <CategoryItem
                 key={idx}
                 isSelected={item.name == value}
-                onClick={() => onClickCategory(item)}
+                onMouseDown={() => onClickCategory(item)}
               >
                 <img src={item.icon} />
                 <div>{item.name}</div>

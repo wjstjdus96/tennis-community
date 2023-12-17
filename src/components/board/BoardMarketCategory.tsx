@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { market_category_list } from "../../consts/const";
 import { useEffect, useState } from "react";
+import { useDropDown } from "../../hooks/useDropdown";
 
 interface IBoardMarketCategory {
   category: string[] | (string | null)[];
@@ -19,12 +20,10 @@ export default function BoardMarketCategory({
   category,
   setCategory,
 }: IBoardMarketCategory) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [selectedIcon, setSelectedIcon] = useState("");
+  const { isExpanded, setIsExpanded, toggleDropdown, clickOutside } =
+    useDropDown();
 
-  const handleClickCategory = () => {
-    setIsExpanded((prev) => !prev);
-  };
+  const [selectedIcon, setSelectedIcon] = useState("");
 
   const changeCategory = (category: ICategoryListItem) => {
     if (category.name == "전체") {
@@ -41,12 +40,12 @@ export default function BoardMarketCategory({
   }, [category]);
 
   return (
-    <Wrapper>
+    <Wrapper onBlur={clickOutside} tabIndex={0}>
       {isExpanded ? (
         <CategoryDropdown>
           {market_category_list.map((item: any, idx: number) => (
             <CategoryItem
-              isSelected={false}
+              isSelected={item.name == category[0]}
               key={idx}
               onClick={() => changeCategory(item)}
             >
@@ -56,7 +55,7 @@ export default function BoardMarketCategory({
           ))}
         </CategoryDropdown>
       ) : (
-        <CategoryItem isSelected={true} onClick={handleClickCategory}>
+        <CategoryItem isSelected={true} onClick={toggleDropdown}>
           <img src={selectedIcon} />
           <div>{category[0]}</div>
         </CategoryItem>

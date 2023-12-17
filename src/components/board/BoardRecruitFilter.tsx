@@ -45,7 +45,8 @@ const FilterItem = styled.div`
   font-size: 12px;
   margin: 0;
   border: 2px solid ${(props) => props.theme.green[1]};
-  color: ${(props) => props.theme.green[2]};
+  background-color: ${(props) => props.theme.green[0]};
+  color: ${(props) => props.theme.green[3]};
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -54,6 +55,10 @@ const FilterItem = styled.div`
   cursor: pointer;
   &.select {
     background-color: ${(props) => props.theme.green[1]};
-    color: white;
+    color: ${(props) => props.theme.green[3]};
+    font-weight: 700;
+  }
+  &:hover {
+    font-weight: 700;
   }
 `;

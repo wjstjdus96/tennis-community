@@ -3,22 +3,14 @@ import { HiOutlineSortDescending, HiPencil } from "react-icons/hi";
 import { IBoardFilter } from "../../interfaces/IComponent";
 import { useState } from "react";
 import { board_filter_type_list } from "../../consts/const";
+import { useDropDown } from "../../hooks/useDropdown";
 
 export default function BoardFilter({
   filterType,
   setFilterType,
 }: IBoardFilter) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const handleClickFilter = () => {
-    setIsExpanded((prev) => !prev);
-  };
-
-  const handleBlurFilter = () => {
-    setTimeout(() => {
-      setIsExpanded(false);
-    }, 200);
-  };
+  const { isExpanded, setIsExpanded, toggleDropdown, clickOutside } =
+    useDropDown();
 
   const changeFilterType = (type: string[]) => {
     setFilterType(type);
@@ -26,15 +18,15 @@ export default function BoardFilter({
   };
 
   return (
-    <Wrapper onBlur={handleBlurFilter}>
-      <SelectedType onClick={handleClickFilter}>
+    <Wrapper>
+      <SelectedType onClick={toggleDropdown} onBlur={clickOutside} tabIndex={0}>
         <HiOutlineSortDescending className="filterIcon" size="18" />
         <div>{filterType[0]}</div>
       </SelectedType>
       {isExpanded && (
         <Dropdown>
           {board_filter_type_list.map((filterType: string[]) => (
-            <DropdownItem onClick={() => changeFilterType(filterType)}>
+            <DropdownItem onMouseDown={() => changeFilterType(filterType)}>
               {filterType[0]}
             </DropdownItem>
           ))}

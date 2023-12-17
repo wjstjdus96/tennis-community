@@ -53,7 +53,7 @@ export const marketWritingSchema = yup.object({
     .string()
     .required("카테고리를 선택해주세요")
     .oneOf(market_category_name_list, "카테고리를 선택해주세요"),
-
+  images: yup.mixed().required("이미지를 첨부해주세요"),
   price: yup
     .number()
     .typeError("숫자만 입력해주세요")
