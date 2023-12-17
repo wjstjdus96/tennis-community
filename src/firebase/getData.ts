@@ -104,7 +104,6 @@ export const getTotalPosts = async ({
     filterType,
   });
   const querySnapShot = await getDocs(queryRef);
-
   querySnapShot.forEach((doc) => {
     const postObject = {
       ...doc.data(),

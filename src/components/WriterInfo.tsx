@@ -15,7 +15,7 @@ export default function WriterInfo({ writerId, isPostDetail }: IWriterInfoC) {
 
   useEffect(() => {
     getWriterInfo({ userId: writerId, setWriterInfo: setWriterInfo });
-  }, []);
+  }, [writerId]);
 
   return (
     <>

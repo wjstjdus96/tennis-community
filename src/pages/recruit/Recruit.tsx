@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import BoardFilter from "../../components/board/BoardFilter";
 import { BoardHead } from "../../components/board/BoardHead";
@@ -25,6 +25,8 @@ export default function Recruit() {
     postsPerPage,
     setPage,
   });
+
+  useEffect(() => console.log(posts), [posts]);
 
   return (
     <HomeLayout>
