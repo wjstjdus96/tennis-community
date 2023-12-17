@@ -88,16 +88,16 @@ const Title = styled.div<{ type?: string }>`
   & > p {
     min-width: 50px;
     max-width: 70px;
-    color: grey;
+    color: ${(props) => props.theme.green[3]};
     font-size: 12px;
-    font-weight: 700;
     margin: 0;
-    border: 1px solid grey;
     border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: baseline;
-    padding: 3px;
+    padding: 2px 3px;
+    border: 2px solid ${(props) => props.theme.green[1]};
+    background-color: ${(props) => props.theme.green[0]};
   }
   & > div {
     max-width: 100%;
