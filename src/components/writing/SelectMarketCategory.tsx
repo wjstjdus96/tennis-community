@@ -49,6 +49,8 @@ export default function SelectMarketCategory({
       <CategoryItem
         isSelected={true}
         onClick={() => setIsExpanded((prev) => !prev)}
+        onBlur={() => setIsExpanded(false)}
+        tabIndex={0}
       >
         <img src={selectedCategory.icon} />
         <div>{selectedCategory.name}</div>
@@ -61,7 +63,7 @@ export default function SelectMarketCategory({
               <CategoryItem
                 key={idx}
                 isSelected={item.name == value}
-                onClick={() => onClickCategory(item)}
+                onMouseDown={() => onClickCategory(item)}
               >
                 <img src={item.icon} />
                 <div>{item.name}</div>

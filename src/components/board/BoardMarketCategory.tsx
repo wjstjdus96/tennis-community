@@ -35,18 +35,22 @@ export default function BoardMarketCategory({
     setIsExpanded(false);
   };
 
+  const onBlurCategory = () => {
+    setIsExpanded(false);
+  };
+
   useEffect(() => {
     const selected = market_category_list.find((e) => e.name === category[0]);
     setSelectedIcon(selected!.icon);
   }, [category]);
 
   return (
-    <Wrapper>
+    <Wrapper onBlur={onBlurCategory} tabIndex={0}>
       {isExpanded ? (
         <CategoryDropdown>
           {market_category_list.map((item: any, idx: number) => (
             <CategoryItem
-              isSelected={false}
+              isSelected={item.name == category[0]}
               key={idx}
               onClick={() => changeCategory(item)}
             >
