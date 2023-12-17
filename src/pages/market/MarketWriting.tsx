@@ -78,12 +78,14 @@ export default function MarketWriting() {
                   name="price"
                   text="가격"
                   register={register}
+                  placeholder="ex) 100000"
                   errorMsg={errors.price && errors.price.message}
                 />
                 <WritingInput
                   name="transactionMethod"
                   text="거래방식"
                   register={register}
+                  placeholder="ex) 강남역 8번 출구 앞 직거래"
                   errorMsg={
                     errors.transactionMethod && errors.transactionMethod.message
                   }
