@@ -88,6 +88,7 @@ export interface IUseGetPosts {
   recruitType?: any;
   marketCategory?: any;
   postsPerPage: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export interface IuseSetBookmark {

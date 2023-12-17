@@ -23,6 +23,7 @@ export default function Recruit() {
     filterType,
     recruitType,
     postsPerPage,
+    setPage,
   });
 
   return (

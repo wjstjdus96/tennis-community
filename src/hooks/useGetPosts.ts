@@ -10,11 +10,13 @@ export const useGetPosts = ({
   recruitType,
   marketCategory,
   postsPerPage,
+  setPage,
 }: IUseGetPosts) => {
   const [totalPosts, setTotalPosts] = useState<any>([]);
   const [posts, setPosts] = useState<any>([]);
 
   useEffect(() => {
+    setPage(1);
     setTotalPosts([]);
     getTotalPosts({
       collectionName,

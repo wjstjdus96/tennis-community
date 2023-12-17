@@ -20,6 +20,7 @@ export default function Community() {
     searchKeyword,
     filterType,
     postsPerPage,
+    setPage,
   });
 
   return (
