@@ -8,6 +8,7 @@ import { useLogout } from "../hooks/useLogout";
 import { userState } from "../recoil/atom";
 import { checkIsLogin } from "../utils/checkIsLogin";
 import defaultProfile from "../assets/defaultProfile.png";
+import { CgMenuGridO } from "react-icons/cg";
 
 export default function Header() {
   const isLogin = checkIsLogin();
@@ -37,9 +38,8 @@ export default function Header() {
       {isLogin ? (
         <Profile>
           <ProfileBox>
+            <CgMenuGridO onClick={() => onClickMyPageButton()} size={28} />
             <img src={userInfo.photo || defaultProfile} />
-            <IoMenu onClick={() => onClickMyPageButton()} size={28} />
-            <IoLogOutOutline onClick={() => clickLogout()} size={28} />
           </ProfileBox>
         </Profile>
       ) : (

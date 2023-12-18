@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { IBoardRecruitFilter } from "../../interfaces/IComponent";
 import { recruit_filter_type_list } from "../../consts/const";
 

@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const useDropDown = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpandedVisibility, setIsExpandedVisibility] = useState(false);
 
   const toggleDropdown = () => {
     setIsExpanded((prev) => !prev);
@@ -11,5 +12,21 @@ export const useDropDown = () => {
     setIsExpanded(false);
   };
 
-  return { isExpanded, setIsExpanded, toggleDropdown, clickOutside };
+  useEffect(() => {
+    if (isExpanded) {
+      setIsExpandedVisibility(true);
+    } else {
+      setTimeout(() => {
+        setIsExpandedVisibility(false);
+      }, 400);
+    }
+  }, [isExpanded]);
+
+  return {
+    isExpanded,
+    isExpandedVisibility,
+    setIsExpanded,
+    toggleDropdown,
+    clickOutside,
+  };
 };
