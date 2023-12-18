@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import { BiSolidTennisBall } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 export default function AuthLayout({
   children,
@@ -9,12 +9,15 @@ export default function AuthLayout({
   children: React.ReactNode;
   title: string;
 }) {
+  const navigate = useNavigate();
+
   return (
     <Wrapper>
-      <Logo>
+      <Logo onClick={() => navigate("/")}>
         TENNING
         <BiSolidTennisBall />
       </Logo>
+
       <Box>
         <Title>{title}</Title>
         {children}
@@ -62,6 +65,7 @@ const Logo = styled.div`
   svg {
     color: ${(props) => props.theme.green[2]};
   }
+  cursor: pointer;
 `;
 
 const Box = styled.div`
@@ -101,5 +105,9 @@ const Others = styled.div`
   }
   a {
     text-underline-offset: 2px;
+    color: ${(props) => props.theme.green[2]};
+  }
+  a:hover {
+    color: ${(props) => props.theme.green[3]};
   }
 `;

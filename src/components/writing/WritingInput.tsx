@@ -43,12 +43,17 @@ const Wrapper = styled.div<{ isBody: boolean }>`
   }
   input,
   textarea {
+    margin: 0 2px;
     display: block;
     font-family: "Noto Sans KR", sans-serif;
     border: none;
     padding: 15px 20px;
     border-radius: 5px;
     background: rgba(255, 255, 255, 1);
+  }
+  textarea:focus,
+  input:focus {
+    outline: 2px solid ${(props) => props.theme.green[1]};
   }
   textarea {
     height: 300px;

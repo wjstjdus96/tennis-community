@@ -26,8 +26,6 @@ export default function Recruit() {
     setPage,
   });
 
-  useEffect(() => console.log(posts), [posts]);
-
   return (
     <HomeLayout>
       <BoardHead
