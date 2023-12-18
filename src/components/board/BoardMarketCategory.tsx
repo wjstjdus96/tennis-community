@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { market_category_list } from "../../consts/const";
 import { useEffect, useState } from "react";
 import { useDropDown } from "../../hooks/useDropdown";
@@ -20,8 +20,13 @@ export default function BoardMarketCategory({
   category,
   setCategory,
 }: IBoardMarketCategory) {
-  const { isExpanded, setIsExpanded, toggleDropdown, clickOutside } =
-    useDropDown();
+  const {
+    isExpanded,
+    isExpandedVisibility,
+    setIsExpanded,
+    toggleDropdown,
+    clickOutside,
+  } = useDropDown();
 
   const [selectedIcon, setSelectedIcon] = useState("");
 
@@ -42,7 +47,7 @@ export default function BoardMarketCategory({
   return (
     <Wrapper onBlur={clickOutside} tabIndex={0}>
       {isExpanded ? (
-        <CategoryDropdown>
+        <CategoryDropdown isExpanded={isExpanded}>
           {market_category_list.map((item: any, idx: number) => (
             <CategoryItem
               isSelected={item.name == category[0]}
@@ -73,9 +78,20 @@ const Wrapper = styled.div`
   font-size: 14px;
 `;
 
-const CategoryDropdown = styled.div`
+const expandedAnimation = (isExpanded: boolean) => keyframes`
+  0% {
+    transform: scaleX(${isExpanded ? 0 : 1})
+  }
+
+  100% {
+    transform: scaleX(${isExpanded ? 1 : 0});
+  }
+`;
+
+const CategoryDropdown = styled.div<{ isExpanded: boolean }>`
   display: flex;
   gap: 0.5rem;
+  animation: ${(props) => expandedAnimation(props.isExpanded)} 0.2s ease;
 `;
 
 const CategoryItem = styled.div<{ isSelected: boolean }>`
