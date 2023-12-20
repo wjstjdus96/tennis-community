@@ -33,34 +33,46 @@ $ npm start
     ┣ 📁home
     ┣ 📁myPage
     ┣ 📁post
+    ┣ 📁writing
+┣ 📁consts
 ┣ 📁firebase
 ┣ 📁hooks
 ┣ 📁interfaces
+┣ 📁layouts
+┣ 📁pages
 ┣ 📁recoil
 ┣ 📁router
 ┣ 📁theme
 ┣ 📁utils
 ```
 
+## 📺 화면 구성
+
+|                                                               홈                                                               |                                                       로그인 / 회원가입                                                        |
+| :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: |
+| <img src="https://github.com/wjstjdus96/tennis-community/assets/77755620/2f156b66-df43-4b8f-afbe-cd40e25ed504" width="500px"/> | <img src="https://github.com/wjstjdus96/tennis-community/assets/77755620/0506d736-fa4f-4185-ade3-0be7f34053c8" width="500px"/> |
+|                                                             게시판                                                             |                                                             게시글                                                             |
+| <img src="https://github.com/wjstjdus96/tennis-community/assets/77755620/d46d0ce2-2545-46b8-b798-f96dcaa64fdb" width="500px"/> | <img width="500px" src="https://github.com/wjstjdus96/tennis-community/assets/77755620/b5f4676a-c7cb-4858-80a0-c79902afd079"/> |
+|                                                          게시글 작성                                                           |                                                           나의 활동                                                            |
+| <img src="https://github.com/wjstjdus96/tennis-community/assets/77755620/bfdbc2cc-be9d-45f9-9f7a-29c366b9af4f" width="500px"/> | <img src="https://github.com/wjstjdus96/tennis-community/assets/77755620/4cf04307-4052-4f67-9b31-6fc0366f7d70" width="500px"/> |
+|                                                           정보 수정                                                            |                                                                                                                                |
+| <img src="https://github.com/wjstjdus96/tennis-community/assets/77755620/3249548e-7a85-4b9e-ab69-096d7be30e99" width="500px"/> |                                                                                                                                |
+
 ## ⚙️ 기능 설명
 
-- 홈
-  - 모든 게시판 한눈에 보기 가능
-- 커뮤니티
-  - 게시글 CRUD 기능
-  - 게시글 댓글 생성, 삭제 기능
-  - 게시글 북마크 기능
-  - 검색 기능
-  - 필터링 기능
-  - 게시글 페이지네이션
+- 로그인 / 로그아웃
+
+- 각 게시판의 기능 ( 커뮤니티 / 사람모집 / 플리마켓 )
+
+  - 게시글 CRUD
+  - 북마크, 댓글 기능
+  - 검색, 정렬, 필터링 기능
+
 - 마이페이지
-  - 작성한 글, 댓글 단 글, 북마크한 글 조회 가능
+  - 사용자가 작성한 글, 댓글 단 글, 북마크 한 글 게시판별로 확인 기능
+  - 사용자의 프로필이미지, 닉네임 수정 기능
 
-## 추후 계획
+## 📈 디벨롭 계획
 
-- 사람모집 게시판 추가
-- 플리마켓 게시판 추가
-- 정보 수정 기능 추가
-- algolia를 사용한 정밀한 검색 기능으로 디벨롭
-- 마이페이지 나의 활동 카테고리 별로 볼 수 있도록 디벨롭
-- 반응형 웹으로 디벨롭
+- 반응형 웹
+- algolia를 활용한 검색 기능 확장
