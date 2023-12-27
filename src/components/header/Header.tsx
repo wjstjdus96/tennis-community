@@ -1,29 +1,32 @@
 import { BiSolidTennisBall } from "react-icons/bi";
-import { IoLogOutOutline, IoMenu } from "react-icons/io5";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { FaHouseUser } from "react-icons/fa";
+import { useMediaQuery } from "react-responsive";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { header_menu_list } from "../consts/const";
-import { useLogout } from "../hooks/useLogout";
-import { userState } from "../recoil/atom";
-import { checkIsLogin } from "../utils/checkIsLogin";
-import defaultProfile from "../assets/defaultProfile.png";
-import { CgMenuGridO } from "react-icons/cg";
-import { useMediaQuery } from "react-responsive";
+import defaultProfile from "../../assets/defaultProfile.png";
+import { userState } from "../../recoil/atom";
+import { checkIsLogin } from "../../utils/checkIsLogin";
+import DeskTopHeaderMenu from "./DeskTopHeaderMenu";
+import MobileHeaderMenu from "./MobileHeaderMenu";
+import { IoLogIn } from "react-icons/io5";
 
 export default function Header() {
   const isLogin = checkIsLogin();
   const userInfo = useRecoilValue(userState);
   const navigate = useNavigate();
-  const clickLogout = useLogout();
-
-  const isMobile = useMediaQuery({
-    query: "(max-width:767px)",
-  });
 
   const onClickMyPageButton = () => {
     navigate("/my-page/activities?field=writing");
   };
+
+  const onClickStartButton = () => {
+    navigate("/login");
+  };
+
+  const isMobile = useMediaQuery({
+    query: "(max-width:767px)",
+  });
 
   return (
     <Wrapper>
@@ -33,24 +36,20 @@ export default function Header() {
           <div>TENNING</div>
         </Link>
       </Logo>
-      <Menu>
-        {header_menu_list.map((menu, idx) => (
-          <div key={idx}>
-            <NavLinkStyle to={menu.src}>{menu.name}</NavLinkStyle>
-          </div>
-        ))}
-      </Menu>
+      {isMobile ? <MobileHeaderMenu /> : <DeskTopHeaderMenu />}
       {isLogin ? (
         <Profile>
           <ProfileBox>
-            <CgMenuGridO onClick={() => onClickMyPageButton()} size={28} />
+            <FaHouseUser onClick={() => onClickMyPageButton()} size={28} />
             <img src={userInfo.photo || defaultProfile} />
           </ProfileBox>
         </Profile>
+      ) : isMobile ? (
+        <LoginIcon onClick={() => onClickStartButton()}>
+          <IoLogIn />
+        </LoginIcon>
       ) : (
-        <Link to="/login" className="links">
-          <LoginBtn>시작하기</LoginBtn>
-        </Link>
+        <LoginBtn onClick={() => onClickStartButton()}>시작하기</LoginBtn>
       )}
     </Wrapper>
   );
@@ -59,17 +58,20 @@ export default function Header() {
 const Wrapper = styled.div`
   z-index: 5;
   position: fixed;
-  display: grid;
 
-  @media all and (min-width: 360px) and (max-width: 767px) {
-    /* grid-template-columns: 1fr 10fr 1fr; */
-  }
-
-  @media all and (min-width: 768px) and (max-width: 1200px) {
-    grid-template-columns: 1fr 6fr 1fr;
+  @media all and (max-width: 1200px) {
+    display: flex;
+    justify-content: space-between;
+    & > div:first-child {
+      margin-left: 1rem;
+    }
+    & > div:last-child {
+      margin-right: 1rem;
+    }
   }
 
   @media all and (min-width: 1201px) {
+    display: grid;
     grid-template-columns: 1fr 3fr 1fr;
   }
 
@@ -92,9 +94,14 @@ const Logo = styled.div`
     align-items: center;
     font-family: "Allan", cursive;
 
+    @media all and (max-width: 767px) {
+      font-size: 23px;
+      letter-spacing: 8px;
+    }
+
     @media all and (min-width: 768px) and (max-width: 1200px) {
-      font-size: 15px;
-      letter-spacing: 5px;
+      font-size: 23px;
+      letter-spacing: 8px;
     }
 
     @media all and (min-width: 1201px) {
@@ -105,42 +112,6 @@ const Logo = styled.div`
   svg {
     color: ${(props) => props.theme.green[2]};
     margin-right: 8px;
-  }
-`;
-
-const Menu = styled.div`
-  display: flex;
-  justify-content: baseline;
-  font-family: "Noto Sans KR", sans-serif;
-  font-weight: 700;
-
-  @media all and (min-width: 768px) and (max-width: 1200px) {
-    font-size: 14px;
-  }
-  @media all and (min-width: 1201px) {
-    font-size: 16px;
-  }
-
-  div:nth-child(n + 2) {
-    position: relative;
-
-    @media all and (min-width: 768px) and (max-width: 1200px) {
-      margin-left: 15px;
-      padding-left: 15px;
-    }
-    @media all and (min-width: 1201px) {
-      margin-left: 25px;
-      padding-left: 25px;
-    }
-  }
-  div:nth-child(n + 2)::after {
-    position: absolute;
-    left: 0;
-    top: 3px;
-    content: "";
-    width: 1px;
-    height: 15px;
-    background-color: black;
   }
 `;
 
@@ -158,6 +129,7 @@ const Profile = styled.div`
 const ProfileBox = styled.div`
   display: flex;
   align-items: center;
+
   gap: 15px;
   img {
     width: 2.5rem;
@@ -171,7 +143,16 @@ const ProfileBox = styled.div`
   }
 `;
 
-const LoginBtn = styled.button`
+const LoginIcon = styled.div`
+  font-size: 25px;
+  &:hover {
+    color: ${(props) => props.theme.green[2]};
+  }
+`;
+
+const LoginBtn = styled.div`
+  justify-self: center;
+  width: 120px;
   box-sizing: border-box;
   appearance: none;
   background-color: transparent;
@@ -187,17 +168,5 @@ const LoginBtn = styled.button`
   transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
   &:hover {
     box-shadow: 0 0 40px 40px ${(props) => props.theme.green[2]} inset;
-  }
-`;
-
-const NavLinkStyle = styled(NavLink)`
-  text-decoration: none;
-  color: black;
-  &:hover {
-    color: ${(props) => props.theme.green[2]};
-    cursor: pointer;
-  }
-  &.active {
-    color: ${(props) => props.theme.green[2]};
   }
 `;
