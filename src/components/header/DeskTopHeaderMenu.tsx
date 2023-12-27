@@ -20,6 +20,11 @@ const Menu = styled.div`
   font-family: "Noto Sans KR", sans-serif;
   font-weight: 700;
 
+  @media all and (min-width: 768px) and (max-width: 1200px) {
+    width: 80%;
+    padding: 1.5rem;
+  }
+
   div:nth-child(n + 2) {
     position: relative;
     margin-left: 20px;
@@ -36,7 +41,7 @@ const Menu = styled.div`
   }
 `;
 
-const NavLinkStyle = styled(NavLink)`
+export const NavLinkStyle = styled(NavLink)`
   text-decoration: none;
   color: black;
   &:hover {

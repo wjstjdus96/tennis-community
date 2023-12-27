@@ -9,7 +9,7 @@ import { userState } from "../../recoil/atom";
 import { checkIsLogin } from "../../utils/checkIsLogin";
 import DeskTopHeaderMenu from "./DeskTopHeaderMenu";
 import MobileHeaderMenu from "./MobileHeaderMenu";
-import { IoLogIn } from "react-icons/io5";
+import { IoLogInOutline } from "react-icons/io5";
 
 export default function Header() {
   const isLogin = checkIsLogin();
@@ -39,14 +39,14 @@ export default function Header() {
       {isMobile ? <MobileHeaderMenu /> : <DeskTopHeaderMenu />}
       {isLogin ? (
         <Profile>
-          <ProfileBox>
-            <FaHouseUser onClick={() => onClickMyPageButton()} size={28} />
-            <img src={userInfo.photo || defaultProfile} />
-          </ProfileBox>
+          <ProfileBox
+            onClick={() => onClickMyPageButton()}
+            src={userInfo.photo || defaultProfile}
+          />
         </Profile>
       ) : isMobile ? (
         <LoginIcon onClick={() => onClickStartButton()}>
-          <IoLogIn />
+          <IoLogInOutline />
         </LoginIcon>
       ) : (
         <LoginBtn onClick={() => onClickStartButton()}>시작하기</LoginBtn>
@@ -63,10 +63,10 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: space-between;
     & > div:first-child {
-      margin-left: 1rem;
+      margin-left: 1.5rem;
     }
     & > div:last-child {
-      margin-right: 1rem;
+      margin-right: 1.5rem;
     }
   }
 
@@ -126,27 +126,25 @@ const Profile = styled.div`
   }
 `;
 
-const ProfileBox = styled.div`
-  display: flex;
-  align-items: center;
-
-  gap: 15px;
-  img {
-    width: 2.5rem;
-    height: 2.5rem;
-    background-color: white;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  svg {
-    cursor: pointer;
+const ProfileBox = styled.img`
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: white;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 0 0 3px;
   }
 `;
 
 const LoginIcon = styled.div`
-  font-size: 25px;
-  &:hover {
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  & > svg:hover {
     color: ${(props) => props.theme.green[2]};
+    cursor: pointer;
   }
 `;
 
