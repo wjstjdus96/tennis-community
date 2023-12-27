@@ -28,7 +28,19 @@ const Wrapper = styled.div`
 const Body = styled.div`
   padding-top: 95px;
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+
+  @media all and (min-width: 360px) and (max-width: 767px) {
+    grid-template-columns: 1fr 10fr 1fr;
+  }
+
+  @media all and (min-width: 768px) and (max-width: 1200px) {
+    grid-template-columns: 1fr 6fr 1fr;
+  }
+
+  @media all and (min-width: 1201px) {
+    grid-template-columns: 1fr 3fr 1fr;
+  }
+
   & > div {
     overflow-x: auto;
     max-width: 100%;

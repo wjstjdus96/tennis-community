@@ -9,12 +9,17 @@ import { userState } from "../recoil/atom";
 import { checkIsLogin } from "../utils/checkIsLogin";
 import defaultProfile from "../assets/defaultProfile.png";
 import { CgMenuGridO } from "react-icons/cg";
+import { useMediaQuery } from "react-responsive";
 
 export default function Header() {
   const isLogin = checkIsLogin();
   const userInfo = useRecoilValue(userState);
   const navigate = useNavigate();
   const clickLogout = useLogout();
+
+  const isMobile = useMediaQuery({
+    query: "(max-width:767px)",
+  });
 
   const onClickMyPageButton = () => {
     navigate("/my-page/activities?field=writing");
@@ -55,7 +60,19 @@ const Wrapper = styled.div`
   z-index: 5;
   position: fixed;
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+
+  @media all and (min-width: 360px) and (max-width: 767px) {
+    /* grid-template-columns: 1fr 10fr 1fr; */
+  }
+
+  @media all and (min-width: 768px) and (max-width: 1200px) {
+    grid-template-columns: 1fr 6fr 1fr;
+  }
+
+  @media all and (min-width: 1201px) {
+    grid-template-columns: 1fr 3fr 1fr;
+  }
+
   align-items: center;
   height: 70px;
   width: 100%;
@@ -73,9 +90,17 @@ const Logo = styled.div`
   & > a {
     display: flex;
     align-items: center;
-    font-size: 23px;
     font-family: "Allan", cursive;
-    letter-spacing: 8px;
+
+    @media all and (min-width: 768px) and (max-width: 1200px) {
+      font-size: 15px;
+      letter-spacing: 5px;
+    }
+
+    @media all and (min-width: 1201px) {
+      font-size: 23px;
+      letter-spacing: 8px;
+    }
   }
   svg {
     color: ${(props) => props.theme.green[2]};
@@ -87,12 +112,26 @@ const Menu = styled.div`
   display: flex;
   justify-content: baseline;
   font-family: "Noto Sans KR", sans-serif;
-  font-size: 16px;
   font-weight: 700;
+
+  @media all and (min-width: 768px) and (max-width: 1200px) {
+    font-size: 14px;
+  }
+  @media all and (min-width: 1201px) {
+    font-size: 16px;
+  }
+
   div:nth-child(n + 2) {
     position: relative;
-    margin-left: 25px;
-    padding-left: 25px;
+
+    @media all and (min-width: 768px) and (max-width: 1200px) {
+      margin-left: 15px;
+      padding-left: 15px;
+    }
+    @media all and (min-width: 1201px) {
+      margin-left: 25px;
+      padding-left: 25px;
+    }
   }
   div:nth-child(n + 2)::after {
     position: absolute;

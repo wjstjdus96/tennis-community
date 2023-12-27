@@ -86,6 +86,9 @@ const Body = styled.div`
 const MarketBoardBody = styled.div`
   display: grid;
   column-gap: 30px;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+
+  @media all and (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
 `;
