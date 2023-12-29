@@ -52,7 +52,10 @@ export default function Market() {
 
 const Board = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 1rem;
   margin-top: 20px;
+
+  @media all and (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
 `;
