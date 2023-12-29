@@ -35,7 +35,7 @@ export function BoardSearch({ boardField, setSearchKeyword }: IBoardSearch) {
 const Search = styled.div`
   position: relative;
   input {
-    width: 350px;
+    width: 30vw;
     border: 2px solid ${(props) => props.theme.green[1]};
     border-radius: 18px;
     text-indent: 4px;

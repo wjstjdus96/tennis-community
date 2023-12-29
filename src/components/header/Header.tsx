@@ -1,15 +1,14 @@
 import { BiSolidTennisBall } from "react-icons/bi";
-import { FaHouseUser } from "react-icons/fa";
-import { useMediaQuery } from "react-responsive";
+import { IoLogInOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import defaultProfile from "../../assets/defaultProfile.png";
+import { useCheckIsMobile } from "../../hooks/useCheckIsMobile";
 import { userState } from "../../recoil/atom";
 import { checkIsLogin } from "../../utils/checkIsLogin";
 import DeskTopHeaderMenu from "./DeskTopHeaderMenu";
 import MobileHeaderMenu from "./MobileHeaderMenu";
-import { IoLogInOutline } from "react-icons/io5";
 
 export default function Header() {
   const isLogin = checkIsLogin();
@@ -24,9 +23,7 @@ export default function Header() {
     navigate("/login");
   };
 
-  const isMobile = useMediaQuery({
-    query: "(max-width:767px)",
-  });
+  const { isMobile } = useCheckIsMobile();
 
   return (
     <Wrapper>
