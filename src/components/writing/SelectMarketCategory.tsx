@@ -8,7 +8,7 @@ import { ISelectMarketCategory } from "../../interfaces/IComponent";
 import { useController } from "react-hook-form";
 import clicking from "../../assets/icon-clicking.png";
 import ErrorMsg from "./ErrorMsg";
-import { useDropDown } from "../../hooks/useDropdown";
+import { useCheckIsMobile } from "../../hooks/useCheckIsMobile";
 
 export default function SelectMarketCategory({
   name,
@@ -17,8 +17,8 @@ export default function SelectMarketCategory({
   existing,
   errorMsg,
 }: ISelectMarketCategory) {
-  const { isExpanded, setIsExpanded, toggleDropdown, clickOutside } =
-    useDropDown();
+  const { isMobile } = useCheckIsMobile();
+  const [isExpanded, setIsExpanded] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState({
     icon: clicking,
     name: "선택",
@@ -49,13 +49,12 @@ export default function SelectMarketCategory({
     <Wrapper>
       <label htmlFor={name}>{text}</label>
       <CategoryItem
+        isSelectedMain={true}
         isSelected={true}
-        onClick={toggleDropdown}
-        onBlur={clickOutside}
-        tabIndex={0}
+        onClick={() => setIsExpanded((prev) => !prev)}
       >
         <img src={selectedCategory.icon} />
-        <div>{selectedCategory.name}</div>
+        {!isMobile && <div>{selectedCategory.name}</div>}
       </CategoryItem>
       {isExpanded && (
         <CategoryList>
@@ -65,7 +64,7 @@ export default function SelectMarketCategory({
               <CategoryItem
                 key={idx}
                 isSelected={item.name == value}
-                onMouseDown={() => onClickCategory(item)}
+                onClick={() => onClickCategory(item)}
               >
                 <img src={item.icon} />
                 <div>{item.name}</div>
@@ -79,6 +78,7 @@ export default function SelectMarketCategory({
 }
 
 const Wrapper = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -102,22 +102,30 @@ const CategoryList = styled.div`
   border-radius: 15px;
 `;
 
-const CategoryItem = styled.div<{ isSelected: boolean }>`
-  min-width: 70px;
+const CategoryItem = styled.div<{
+  isSelected: boolean;
+  isSelectedMain?: boolean;
+}>`
+  width: ${(props) => (props.isSelectedMain ? "90%" : "110px")};
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.7rem;
   background-color: ${(props) =>
     props.isSelected ? props.theme.green[1] : props.theme.green[0]};
-  padding: 13px 30px;
+  padding: 13px 10px;
   border-radius: 40px;
   cursor: pointer;
+  font-size: 14px;
   &:hover {
     background-color: ${(props) => props.theme.green[1]};
   }
   img {
     width: 15px;
     height: 15px;
+  }
+
+  @media all and (min-width: 360px) and (max-width: 767px) {
+    padding: 13px 5px;
   }
 `;
