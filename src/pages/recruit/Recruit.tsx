@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import BoardFilter from "../../components/board/BoardFilter";
 import { BoardHead } from "../../components/board/BoardHead";
 import BoardRecruitFilter from "../../components/board/BoardRecruitFilter";
-import { BoardSearch } from "../../components/board/BoardSearch";
-import { BoardWritingBtn } from "../../components/board/BoardWritinBtn";
+import BoardSetting from "../../components/board/BoardSetting";
 import { Pagination } from "../../components/board/Pagination";
 import Post from "../../components/home/Post";
 import { useGetPosts } from "../../hooks/useGetPosts";
@@ -32,11 +30,12 @@ export default function Recruit() {
         title="사람모집"
         summary="다양한 사람들과 함께 테니스를 즐겨보세요"
       />
-      <Settings>
-        <BoardWritingBtn boardField="recruit" />
-        <BoardSearch boardField="recruit" setSearchKeyword={setSearchKeyword} />
-        <BoardFilter filterType={filterType} setFilterType={setFilterType} />
-      </Settings>
+      <BoardSetting
+        boardField="recruit"
+        setSearchKeyword={setSearchKeyword}
+        filterType={filterType}
+        setFilterType={setFilterType}
+      />
       <BoardRecruitFilter
         recruitFilterType={recruitType}
         setRecruitFilterType={setRecruitType}
@@ -56,12 +55,6 @@ export default function Recruit() {
   );
 }
 
-const Settings = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 20px;
-`;
 const Board = styled.div`
   margin-top: 20px;
 `;
