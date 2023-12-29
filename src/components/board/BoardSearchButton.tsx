@@ -1,14 +1,15 @@
-import styled from "styled-components";
 import { IoSearch } from "react-icons/io5";
-import { useDropDown } from "../../hooks/useDropdown";
+import styled from "styled-components";
 
-export default function BoardSearchButton() {
-  const {} = useDropDown();
-
+export default function BoardSearchButton({
+  toggleDropdown,
+}: {
+  toggleDropdown: () => void;
+}) {
   return (
     <Wrapper>
       <ButtonBox>
-        <IoSearch />
+        <IoSearch onClick={toggleDropdown} />
       </ButtonBox>
     </Wrapper>
   );

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { BoardHead } from "../../components/board/BoardHead";
-import BoardSetting from "../../components/board/BoardSetting";
+import BoardSetting from "../../components/board/boardSetting/BoardSetting";
 import { Pagination } from "../../components/board/Pagination";
 import Post from "../../components/home/Post";
 import { useGetPosts } from "../../hooks/useGetPosts";
