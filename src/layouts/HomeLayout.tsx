@@ -1,8 +1,18 @@
 import styled from "styled-components";
 import Header from "../components/header/Header";
 import Footer from "../components/Footer";
+import { useEffect } from "react";
 
 export function HomeLayout({ children }: { children: React.ReactNode }) {
+  const setScreenSize = () => {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  };
+
+  useEffect(() => {
+    setScreenSize();
+  });
+
   return (
     <Wrapper>
       <Header />
@@ -18,7 +28,7 @@ export function HomeLayout({ children }: { children: React.ReactNode }) {
 
 const Wrapper = styled.div`
   background-color: ${(props) => props.theme.bgColor};
-  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
   font-family: "Noto Sans KR", sans-serif;
   display: flex;
   flex-direction: column;
@@ -30,7 +40,7 @@ const Body = styled.div`
   display: grid;
 
   @media all and (min-width: 360px) and (max-width: 767px) {
-    grid-template-columns: 1fr 10fr 1fr;
+    grid-template-columns: 0.8fr 15fr 0.8fr;
   }
 
   @media all and (min-width: 768px) and (max-width: 1200px) {

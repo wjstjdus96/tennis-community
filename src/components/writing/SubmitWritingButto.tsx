@@ -16,6 +16,7 @@ const Wrappper = styled.button`
   border-radius: 10px;
   border: none;
   background-color: ${(props) => props.theme.green[2]};
+  color: black;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
   transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
