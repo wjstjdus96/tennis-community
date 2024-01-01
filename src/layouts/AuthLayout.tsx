@@ -94,6 +94,7 @@ const Box = styled.div`
   @media all and (min-width: 360px) and (max-width: 767px) {
     min-height: 400px;
     padding: 5vh 5vw;
+    margin-bottom: 20px;
   }
 
   @media all and (min-width: 768px) {
