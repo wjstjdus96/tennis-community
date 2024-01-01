@@ -102,6 +102,9 @@ const InputWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   column-gap: 40px;
+  & > div {
+    min-width: 300px;
+  }
 `;
 
 const SubmitBtn = styled.button`

@@ -58,22 +58,28 @@ const Wrapper = styled.div`
 const Logo = styled.div`
   display: flex;
   justify-content: center;
-  font-size: 50px;
   font-family: "Allan", cursive;
   margin-bottom: 20px;
-  letter-spacing: 20px;
+
   svg {
     color: ${(props) => props.theme.green[2]};
   }
   cursor: pointer;
+
+  @media all and (min-width: 360px) and (max-width: 767px) {
+    font-size: 50px;
+    letter-spacing: 2vw;
+  }
+
+  @media all and (min-width: 768px) {
+    font-size: 50px;
+    letter-spacing: 20px;
+  }
 `;
 
 const Box = styled.div`
   position: relative;
-  min-width: 400px;
-  min-height: 400px;
   border-radius: 30px;
-  padding: 30px 70px;
   background-color: rgb(255, 255, 255, 0.5);
   & > form {
     display: flex;
@@ -83,6 +89,17 @@ const Box = styled.div`
   }
   hr {
     width: 100%;
+  }
+
+  @media all and (min-width: 360px) and (max-width: 767px) {
+    min-height: 400px;
+    padding: 5vh 5vw;
+  }
+
+  @media all and (min-width: 768px) {
+    min-width: 400px;
+    min-height: 400px;
+    padding: 30px 70px;
   }
 `;
 
