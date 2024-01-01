@@ -59,19 +59,19 @@ const Logo = styled.div`
   display: flex;
   justify-content: center;
   font-family: "Allan", cursive;
-  margin: 20px;
-
   svg {
     color: ${(props) => props.theme.green[2]};
   }
   cursor: pointer;
 
   @media all and (min-width: 360px) and (max-width: 767px) {
+    margin: 40px 0 20px 0;
     font-size: 50px;
     letter-spacing: 2vw;
   }
 
   @media all and (min-width: 768px) {
+    margin: 20px;
     font-size: 50px;
     letter-spacing: 20px;
   }
@@ -94,7 +94,7 @@ const Box = styled.div`
   @media all and (min-width: 360px) and (max-width: 767px) {
     min-height: 400px;
     padding: 5vh 5vw;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
   }
 
   @media all and (min-width: 768px) {
