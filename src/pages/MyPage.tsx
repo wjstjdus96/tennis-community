@@ -17,15 +17,26 @@ export default function MyPage() {
 }
 
 const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 3fr;
+  @media all and (min-width: 360px) and (max-width: 767px) {
+    display: flex;
+    flex-direction: column;
+    & > div:first-child {
+      border-bottom: 2px solid ${(props) => props.theme.green[1]};
+    }
+    min-height: 75vh;
+  }
+
+  @media all and (min-width: 768px) {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    & > div:first-child {
+      border-right: 2px solid ${(props) => props.theme.green[1]};
+    }
+    min-height: 630px;
+  }
   width: 100%;
-  min-height: 630px;
   background-color: ${(props) => props.theme.myPageBgColor};
   border-radius: 20px;
-  & > div:first-child {
-    border-right: 2px solid ${(props) => props.theme.green[1]};
-  }
 `;
 
 const MyPageBody = styled.div``;

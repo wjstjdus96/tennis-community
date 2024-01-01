@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   gap: 10px;
   font-size: 13px;
   color: grey;
-  padding: 60px 0;
+  padding: 40px 0;
   & > div {
     width: 20px;
     height: 16px;

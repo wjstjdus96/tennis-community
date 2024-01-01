@@ -94,7 +94,14 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 50px;
+
+    @media all and (min-width: 360px) and (max-width: 767px) {
+      padding: 20px 10px;
+    }
+
+    @media all and (min-width: 768px) {
+      margin-top: 50px;
+    }
     gap: 30px;
   }
 `;
