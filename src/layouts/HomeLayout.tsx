@@ -28,11 +28,11 @@ export function HomeLayout({ children }: { children: React.ReactNode }) {
 
 const Wrapper = styled.div`
   background-color: ${(props) => props.theme.bgColor};
-  min-height: calc(var(--vh, 1vh) * 100);
   font-family: "Noto Sans KR", sans-serif;
+  /* min-height: calc(var(--vh, 1vh) * 100);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-between; */
 `;
 
 const Body = styled.div`
@@ -56,6 +56,6 @@ const Body = styled.div`
     max-width: 100%;
     width: 100%;
     box-sizing: border-box;
-    min-height: 100%;
+    /* min-height: 100%; */
   }
 `;
