@@ -32,7 +32,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
-  min-width: 300px;
   label {
     color: grey;
     font-size: 15px;

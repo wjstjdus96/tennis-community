@@ -139,8 +139,13 @@ const Body = styled.div`
 `;
 
 const InputRow = styled.div<{ isFirst?: boolean }>`
+  width: 100%;
   display: grid;
-  grid-template-columns: ${(props) =>
-    props.isFirst ? "110px auto" : "1fr 2fr"};
-  gap: 3rem;
+  grid-template-columns: ${(props) => (props.isFirst ? "15% 80%" : "35% 60%")};
+  gap: 5%;
+
+  @media all and (min-width: 360px) and (max-width: 767px) {
+    grid-template-columns: ${(props) =>
+      props.isFirst ? "70px auto" : "35% 60%"};
+  }
 `;

@@ -2,6 +2,7 @@ import styled, { keyframes } from "styled-components";
 import { market_category_list } from "../../consts/const";
 import { useEffect, useState } from "react";
 import { useDropDown } from "../../hooks/useDropdown";
+import { useCheckIsMobile } from "../../hooks/useCheckIsMobile";
 
 interface IBoardMarketCategory {
   category: string[] | (string | null)[];
@@ -20,6 +21,7 @@ export default function BoardMarketCategory({
   category,
   setCategory,
 }: IBoardMarketCategory) {
+  const { isMobile } = useCheckIsMobile();
   const {
     isExpanded,
     isExpandedVisibility,
@@ -55,15 +57,15 @@ export default function BoardMarketCategory({
               onClick={() => changeCategory(item)}
             >
               <img src={item.icon} />
-              <div>{item.name}</div>
+              {!isMobile && <div>{item.name}</div>}
             </CategoryItem>
           ))}
         </CategoryDropdown>
       ) : (
-        <CategoryItem isSelected={true} onClick={toggleDropdown}>
+        <SelectedCategoryItem onClick={toggleDropdown}>
           <img src={selectedIcon} />
           <div>{category[0]}</div>
-        </CategoryItem>
+        </SelectedCategoryItem>
       )}
     </Wrapper>
   );
@@ -76,6 +78,7 @@ const Wrapper = styled.div`
   gap: 1.2rem;
   position: relative;
   font-size: 14px;
+  margin-top: 20px;
 `;
 
 const expandedAnimation = (isExpanded: boolean) => keyframes`
@@ -99,14 +102,46 @@ const CategoryItem = styled.div<{ isSelected: boolean }>`
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+
+  font-size: 13px;
   background-color: ${(props) =>
     props.isSelected ? props.theme.green[1] : props.theme.green[0]};
-  padding: 9px 30px;
-  border-radius: 40px;
+
   cursor: pointer;
   &:hover {
     background-color: ${(props) => props.theme.green[1]};
   }
+  img {
+    width: 15px;
+    height: 15px;
+  }
+
+  @media all and (min-width: 360px) and (max-width: 767px) {
+    border-radius: 50%;
+    padding: 11px;
+  }
+
+  @media all and (min-width: 768px) and (max-width: 1200px) {
+    border-radius: 40px;
+    padding: 9px 20px;
+  }
+
+  @media all and (min-width: 1201px) {
+    border-radius: 40px;
+    padding: 9px 30px;
+  }
+`;
+
+const SelectedCategoryItem = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 9px 30px;
+  font-size: 13px;
+  background-color: ${(props) => props.theme.green[1]};
+  border-radius: 40px;
+  cursor: pointer;
   img {
     width: 15px;
     height: 15px;

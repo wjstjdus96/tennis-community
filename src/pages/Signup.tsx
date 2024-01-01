@@ -99,13 +99,26 @@ export default function Signup() {
 }
 
 const InputWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: 40px;
+  @media all and (min-width: 360px) and (max-width: 767px) {
+    width: 70vw;
+  }
+  @media all and (min-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 40px;
+    & > div {
+      min-width: 300px;
+    }
+  }
 `;
 
 const SubmitBtn = styled.button`
-  width: 400px;
+  @media all and (min-width: 360px) and (max-width: 767px) {
+    width: 100%;
+  }
+  @media all and (min-width: 768px) {
+    width: 400px;
+  }
   margin: 20px 0px 30px 0px;
   box-sizing: border-box;
   appearance: none;

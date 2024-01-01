@@ -58,7 +58,13 @@ export function MyActivities() {
 }
 
 const Wrapper = styled.div`
-  padding: 40px;
+  @media all and (min-width: 360px) and (max-width: 767px) {
+    padding: 20px 10px;
+  }
+
+  @media all and (min-width: 768px) {
+    padding: 40px;
+  }
 `;
 
 const FieldBoxWrapper = styled.div`
@@ -68,5 +74,5 @@ const FieldBoxWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `;

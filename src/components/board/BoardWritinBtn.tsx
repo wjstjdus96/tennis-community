@@ -20,6 +20,7 @@ export function BoardWritingBtn({ boardField }: { boardField: string }) {
 const WritingBtn = styled.button`
   display: flex;
   align-items: center;
+  min-width: 100px;
   padding: 8px 13px;
   border-radius: 10px;
   border: none;

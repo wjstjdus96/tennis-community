@@ -24,7 +24,7 @@ export default function BoardFilter({
   };
 
   return (
-    <Wrapper>
+    <Wrapper isBookMarkSort={filterType[0] == "북마크순"}>
       <SelectedType onClick={toggleDropdown} onBlur={clickOutside} tabIndex={0}>
         <HiOutlineSortDescending className="filterIcon" size="18" />
         <div>{filterType[0]}</div>
@@ -44,8 +44,8 @@ export default function BoardFilter({
   );
 }
 
-const Wrapper = styled.div`
-  min-width: 90px;
+const Wrapper = styled.div<{ isBookMarkSort?: boolean }>`
+  min-width: ${(props) => (props.isBookMarkSort ? "110px" : "90px")};
   display: flex;
   flex-direction: column;
   justify-content: center;

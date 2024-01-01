@@ -16,9 +16,16 @@ export default function Home() {
 
 const Row = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap: 30px;
-  & > :nth-child(3) {
-    grid-column: 1/3;
+
+  @media all and (min-width: 360px) and (max-width: 767px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media all and (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    & > :nth-child(3) {
+      grid-column: 1/3;
+    }
   }
 `;

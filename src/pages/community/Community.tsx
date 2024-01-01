@@ -1,9 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
-import BoardFilter from "../../components/board/BoardFilter";
 import { BoardHead } from "../../components/board/BoardHead";
-import { BoardSearch } from "../../components/board/BoardSearch";
-import { BoardWritingBtn } from "../../components/board/BoardWritinBtn";
+import BoardSetting from "../../components/board/boardSetting/BoardSetting";
 import { Pagination } from "../../components/board/Pagination";
 import Post from "../../components/home/Post";
 import { useGetPosts } from "../../hooks/useGetPosts";
@@ -29,14 +27,12 @@ export default function Community() {
         title="커뮤니티"
         summary="테니스에 대한 다양한 생각을 공유해보세요"
       />
-      <Settings>
-        <BoardWritingBtn boardField="community" />
-        <BoardSearch
-          boardField="community"
-          setSearchKeyword={setSearchKeyword}
-        />
-        <BoardFilter filterType={filterType} setFilterType={setFilterType} />
-      </Settings>
+      <BoardSetting
+        boardField="community"
+        setSearchKeyword={setSearchKeyword}
+        filterType={filterType}
+        setFilterType={setFilterType}
+      />
       <Board>
         {posts.map((post: any) => (
           <Post post={post} isHome={false} />
@@ -51,13 +47,6 @@ export default function Community() {
     </HomeLayout>
   );
 }
-
-const Settings = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 20px;
-`;
 
 const Board = styled.div`
   margin-top: 20px;

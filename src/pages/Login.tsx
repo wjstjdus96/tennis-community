@@ -60,7 +60,7 @@ export default function Login() {
 
   return (
     <AuthLayout title="로그인">
-      <form onSubmit={handleSubmit(onSubmitHandler)}>
+      <LoginForm onSubmit={handleSubmit(onSubmitHandler)}>
         <AuthInput
           name="email"
           text="이메일을 입력하십시오"
@@ -76,7 +76,7 @@ export default function Login() {
           errorMsg={errors.password && errors.password.message}
         />
         <SubmitBtn type="submit">로그인</SubmitBtn>
-      </form>
+      </LoginForm>
     </AuthLayout>
   );
 }
@@ -98,5 +98,13 @@ const SubmitBtn = styled.button`
   transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
   &:hover {
     background-color: transparent;
+  }
+`;
+
+const LoginForm = styled.form`
+  & > div {
+    @media all and (min-width: 360px) and (max-width: 767px) {
+      width: 70vw;
+    }
   }
 `;

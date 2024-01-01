@@ -1,15 +1,13 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { BoardHead } from "../../components/board/BoardHead";
-import { HomeLayout } from "../../layouts/HomeLayout";
-import { useGetPosts } from "../../hooks/useGetPosts";
-import { useState } from "react";
-import { BoardWritingBtn } from "../../components/board/BoardWritinBtn";
-import { BoardSearch } from "../../components/board/BoardSearch";
-import BoardFilter from "../../components/board/BoardFilter";
 import BoardMarketCategory from "../../components/board/BoardMarketCategory";
-import MarketPost from "../../components/home/MarketPost";
-import { IMarketPost } from "../../interfaces/IValue";
+import BoardSetting from "../../components/board/boardSetting/BoardSetting";
 import { Pagination } from "../../components/board/Pagination";
+import MarketPost from "../../components/home/MarketPost";
+import { useGetPosts } from "../../hooks/useGetPosts";
+import { IMarketPost } from "../../interfaces/IValue";
+import { HomeLayout } from "../../layouts/HomeLayout";
 
 export default function Market() {
   const [page, setPage] = useState<number>(1);
@@ -30,11 +28,12 @@ export default function Market() {
   return (
     <HomeLayout>
       <BoardHead title="플리마켓" summary="여러가지 테니스 용품을 나눠보세요" />
-      <Settings>
-        <BoardWritingBtn boardField="market" />
-        <BoardSearch boardField="market" setSearchKeyword={setSearchKeyword} />
-        <BoardFilter filterType={filterType} setFilterType={setFilterType} />
-      </Settings>
+      <BoardSetting
+        boardField="market"
+        setSearchKeyword={setSearchKeyword}
+        filterType={filterType}
+        setFilterType={setFilterType}
+      />
       <BoardMarketCategory category={category} setCategory={setCategory} />
       <Board>
         {posts.map((post: IMarketPost, idx: number) => (
@@ -51,17 +50,12 @@ export default function Market() {
   );
 }
 
-const Settings = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 20px;
-  margin-bottom: 20px;
-`;
-
 const Board = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 1rem;
   margin-top: 20px;
+
+  @media all and (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
 `;
