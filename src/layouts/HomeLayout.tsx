@@ -29,10 +29,7 @@ export function HomeLayout({ children }: { children: React.ReactNode }) {
 const Wrapper = styled.div`
   background-color: ${(props) => props.theme.bgColor};
   font-family: "Noto Sans KR", sans-serif;
-  /* min-height: calc(var(--vh, 1vh) * 100);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; */
+  min-height: calc(var(--vh, 1vh) * 100);
 `;
 
 const Body = styled.div`
