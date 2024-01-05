@@ -1,4 +1,3 @@
-import React from "react";
 import Router from "./router/Router";
 import { RecoilRoot } from "recoil";
 
