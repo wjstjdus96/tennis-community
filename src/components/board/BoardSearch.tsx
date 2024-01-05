@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FiSearch } from "react-icons/fi";
+import { FiSearch } from "@react-icons/all-files/fi/FiSearch";
 import { useNavigate } from "react-router-dom";
 import { IBoardSearch } from "../../interfaces/IComponent";
 import { useState } from "react";

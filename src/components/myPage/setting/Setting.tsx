@@ -1,15 +1,15 @@
-import styled from "styled-components";
-import SettingProfileImage from "./SettingProfileImage";
-import SettingInput from "./SettingInput";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { userState } from "../../../recoil/atom";
 import { getAuth, updateProfile } from "firebase/auth";
-import { updateUserInfo } from "../../../firebase/updateData";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { IUserInfoEdit } from "../../../interfaces/IComponent";
+import { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useRecoilState } from "recoil";
+import styled from "styled-components";
 import defaultProfile from "../../../assets/defaultProfile.png";
+import { updateUserInfo } from "../../../firebase/updateData";
+import { IUserInfoEdit } from "../../../interfaces/IComponent";
+import { userState } from "../../../recoil/atom";
+import SettingInput from "./SettingInput";
+import SettingProfileImage from "./SettingProfileImage";
 
 export function Setting() {
   const [userInfo, setUserInfo] = useRecoilState(userState);

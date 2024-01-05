@@ -1,11 +1,9 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import {
-  FaAngleDoubleLeft,
-  FaAngleLeft,
-  FaAngleRight,
-  FaAngleDoubleRight,
-} from "react-icons/fa";
+import { FaAngleDoubleLeft } from "@react-icons/all-files/fa/FaAngleDoubleLeft";
+import { FaAngleLeft } from "@react-icons/all-files/fa/FaAngleLeft";
+import { FaAngleRight } from "@react-icons/all-files/fa/FaAngleRight";
+import { FaAngleDoubleRight } from "@react-icons/all-files/fa/FaAngleDoubleRight";
 import { IPagination } from "../../interfaces/IComponent";
 
 export function Pagination({ totalPage, limit, page, setPage }: IPagination) {

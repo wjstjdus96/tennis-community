@@ -1,8 +1,9 @@
-import styled, { keyframes } from "styled-components";
-import { ActivityFieldItem } from "./ActivityFieldItem";
-import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { IoMdArrowDown } from "@react-icons/all-files/io/IoMdArrowDown";
+import { IoMdArrowUp } from "@react-icons/all-files/io/IoMdArrowUp";
+import styled from "styled-components";
 import { ITogglePostsItem } from "../../../interfaces/IComponent";
+import { ActivityFieldItem } from "./ActivityFieldItem";
 
 export default function TogglePostsItem({
   postsIds,
@@ -19,9 +20,9 @@ export default function TogglePostsItem({
     <Wrapper>
       <ToggleHead>
         {isExpanded ? (
-          <BiSolidUpArrow size={10} onClick={onClickArrow} />
+          <IoMdArrowUp size={10} onClick={onClickArrow} />
         ) : (
-          <BiSolidDownArrow size={10} onClick={onClickArrow} />
+          <IoMdArrowDown size={10} onClick={onClickArrow} />
         )}
         <div>{fieldKor}</div>
         <div>( {postsIds.length} )</div>

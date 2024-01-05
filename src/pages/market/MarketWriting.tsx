@@ -1,7 +1,9 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
+import Loading from "../../components/Loading";
 import ImageInput from "../../components/writing/ImageInput";
 import SelectMarketCategory from "../../components/writing/SelectMarketCategory";
 import { SubmitWritingButton } from "../../components/writing/SubmitWritingButto";
@@ -10,9 +12,7 @@ import { useEditPost } from "../../hooks/useEditPost";
 import { useWritingPost } from "../../hooks/useWritingPost";
 import { IMarketWritingValue } from "../../interfaces/IValue";
 import { HomeLayout } from "../../layouts/HomeLayout";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { marketWritingSchema } from "../../utils/schema";
-import Loading from "../../components/Loading";
 
 export default function MarketWriting() {
   const { postId } = useParams();

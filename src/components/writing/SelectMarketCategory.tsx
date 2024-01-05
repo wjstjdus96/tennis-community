@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
-import BoardMarketCategory, {
-  ICategoryListItem,
-} from "../board/BoardMarketCategory";
-import styled from "styled-components";
-import { market_category_list } from "../../consts/const";
-import { ISelectMarketCategory } from "../../interfaces/IComponent";
 import { useController } from "react-hook-form";
+import styled from "styled-components";
 import clicking from "../../assets/icon-clicking.png";
-import ErrorMsg from "./ErrorMsg";
+import { market_category_list } from "../../consts/const";
 import { useCheckIsMobile } from "../../hooks/useCheckIsMobile";
+import { ISelectMarketCategory } from "../../interfaces/IComponent";
+import { ICategoryListItem } from "../board/BoardMarketCategory";
+import ErrorMsg from "./ErrorMsg";
 
 export default function SelectMarketCategory({
   name,

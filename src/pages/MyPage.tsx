@@ -1,7 +1,7 @@
+import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import { MyPageSideBar } from "../components/myPage/MyPageSideBar";
 import { HomeLayout } from "../layouts/HomeLayout";
-import { Outlet } from "react-router-dom";
 
 export default function MyPage() {
   return (

@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getAuth } from "firebase/auth";
+import { getWriterInfo } from "../firebase/getData";
 import { IWriterInfoC } from "../interfaces/IComponent";
 import { IWriterInfo } from "../interfaces/IValue";
-import { getWriterInfo } from "../firebase/getData";
-import defaultProfile from "../../assets/defaultProfile.png";
 
 export default function WriterInfo({ writerId, isPostDetail }: IWriterInfoC) {
   const [writerInfo, setWriterInfo] = useState<IWriterInfo>({

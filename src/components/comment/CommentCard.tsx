@@ -1,12 +1,12 @@
-import styled from "styled-components";
-import { getElapsedTime } from "../../utils/getTime";
-import { ICommentCard } from "../../interfaces/IComponent";
-import { EditDeleteBtn } from "../post/EditDeleteBtns";
-import { deleteComment } from "../../firebase/deleteData";
 import { useRecoilValue } from "recoil";
-import { userState } from "../../recoil/atom";
+import styled from "styled-components";
+import { deleteComment } from "../../firebase/deleteData";
 import { updateUserArrayData } from "../../firebase/updateData";
+import { ICommentCard } from "../../interfaces/IComponent";
+import { userState } from "../../recoil/atom";
+import { getElapsedTime } from "../../utils/getTime";
 import WriterInfo from "../WriterInfo";
+import { EditDeleteBtn } from "../post/EditDeleteBtns";
 
 export default function CommentCard({
   comment,

@@ -1,12 +1,12 @@
-import styled from "styled-components";
-import BookmarkBtn from "./BookmarkBtn";
-import { IPostBody } from "../../interfaces/IComponent";
-import { deletePost } from "../../firebase/deleteData";
 import { useNavigate, useParams } from "react-router-dom";
-import { EditDeleteBtn } from "./EditDeleteBtns";
 import { useRecoilValue } from "recoil";
-import { userState } from "../../recoil/atom";
+import styled from "styled-components";
+import { deletePost } from "../../firebase/deleteData";
 import { updateUserArrayData } from "../../firebase/updateData";
+import { IPostBody } from "../../interfaces/IComponent";
+import { userState } from "../../recoil/atom";
+import BookmarkBtn from "./BookmarkBtn";
+import { EditDeleteBtn } from "./EditDeleteBtns";
 import MarketPostBodyDetail from "./MarketPostBodyDetail";
 
 export function PostBody({ postData }: IPostBody) {

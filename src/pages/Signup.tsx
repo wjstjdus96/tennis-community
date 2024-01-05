@@ -3,7 +3,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
 import AuthInput from "../components/AuthInput";
 import AuthLayout from "../layouts/AuthLayout";
-
 import {
   createUserWithEmailAndPassword,
   inMemoryPersistence,

@@ -1,10 +1,8 @@
-import styled, { css } from "styled-components";
-import { HiOutlineSortDescending, HiPencil } from "react-icons/hi";
-import { IBoardFilter } from "../../interfaces/IComponent";
-import { useEffect, useState } from "react";
+import { HiOutlineSortDescending } from "@react-icons/all-files/hi/HiOutlineSortDescending";
+import styled, { css, keyframes } from "styled-components";
 import { board_filter_type_list } from "../../consts/const";
 import { useDropDown } from "../../hooks/useDropdown";
-import { keyframes } from "styled-components";
+import { IBoardFilter } from "../../interfaces/IComponent";
 
 export default function BoardFilter({
   filterType,

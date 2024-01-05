@@ -1,11 +1,12 @@
-import { FaBookmark, FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
+import { FaRegBookmark } from "@react-icons/all-files/fa/FaRegBookmark";
+import { FaRegCommentDots } from "@react-icons/all-files/fa/FaRegCommentDots";
+import { FaBookmark } from "@react-icons/all-files/fa/FaBookmark";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useSetBookmark } from "../../hooks/useSetBookmark";
 import { IPost } from "../../interfaces/IValue";
 import { getElapsedTime } from "../../utils/getTime";
 import WriterInfo from "../WriterInfo";
-import { useEffect } from "react";
 
 export default function Post({
   post,

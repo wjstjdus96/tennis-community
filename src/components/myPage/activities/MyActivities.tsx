@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import styled from "styled-components";
-import { ActivityFieldBtn } from "./ActivityFieldBtn";
-import { getPost, getUserActivities } from "../../../firebase/getData";
 import { useRecoilValue } from "recoil";
-import { userBookmarkState, userState } from "../../../recoil/atom";
-import { ActivityFieldItem } from "./ActivityFieldItem";
-import TogglePostsList from "./TogglePostsList";
+import styled from "styled-components";
+import { getUserActivities } from "../../../firebase/getData";
 import { IFieldItemIds } from "../../../interfaces/IValue";
+import { userState } from "../../../recoil/atom";
+import { ActivityFieldBtn } from "./ActivityFieldBtn";
+import TogglePostsList from "./TogglePostsList";
 
 export function MyActivities() {
   const { search } = useLocation();

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { FaCamera } from "react-icons/fa";
+import { FaCamera } from "@react-icons/all-files/fa/FaCamera";
 import styled from "styled-components";
 import { IImageInput } from "../../interfaces/IComponent";
 import ErrorMsg from "./ErrorMsg";

@@ -1,12 +1,12 @@
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Post from "./Post";
-import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
-import { useState, useEffect } from "react";
-import MarketPost from "./MarketPost";
-import { Link, useNavigate } from "react-router-dom";
 import { IBoard } from "../../interfaces/IComponent";
 import { IMarketPost, IPost } from "../../interfaces/IValue";
+import MarketPost from "./MarketPost";
+import Post from "./Post";
 
 export default function Board({ title, collectionName }: IBoard) {
   const [posts, setPosts] = useState<IPost[] | IMarketPost[]>([]);
