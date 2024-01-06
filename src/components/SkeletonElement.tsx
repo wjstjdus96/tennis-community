@@ -21,9 +21,17 @@ const Wrapper = styled.div`
     width: 100%;
   }
   &.market_post_image {
+    width: 65px;
+    height: 65px;
+    border-radius: 10px;
   }
   &.market_post_price {
+    width: 50%;
+    height: 18px;
   }
   &.market_post_infos {
+    align-self: flex-end;
+    width: 30%;
+    height: 18px;
   }
 `;

@@ -8,6 +8,7 @@ import { IMarketPost, IPost } from "../../interfaces/IValue";
 import MarketPost from "./MarketPost";
 import Post from "./Post";
 import PostSkeleton from "./PostSkeleton";
+import MaketPostSkeleton from "./MarketPostSkeleton";
 
 export default function Board({ title, collectionName }: IBoard) {
   const [posts, setPosts] = useState<IPost[] | IMarketPost[]>([]);
@@ -42,14 +43,16 @@ export default function Board({ title, collectionName }: IBoard) {
       <Head onClick={onClickTitle}>{title}</Head>
       {collectionName == "market" ? (
         <MarketBoardBody>
-          {posts.map((post: any) => (
-            <MarketPost post={post} isHome={true} />
-          ))}
+          {posts.length == 0
+            ? [1, 2, 3, 4, 5, 6].map(() => <MaketPostSkeleton isHome={true} />)
+            : posts.map((post: any) => (
+                <MarketPost post={post} isHome={true} />
+              ))}
         </MarketBoardBody>
       ) : (
         <Body>
           {posts.length == 0
-            ? [1, 2, 3, 4].map((item: number) => (
+            ? [1, 2, 3, 4].map(() => (
                 <PostSkeleton field={collectionName} isHome={true} />
               ))
             : posts.map((post: any) => <Post post={post} isHome={true} />)}
