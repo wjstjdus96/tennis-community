@@ -76,7 +76,6 @@ const Head = styled.div`
   align-items: center;
   padding: 20px;
   border-radius: 15px;
-  font-family: "Noto Sans KR", sans-serif;
   font-weight: 700;
   &:hover {
     color: ${(props) => props.theme.green[3]};

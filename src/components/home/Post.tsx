@@ -66,7 +66,6 @@ const Wrapper = styled.div<{ isHome: boolean; field: string }>`
         ? "1.03rem 1rem "
         : "1rem"
       : "15px 3px"};
-  font-family: "Noto Sans KR", sans-serif;
   border-bottom: 1px solid ${(props) => props.theme.green[1]};
   max-width: 100%;
 `;
