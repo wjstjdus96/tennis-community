@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { HiOutlineMenu } from "react-icons/hi";
+import { HiOutlineMenu } from "@react-icons/all-files/hi/HiOutlineMenu";
 import { useDropDown } from "../../hooks/useDropdown";
 import MobileSideBar from "./MobileSideBar";
 

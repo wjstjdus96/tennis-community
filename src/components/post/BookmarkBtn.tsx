@@ -1,4 +1,5 @@
-import { FaBookmark, FaRegBookmark } from "react-icons/fa6";
+import { FaBookmark } from "@react-icons/all-files/fa/FaBookmark";
+import { FaRegBookmark } from "@react-icons/all-files/fa/FaRegBookmark";
 import styled from "styled-components";
 import { useSetBookmark } from "../../hooks/useSetBookmark";
 import { IBookmarkBtn } from "../../interfaces/IComponent";

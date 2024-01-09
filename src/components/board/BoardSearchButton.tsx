@@ -1,4 +1,4 @@
-import { IoSearch } from "react-icons/io5";
+import { IoSearch } from "@react-icons/all-files/io5/IoSearch";
 import styled from "styled-components";
 
 export default function BoardSearchButton({

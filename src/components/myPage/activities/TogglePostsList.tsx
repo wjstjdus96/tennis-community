@@ -1,9 +1,8 @@
-import { useState } from "react";
-import TogglePostsItem from "./TogglePostsItem";
 import styled from "styled-components";
-import { IField, IFieldItemIds } from "../../../interfaces/IValue";
-import { ITogglePostsList } from "../../../interfaces/IComponent";
 import { mypage_activities_field_list } from "../../../consts/const";
+import { ITogglePostsList } from "../../../interfaces/IComponent";
+import { IField, IFieldItemIds } from "../../../interfaces/IValue";
+import TogglePostsItem from "./TogglePostsItem";
 
 export default function TogglePostsList({ fieldPostsIds }: ITogglePostsList) {
   return (

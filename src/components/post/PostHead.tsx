@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { getDateTime, getElapsedTime } from "../../utils/getTime";
 import { IPostHead } from "../../interfaces/IComponent";
+import { getDateTime } from "../../utils/getTime";
 import PostWriter from "../WriterInfo";
 
 export function PostHead({ writerId, createdAt }: IPostHead) {

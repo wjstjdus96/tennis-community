@@ -1,19 +1,19 @@
+import {
+  browserSessionPersistence,
+  setPersistence,
+  signInWithEmailAndPassword,
+} from "@firebase/auth";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import AuthInput from "../components/AuthInput";
-import { useForm, SubmitHandler } from "react-hook-form";
-import {
-  signInWithEmailAndPassword,
-  setPersistence,
-  browserSessionPersistence,
-} from "@firebase/auth";
 import { auth } from "../firebase/firebase";
-import { useNavigate } from "react-router-dom";
-import AuthLayout from "../layouts/AuthLayout";
+import { getUserBookmark } from "../firebase/getData";
 import { ILoginValue } from "../interfaces/IValue";
+import AuthLayout from "../layouts/AuthLayout";
 import { userBookmarkState, userState } from "../recoil/atom";
-import { useSetRecoilState } from "recoil";
-import { getImage, getUserBookmark } from "../firebase/getData";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../utils/schema";
 
 export default function Login() {

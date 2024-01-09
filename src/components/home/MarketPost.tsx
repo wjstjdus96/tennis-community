@@ -1,4 +1,6 @@
-import { FaRegBookmark, FaRegCommentDots, FaBookmark } from "react-icons/fa6";
+import { FaRegBookmark } from "@react-icons/all-files/fa/FaRegBookmark";
+import { FaRegCommentDots } from "@react-icons/all-files/fa/FaRegCommentDots";
+import { FaBookmark } from "@react-icons/all-files/fa/FaBookmark";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IMarketPost } from "../../interfaces/IValue";

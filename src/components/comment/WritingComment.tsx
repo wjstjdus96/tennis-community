@@ -1,23 +1,15 @@
-import styled from "styled-components";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { ISetComment } from "../../interfaces/IFunction";
-import {
-  doc,
-  setDoc,
-  collection,
-  serverTimestamp,
-  updateDoc,
-  arrayUnion,
-  addDoc,
-} from "firebase/firestore";
-import { updateOneData, updateUserArrayData } from "../../firebase/updateData";
-import { db } from "../../firebase/firebase";
-import { IWritingComment } from "../../interfaces/IComponent";
-import { getComments } from "../../firebase/getData";
-import { checkIsLogin } from "../../utils/checkIsLogin";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
-import { userState } from "../../recoil/atom";
+import styled from "styled-components";
 import defaultProfile from "../../assets/defaultProfile.png";
+import { db } from "../../firebase/firebase";
+import { getComments } from "../../firebase/getData";
+import { updateOneData, updateUserArrayData } from "../../firebase/updateData";
+import { IWritingComment } from "../../interfaces/IComponent";
+import { ISetComment } from "../../interfaces/IFunction";
+import { userState } from "../../recoil/atom";
+import { checkIsLogin } from "../../utils/checkIsLogin";
 
 export function WritingComment({
   collectionName,

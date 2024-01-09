@@ -1,5 +1,5 @@
-import { BiSolidTennisBall } from "react-icons/bi";
-import { IoLogInOutline } from "react-icons/io5";
+import { IoLogInOutline } from "@react-icons/all-files/io5/IoLogInOutline";
+import { IoTennisballSharp } from "@react-icons/all-files/io5/IoTennisballSharp";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -29,7 +29,7 @@ export default function Header() {
     <Wrapper>
       <Logo>
         <Link to="/">
-          <BiSolidTennisBall />
+          <IoTennisballSharp />
           <div>TENNING</div>
         </Link>
       </Logo>
@@ -89,7 +89,8 @@ const Logo = styled.div`
   & > a {
     display: flex;
     align-items: center;
-    font-family: "Allan", cursive;
+    font-family: "Allan";
+    font-weight: 700;
 
     @media all and (max-width: 767px) {
       font-size: 23px;

@@ -1,4 +1,4 @@
-import { BiSolidTennisBall } from "react-icons/bi";
+import { IoTennisballSharp } from "@react-icons/all-files/io5/IoTennisballSharp";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -15,7 +15,7 @@ export default function AuthLayout({
     <Wrapper>
       <Logo onClick={() => navigate("/")}>
         TENNING
-        <BiSolidTennisBall />
+        <IoTennisballSharp />
       </Logo>
 
       <Box>
@@ -59,6 +59,7 @@ const Logo = styled.div`
   display: flex;
   justify-content: center;
   font-family: "Allan", cursive;
+  font-weight: 700;
   svg {
     color: ${(props) => props.theme.green[2]};
   }

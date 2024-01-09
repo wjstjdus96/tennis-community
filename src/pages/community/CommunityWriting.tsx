@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
+import Loading from "../../components/Loading";
 import { SubmitWritingButton } from "../../components/writing/SubmitWritingButto";
 import WritingInput from "../../components/writing/WritingInput";
 import { useEditPost } from "../../hooks/useEditPost";
@@ -10,7 +11,6 @@ import { useWritingPost } from "../../hooks/useWritingPost";
 import { ICommunityWritingValue } from "../../interfaces/IValue";
 import { HomeLayout } from "../../layouts/HomeLayout";
 import { communityWritingSchema } from "../../utils/schema";
-import Loading from "../../components/Loading";
 
 export default function CommunityWriting() {
   const { postId } = useParams();

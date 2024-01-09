@@ -1,7 +1,7 @@
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import styled, { keyframes } from "styled-components";
-import { IBoardRecruitFilter } from "../../interfaces/IComponent";
+import { useSearchParams } from "react-router-dom";
+import styled from "styled-components";
 import { recruit_filter_type_list } from "../../consts/const";
+import { IBoardRecruitFilter } from "../../interfaces/IComponent";
 
 export default function BoardRecruitFilter({
   recruitFilterType,

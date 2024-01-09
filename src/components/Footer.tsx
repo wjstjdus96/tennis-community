@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { BiCopyright } from "react-icons/bi";
+import { BiCopyright } from "@react-icons/all-files/bi/BiCopyright";
 
 export default function Footer() {
   return (

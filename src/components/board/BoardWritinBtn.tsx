@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { HiPencil } from "react-icons/hi";
+import { HiPencil } from "@react-icons/all-files/hi/HiPencil";
 import { useNavigate } from "react-router-dom";
 
 export function BoardWritingBtn({ boardField }: { boardField: string }) {
