@@ -59,6 +59,7 @@ const Logo = styled.div`
   display: flex;
   justify-content: center;
   font-family: "Allan", cursive;
+  font-weight: 700;
   svg {
     color: ${(props) => props.theme.green[2]};
   }

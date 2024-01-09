@@ -89,7 +89,8 @@ const Logo = styled.div`
   & > a {
     display: flex;
     align-items: center;
-    font-family: "Allan", cursive;
+    font-family: "Allan";
+    font-weight: 700;
 
     @media all and (max-width: 767px) {
       font-size: 23px;
