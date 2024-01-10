@@ -42,6 +42,7 @@ $ npm start
 ┣ 📁pages
 ┣ 📁recoil
 ┣ 📁router
+┣ 📁styles
 ┣ 📁theme
 ┣ 📁utils
 ```
@@ -58,7 +59,7 @@ $ npm start
 |                                                           정보 수정                                                            |                                                                                                                                |
 | <img src="https://github.com/wjstjdus96/tennis-community/assets/77755620/3249548e-7a85-4b9e-ab69-096d7be30e99" width="500px"/> |                                                                                                                                |
 
-## ⚙️ 기능 설명
+## ⚙️ 주요 기능
 
 - 로그인 / 로그아웃
 
@@ -71,8 +72,3 @@ $ npm start
 - 마이페이지
   - 사용자가 작성한 글, 댓글 단 글, 북마크 한 글 게시판별로 확인 기능
   - 사용자의 프로필이미지, 닉네임 수정 기능
-
-## 📈 디벨롭 계획
-
-- 반응형 웹
-- algolia를 활용한 검색 기능 확장
